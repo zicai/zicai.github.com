@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Hello World!
-tagline: Supporting tagline
+tagline: To become a hacker, all you need is dedication and hard work. 
 ---
 {% include JB/setup %}
 
