@@ -3,7 +3,7 @@ layout: post
 title: "how to become hacker"
 description: ""
 category: 
-tags: []
+tags: [hacker,book]
 ---
 {% include JB/setup %}
 原文地址：<http://www.gohacking.com/how-to-become-hacker/>
