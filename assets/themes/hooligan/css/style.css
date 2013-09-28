@@ -7,15 +7,14 @@
 /* line 13, ../_sass/_base.scss */
 html, body {
   background-color: #2a2a2a;
-  background: url(../images/bgs/body.png) repeat;
+  background: url(../images/bgs/body.jpg) repeat;
 }
 
 /* line 18, ../_sass/_base.scss */
 body {
-  color: #bbb;
-  text-shadow: 1px 1px 1px #000;
+  color: #333;
   height: 100%;
-  font-family: 'Oxygen', sans-serif;
+  font-family: "STHei","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
   font-size: 14px;
 }
 
@@ -91,6 +90,13 @@ hr {
 /* line 81, ../_sass/_base.scss */
 .navbar {
   margin-bottom: 0;
+  background: url(../images/bgs/wood.jpg);
+}
+.navbar .navbar-inner{
+  background: none;
+}
+.navbar .nav>li>a{
+  color: #eeeeee;
 }
 /* line 83, ../_sass/_base.scss */
 .navbar div.navbar-inner {
