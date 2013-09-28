@@ -10,4 +10,5 @@ tagline: To become a hacker, all you need is dedication and hard work.
     <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
   {% endfor %}
 </ul>
+http://bbs.blueidea.com/thread-2636904-1-1.html
  
