@@ -17,14 +17,14 @@ However, texture has long been synonymous with “dirty” or “grungy” desig
 然而，很长时间里纹理都是“丑陋设计”或者“低劣设计”的同义词。在世界各地的音乐网站上都可以看到被滥用的纹理，这给设计师们留下了不好的印象。因为经常被误用，使用它的好处一直被忽略。纹理可以使网站成为一个整体，但不应该成为主要的关注点。
 
 ####Textures vs. Patterns 
-####Textures（纹理） vs. Patterns
+####Textures（纹理） vs. Patterns   
 
 Before we get into textures in depth, let’s distinguish between patterns and textures. These words are often used synonymously. Patterns are typically small, repeating, tileable elements, whereas textures tend to be much bigger images that don’t repeat. Imagine a Venn diagram, with textures on the left and patterns on the right, with a little overlap in the middle. So, some textures are also patterns. Several of the tileable texture packs found on Tileables are good examples.
 
 在开始深入讲解纹理之前，我们先来区分下patterns和textures（纹理）。这两个词经常被当做同义词使用。Patterns通常是小块的，可重复的，可平铺的元素，而textures更倾向于那种稍大的且不重复的图片。想象一幅维恩图，textures在图的左侧，patterns在图的右侧，当中有一部分重叠。所以，一些textures也是patterns。在[Tileables](http://tileabl.es/) 上找到的几个可平铺的纹理包就是很好的例证。
 
 ###The Function Of Textures 
-###纹理的作用
+###纹理的作用  
 
 We love texture on the Web for a multitude of reasons. Design decisions shouldn’t be made simply on the basis of, “Oh, well. It looks good.” Design should serve a purpose, and each decision about texture should be made by weighing the pros and cons. Let’s start by going over some of the key benefits.
 

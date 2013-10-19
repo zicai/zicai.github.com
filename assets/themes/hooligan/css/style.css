@@ -22,7 +22,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: normal;
-  color: #999;
+  color: #111;
   text-rendering: optimizelegibility;
   font-family: 'Advent Pro', sans-serif;
   /*font-family: 'Pontano Sans', sans-serif;*/
@@ -160,7 +160,10 @@ hr {
   line-height: 25px;
   margin: 0;
 }
-
+article{
+  background: url(../images/bgs/paper_1.jpg);
+  padding: 15px;
+}
 /* Page header tweaks */
 /* line 142, ../_sass/_base.scss */
 .page-header {
