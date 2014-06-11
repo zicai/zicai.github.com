@@ -22,6 +22,8 @@ tags: []
 
 ![opacity compatible][2]
 
+<!--more-->
+
 在不支持`opacity`的IE6、7、8中效果如下：
 
 ![opacity in ie 8][3]
@@ -157,11 +159,8 @@ tags: []
 
 那接下来准备谈谈`RGBA(R,G,B,A)`
 
-如果你发现文章有错误，却不告诉我，那你也太不够意思了吧。哪怕是有疑问，也得告诉俺一声儿，咱可以一块研究研究嘛，对不？你说呢？O(∩_∩)O哈哈~
 
-邮箱：395217502@qq.com
 
-[我的豆瓣][17]
 
 
   [1]: http://htmljs.b0.upaiyun.com/uploads/1386064479852-opacity-chrome.PNG
@@ -180,4 +179,3 @@ tags: []
   [14]: http://htmljs.b0.upaiyun.com/uploads/1386075523993-rgba-ie8-fixed-inner-fallback.PNG
   [15]: http://htmljs.b0.upaiyun.com/uploads/1386075742193-rgba-ie8-fixed-inner-fallback-fixed.PNG
   [16]: http://www.linxz.de/demo/hex_color.html
-  [17]: http://www.douban.com/people/56880223/
