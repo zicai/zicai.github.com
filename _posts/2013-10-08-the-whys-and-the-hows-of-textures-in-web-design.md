@@ -11,7 +11,7 @@ tags: []
 Texture is becoming integral to design. It’s gone beyond being a trend — it’s now a simple and effective way to add depth to a website. Wielding the power of texture is a great responsibility. It increases the effectiveness of websites and is a quality tool in the arsenal of designers. It can guide the user’s eye and emphasize the importance of key elements.
 
 纹理正在成为WEB设计不可或缺的一部分。它已不再是作为一种流行趋势而存在，现在它是给网站设计增加层次感的一种简单而有效的方式。Wielding the power of texture is a great responsibility.它提高了网站的展示效果，成为设计师兵器库中的一件利器。它能够引导用户的视线并突出显示关键元素。
-
+<!--more-->
 However, texture has long been synonymous with “dirty” or “grungy” design. Its overuse can be seen throughout the world of music group websites and has left a bad taste in the mouths of designers. Due to its frequent misuse, its benefits have long been overlooked. Texture can bring a website together, but should not be the main focus.
 
 然而，很长时间里纹理都是“丑陋设计”或者“低劣设计”的同义词。在世界各地的音乐网站上都可以看到被滥用的纹理，这给设计师们留下了不好的印象。因为经常被误用，使用它的好处一直被忽略。纹理可以使网站成为一个整体，但不应该成为主要的关注点。
