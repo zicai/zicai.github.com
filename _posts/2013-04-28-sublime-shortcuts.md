@@ -1,5 +1,6 @@
 ---
 layout: post
+title: "sublime 常用快捷键"
 category : lessons
 tagline: "Supporting tagline"
 tags : [sublime, shortcuts]
