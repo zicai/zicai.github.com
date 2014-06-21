@@ -4,7 +4,7 @@ category : tutorial
 title: grunt 使用
 tags : [grunt]
 ---
-{% include JB/setup %}
+
  
 1. 生成package.json
  

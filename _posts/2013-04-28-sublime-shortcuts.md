@@ -4,7 +4,7 @@ title: "sublime 安装配置"
 category : tutorial
 tags : [sublime, shortcuts]
 ---
-{% include JB/setup %}
+
 
 1. 下载并安装。地址[http://www.sublimetext.com/](http://www.sublimetext.com/)
 2. 安装 [package control](https://sublime.wbond.net/installation)。

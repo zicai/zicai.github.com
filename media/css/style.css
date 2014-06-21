@@ -1,7 +1,4 @@
-@charset
-utf-8
-
-;
+@charset "UTF-8";
 
 /*
 author:cho
@@ -277,10 +274,10 @@ form, embed {
     margin-bottom: 20px;
 }
 .posts-by-year .row:hover{
-   color: #40aa12;
+   color: #243743;
 }
 .posts-by-year .row:hover a{
-    color: #40aa12;
+    color: #243743;
 }
 .sidebar {
     float: right;

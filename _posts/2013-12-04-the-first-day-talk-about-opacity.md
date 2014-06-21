@@ -5,7 +5,7 @@ description: ""
 category: 
 tags: []
 ---
-{% include JB/setup %}
+
 提到透明，大家首先会想到`opacity`。先来看测试用例一：
 
     .case{
@@ -22,7 +22,6 @@ tags: []
 
 ![opacity compatible][2]
 
-<!--more-->
 
 在不支持`opacity`的IE6、7、8中效果如下：
 

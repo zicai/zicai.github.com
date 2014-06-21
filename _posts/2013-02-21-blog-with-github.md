@@ -5,7 +5,7 @@ title: github 写博客
 tagline: "Supporting tagline"
 tags : [github, jekyll, tutorial]
 ---
-{% include JB/setup %}
+
 1.安装Ruby
 
     ruby --version
