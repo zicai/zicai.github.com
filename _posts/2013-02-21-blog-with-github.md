@@ -59,8 +59,8 @@ tags : [github, jekyll, tutorial]
 
 8.切换模板
 
-rake theme:install name="THEME-NAME"
-rake theme:install git="https://github.com/theme_name.git"
+	rake theme:install name="THEME-NAME"
+	rake theme:install git="https://github.com/theme_name.git"
 
 可能出现的问题：
 
