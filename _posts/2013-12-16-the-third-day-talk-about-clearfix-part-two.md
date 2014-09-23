@@ -70,6 +70,5 @@ tags: []
 
 还看啥呢？动手吧！O(∩_∩)O
 
-邮箱：395217502@qq.com （期待骚扰）
 
   [1]: http://jsfiddle.net/zicai/z5a34/8/embedded/
