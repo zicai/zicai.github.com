@@ -6,7 +6,7 @@ tagline: "Supporting tagline"
 tags : [scrapy]
 ---
 
-[http://doc.scrapy.org/en/latest/intro/install.html](http://doc.scrapy.org/en/latest/intro/install.html)
+原文地址：[http://doc.scrapy.org/en/latest/intro/install.html](http://doc.scrapy.org/en/latest/intro/install.html)
 ##准备工作
 1. python 2.7
         
