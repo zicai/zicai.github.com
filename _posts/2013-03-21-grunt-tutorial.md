@@ -12,15 +12,11 @@ tags : [grunt]
 
 2. 新建Gruntfile.js
 
-    ```javascript
-
         module.exports = function (grunt) {
             grunt.initConfig({
             
             });
         }
-
-    ```
 
 3. 文件合并 [https://github.com/gruntjs/grunt-contrib-concat](https://github.com/gruntjs/grunt-contrib-concat)
     

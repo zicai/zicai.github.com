@@ -8,13 +8,17 @@
     <link rel="shortcut icon" href="{{site.url}}/media/img/favicon.ico" />
     <link rel="alternate" title="likebeta" type="application/atom+xml" href="{{site.feed}}" />
     <link rel="stylesheet" type="text/css" href="{{site.url}}/media/css/style.css" />
-    <link rel="stylesheet" href="{{site.url}}/media/css/highlight.css" />
+    <link rel="stylesheet" href="{{site.url}}/media/highlight/styles/monokai_sublime.css" />
 	<title>{{page.title}}</title>
 	<!--[if lt IE 9]>
 	<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-    <script type="text/javascript" src="{{site.url}}/media/js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="{{site.url}}/media/js/base.js"></script>
+      <script type="text/javascript" src="{{site.url}}/media/js/jquery-1.7.1.min.js"></script>
+      <script type="text/javascript" src="{{site.url}}/media/js/base.js"></script>
+      <script src="{{site.url}}/media/highlight/highlight.pack.js"></script>
+      <script>
+          hljs.initHighlightingOnLoad();
+      </script>
   </head>
   <body>
 	<div id="clickload">假装异步加载中...</div>
@@ -23,5 +27,6 @@
 		{% include post.html %}
 		{% include footer.html %}
 	</div>
+
   </body>
 </html>
