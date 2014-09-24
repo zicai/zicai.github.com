@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: 
+title: "可爱的模板"
 tagline: "Supporting tagline"
 tags : [intro, beginner, jekyll, tutorial]
 ---
