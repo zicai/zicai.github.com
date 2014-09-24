@@ -16,10 +16,12 @@ tags : [github, jekyll, tutorial]
     
 如果无法安装，可能是因为 rubygems.org 被墙，改用[淘宝rubygem镜像](http://ruby.taobao.org/)
 
+```bash
     gem sources -l
     gem sources --remove https://rubygems.org
     gem sources -a https://ruby.taobao.org
     gem sources -l
+```
 
 3.安装Jekyll
 
