@@ -197,3 +197,7 @@ Migrations 非常强大，让你可以随时修改model，而不用删掉数据�
     	# ...
     	def __str__(self):              # __unicode__ on Python 2
         	return self.choice_text
+        	
+给model添加`__str__()`方法很重要，因为Django自动生成的admin后台会用到。
+>python 3 ，很简单，只用`__str__()`
+On Python 2, you should define `__unicode__()` methods returning unicode values instead. Django models have a default `__str__()` method that calls `__unicode__()` and converts the result to a UTF-8 bytestring. This means that unicode(p) will return a Unicode string, and str(p) will return a bytestring, with characters encoded as UTF-8. Python does the opposite: object has a `__unicode__` method that calls `__str__` and interprets the result as an ASCII bytestring. This difference can create confusion.
