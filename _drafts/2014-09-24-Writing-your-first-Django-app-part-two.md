@@ -1,7 +1,7 @@
 ---
 layout: post
 category : Django
-title : "你的第一个Django应用(part 1)"
+title : "你的第一个Django应用(part 2)"
 tagline: "Supporting tagline"
 tags : [python, Django]
 ---
