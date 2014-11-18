@@ -21,6 +21,6 @@ tags : [MinGW]
 安装完后的配置：
 
 - 切换到C:\MinGW\msys\1.0，双击msys.bat进入MinGW Shell  。输入`mingw-get --help`
-- 然后使用"mingw-get install msys-groff" 和"mingw-get install msys-man"命令来安装man包，
+- 然后使用`mingw-get install msys-groff` 和`mingw-get install msys-man`命令来安装man包，
 - 然后去 [https://www.kernel.org/pub/linux/docs/man-pages/](https://www.kernel.org/pub/linux/docs/man-pages/)网站下载man手册，建议下载最新的版本，放置到c:\MinGW\msys\1.0\home\Administrator目录下，其中"c:\MinGW"是我的 MinGW安装目录，"Administrator"当前登录windows的用户名。切换到该目录`tar -xzvf man-pages-X.XX.tar.gz`解压缩该文件。进入目录man-pages-3.58 执行`make`
 man手册生成成功后，执行 `man printf`,测试一下。
