@@ -112,12 +112,22 @@ server收集浏览器返回的结果，呈献给开发者。
 ##FAQ 
 
 - 我可以结合karma和其他测试框架么？
+
+
     可以的，对于常用的测试框架（例如 Jasmine，Mocha，Qunit）都有插件。
 -  可以用karma来做端到端测试（end to end testing）么？
+
+
     Karma主要设计用来做低层级的测试（单元测试）。如果你想做高层级测试，我们推荐使用[protractor](https://github.com/angular/protractor)
 - 我能在CI服务器上使用Karma么？
+
+
     当然，你可以看看相关文档[Jenkins](http://karma-runner.github.io/0.12/plus/jenkins.html),[Travis](http://karma-runner.github.io/0.12/plus/travis.html),[Semaphore](http://karma-runner.github.io/0.12/plus/semaphore.html)
 - 我该使用哪个版本的Karma
+
+
     npm上最新稳定版（`npm install karma`）
 - Karma运行在哪个版本的Node.js
+
+
     最新的两个稳定版。当前也就是0.8和0.10。
