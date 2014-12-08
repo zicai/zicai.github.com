@@ -84,6 +84,8 @@ Modern.IE用来扫描网站的工具可以在[github上获取](https://github.co
 
 ##结语
 
-为了检测兼容性问题和性能提升，Modern.IE提供了许多用来分析网站的工具，不论是离线还是在线。感谢这个本地版本，它可以在网站上线之前进行测试，是我们可以避免在用户和客户之前出错。
+为了检测兼容性问题和性能提升，Modern.IE提供了许多用来分析网站的工具，不论是离线还是在线。感谢这个本地版本，它可以在网站上线之前进行测试，使我们可以避免在用户和客户之前出错。
 
 你试过Modern.IE 了么？
+
+原文地址： [http://www.sitepoint.com/test-site-locally-modern-ie/](http://www.sitepoint.com/test-site-locally-modern-ie/)
