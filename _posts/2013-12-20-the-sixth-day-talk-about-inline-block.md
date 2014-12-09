@@ -46,9 +46,9 @@ tags: []
 
  给`span`应用`display:inline-block`前后的效果对比如下：
 
-    应用前 | 应用后
-    --------- | ---------
-    ![inline-block][1] | ![enter image description here][2]
+   应用前 | 应用后
+   --------- | ---------
+   ![inline-block][1] | ![enter image description here][2]
 
  在[上一篇有关hasLayout的文章](http://www.html-js.com/article/A-day-to-learn-CSS-and-on-the-fourth-day-talk-about-hasLayout)里，我们说过`display:inline-block`可以使元素拥有Layout。而拥有layout的元素表现出来的特征就是一个独立的矩形容器，并且其内容不受周围元素的影响。
 
