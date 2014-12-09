@@ -69,9 +69,10 @@ tags: []
         sit amet  elit. Consequuntur a.
  给`div`应用`display:inline-block`前后的效果对比如下：
 
-   应用前 | 应用后
-   --------- | ---------
-   ![enter image description here][5] |  ![enter image description here][6]
+应用前 | 应用后
+--------- | ---------
+![enter image description here][5] |  ![enter image description here][6]
+
  看上去没有任何变化。其实，在IE6、7中，`display:inline-block`同样会使块元素获得layout，但是并不能使块元素表现的如同`inline-block`元素一样。
 
  通过上面的分析我们知道：在IE6、7中，让一个`inline`元素拥有Layout就可以使其表现的如同`inline-block`元素一样，那么相应的，我们让一个拥有Layout的元素`display:inline`会产生怎样的效果呢？
