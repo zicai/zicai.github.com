@@ -25,14 +25,17 @@ Karma配置文件以Node.js模块方式被加载。
         # ...
 
 ##File Patterns
-所有需要指定文件路径的配置选项，都是用[minimatch]库(https://github.com/isaacs/minimatch)，方便你轻松的列出需要包含和剔除的文件
+所有需要指定文件路径的配置选项，都是用[minimatch](https://github.com/isaacs/minimatch)库，方便你轻松的列出需要包含和剔除的文件
 
 例如：
 
 - `**/*.js`: 所有子目录中以`js`结尾的文件
 - `**/!(jquery).js`: 同上, 但是不包括 "jquery.js"
 - `**/(foo|bar).js`: 所有子目录中, 所有 "foo.js" 或 "bar.js" 文件
+
+
 ##配置项
+
 ###autoWatch
 
 类型：布尔值
