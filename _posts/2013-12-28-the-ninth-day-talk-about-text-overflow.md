@@ -46,6 +46,6 @@ text-overflow 示例:
  - [http://quirksmode.org/css/user-interface/textoverflow.html](http://quirksmode.org/css/user-interface/textoverflow.html)
  - [https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow)
 
-如果发现文章有错误，或者对文章有任何疑问，欢迎骚扰 395217502@qq.com O(∩_∩)O
+
 
   [1]: http://jsfiddle.net/zicai/PFx7g/embedded/

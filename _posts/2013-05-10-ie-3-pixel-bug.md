@@ -57,12 +57,15 @@ tags: []
 ![enter image description here][5] | ![enter image description here][6]
 
 我们发现即使不直接接触浮动元素，IE 6中还是存在3px。但是，请仔细观察IE 6中的效果图，发现什么问题没？或者看下面的局部放大图：
+
 ![enter image description here][7]
+
 我们发现，红框里超出浮动元素高度的那部分内容与红边框之间是没有3px间距的。看到这，能想出IE 6到底是给谁加上的3px么？ 
 
 ## Bug 分析： ##
 
 ![enter image description here][8]
+
 很明显：**IE 6给与浮动元素相邻的[line box](http://www.html-js.com/article/1645#line-box)添加了3px间距，而且，只有在浮动元素高度范围之内line box 才会被添加3px 间距。**
 
 
