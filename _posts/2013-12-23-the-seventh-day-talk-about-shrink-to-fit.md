@@ -18,9 +18,10 @@ shrink-to-fit指的是块级元素只占据内容所需要的宽度。[Shrink-To
 
  示例代码一：
  <iframe width="100%" height="300" src="http://jsfiddle.net/zicai/9nJDc/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
- 这应该是使用最普遍的一种方式，因为主流浏览器都支持，并且浮动带来的副作用很小（一般通过[清除浮动](http://www.html-js.com/article/A-day-to-learn-CSS-for-third-days-to-talk-about-the-reset-on)即可消除副作用）。
+ 这应该是使用最普遍的一种方式，因为主流浏览器都支持，并且浮动带来的副作用很小（一般通过[清除浮动](http://zicai.github.io/2013/12/15/the-third-day-talk-about-clearfix-part-one/)即可消除副作用）。
 
  但如果你想让shrink-to-fit的元素居中显示，可能就要换一种方式了，比如下面这种。
+
  - 方式二：通过`display:inline`
 
  示例代码二：
@@ -38,7 +39,7 @@ shrink-to-fit指的是块级元素只占据内容所需要的宽度。[Shrink-To
   示例代码三：
  <iframe width="100%" height="300" src="http://jsfiddle.net/zicai/9nJDc/3/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
- `display:inline-block`在现代浏览器中即可使元素shrink-to-fit，为了在IE6、7中达到同样的效果，需要用`*display: inline;*zoom: 1;`hack一下。详见[上一篇谈谈【inline-block】](http://www.html-js.com/article/1745)
+ `display:inline-block`在现代浏览器中即可使元素shrink-to-fit，为了在IE6、7中达到同样的效果，需要用`*display: inline;*zoom: 1;`hack一下。详见[上一篇谈谈【inline-block】](http://zicai.github.io/2013/12/20/the-sixth-day-talk-about-inline-block/)
 
  用这种方式shrink-to-fit的元素，通过设置`container`的`text-align:center`即可使其居中显示。
 
