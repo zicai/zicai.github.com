@@ -14,9 +14,11 @@ Google为jQuery，angularjs，jQuerymobile，jQueryui等常用类库提供了CDN
 例如：访问 http://stackoverflow.com/
 
 先是显示等待加载。。。
+
 ![enter image description here][1]
 
 等待大约两分钟后，告诉你加载失败了~~~~(>_<)~~~~ 
+
 ![enter image description here][2]
 
 由于浏览器在加载js的时候，会阻塞后面资源的加载以及内容的呈现，这就会导致呈现页面时出现明显的延迟。如果是在`<head>`标签里引用的该js，那么延迟期间浏览器窗口将是一片空白。
