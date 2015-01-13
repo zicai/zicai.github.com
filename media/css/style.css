@@ -475,8 +475,6 @@ form, embed {
 }
 
 .post .intro p {
-    text-align: justify;
-    text-justify: inter-ideograph;
     padding: 5px 0;
 }
 
@@ -548,15 +546,11 @@ form, embed {
 }
 
 .post .con p {
-    text-align: justify;
-    text-justify: inter-ideograph;
     padding: 8px 0;
     /*text-indent:2em;*/
 }
 
 .post .con div p {
-    text-align: justify;
-    text-justify: inter-ideograph;
     padding: 0;
     text-indent: 0;
 }
