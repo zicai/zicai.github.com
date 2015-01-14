@@ -16,11 +16,6 @@ HTML CSS Javascript Python
 
 
 
-#### 创业
-
-兼职创业中...
-
-
 #### 联系
 
  [github/zicai][1]
