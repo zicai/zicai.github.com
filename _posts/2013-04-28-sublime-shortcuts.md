@@ -26,6 +26,7 @@ tags : [sublime, shortcuts]
  - [sublimetext-markdown-preview](https://github.com/revolunet/sublimetext-markdown-preview markdown)
  - [emmet](http://emmet.io/blog/sublime-text-3/)
  - [Autocomplete](https://github.com/alienhard/SublimeAllAutocomplete)
+ - [jade语法支持]Package Control 安装 Jade
  
 
 

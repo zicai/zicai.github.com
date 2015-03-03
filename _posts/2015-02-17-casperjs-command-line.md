@@ -77,7 +77,7 @@ casperjs内置一个命令行解析器，基于PhantomJS 命令行构建，放�
            casper.echo("No arg nor option passed").exit();
        }
 
-#casperjs原生的选项
+##casperjs原生的选项
 `casperjs`命令有三个可用选项：
 
 - ``--direct``: 打印log信息到控制台
