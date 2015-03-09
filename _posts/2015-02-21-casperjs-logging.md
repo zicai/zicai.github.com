@@ -64,6 +64,4 @@ CasperJS 可以通过`casper.log()`记录日志，日志有四个级别：
 ![http://docs.casperjs.org/en/latest/_images/logoutput.png](http://docs.casperjs.org/en/latest/_images/logoutput.png)
 
    
-提示：
-
-	CasperJS不会在文件系统记录日志，如果需要的话，你得自己实现。
+提示：CasperJS不会在文件系统记录日志，如果需要的话，你得自己实现。
