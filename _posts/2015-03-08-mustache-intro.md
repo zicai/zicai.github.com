@@ -41,6 +41,15 @@ Mustache可以用在HTML，配置文件，源代码--等任何文件中。它的
 ##Tag 类型
 Tag用双大括号标明。{{person}}是一个tag，{{#person}}也是一个tag。下面的例子中，我们把 person 叫做`key` 或者 tag key。
 
+tag类型包括:
+
+- Variables
+- Sections
+- Inverted Section
+- Comments
+- Partials
+- Set Delimiter
+
 ###Variables
 最基本的tag就是variable。模板里的一个 {{name}} tag会尝试在当前context中寻找`name` key。如果没找到，则递归的从父级context中查找。如果一直到顶层context，都没找到`name` key。那么就不会渲染。
 
@@ -74,7 +83,7 @@ hash:
 ###Sections
 sections会根据当前context中key的值渲染文本块一次或多次。
 
-一个section以`#`开始，`/`结束。例如：{{#person}}开始一个“person” section ，而{{/person}}结束它。
+一个section以`#`开始，`/`结束。例如：{{#person}}开始一个“person” section ，而{{/person}}结束它。我们把开始tag 和结束tag之间的文本叫做section's "block"(后面叫做文本块)。
 
 section的行为取决于key的值。key的值有下面几种情况：
 
@@ -196,7 +205,7 @@ hash:
 
     No repos :(
 
-###注释
+###Comments
 注释以感叹号开始，并且不会被渲染。例如：
 
     <h1>Today{{! ignore me }}.</h1>
@@ -206,7 +215,7 @@ hash:
     <h1>Today.</h1>
 
 注释可以包含新行。
-###partials
+###Partials
 partials以 `>` 开始，例如：{{> box}}。
 
 partials在运行时渲染(和编译时相对)，所以递归的partials是有可能的。只是要避免无限循环。
