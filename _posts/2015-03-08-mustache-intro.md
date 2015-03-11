@@ -8,13 +8,15 @@ tags : [Mustache]
 
 ##概要
 一个典型的Mustache模板：
+
 ```   
-    Hello {{name}}
-    You have just won {{value}} dollars!
-    {{#in_ca}}
-    Well, {{taxed_value}} dollars, after taxes.
-    {{/in_ca}}
+Hello {{name}}
+You have just won {{value}} dollars!
+{{#in_ca}}
+Well, {{taxed_value}} dollars, after taxes.
+{{/in_ca}}
 ```
+
 如果给定下面的hash
 
     {
