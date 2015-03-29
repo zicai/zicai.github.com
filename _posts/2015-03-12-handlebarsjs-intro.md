@@ -129,8 +129,7 @@ template(context);
 
 ### Block Helpers
 
-
-
+Block expressions allow you to define helpers that will invoke a section of your template with a different context than the current.
 Handlebars.js 增加了定义block helpers的能力。block helpers 是可以在模板任意地方调用的函数。例如：
 
 ```js
@@ -158,13 +157,7 @@ any arguments that are passed into the helper in the call, and an `options`
 object containing the `fn` function which executes the block's child.
 The block's current context may be accessed through `this`.
 
-Block helpers have the same syntax as mustache sections but should not be
-confused with one another. Sections are akin to an implicit `each` or
-`with` statement depending on the input data and helpers are explicit
-pieces of code that are free to implement whatever behavior they like.
-The [mustache spec](http://mustache.github.io/mustache.5.html)
-defines the exact behavior of sections. In the case of name conflicts,
-helpers are given priority.
+Block helpers 的语法和mustache sections 语法一样，但是不要把它们弄混。Sections根据输入值的不同，类似于`each`或是`with`语句，而helpers是一段代码，你可以做任何你想做的操作。
 
 ### Partials
 

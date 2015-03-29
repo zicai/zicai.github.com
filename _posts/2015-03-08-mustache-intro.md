@@ -53,9 +53,9 @@ tag类型包括:
 ###Variables
 最基本的tag就是variable。模板里的一个 {{name}} tag会尝试在当前context中寻找`name` key。如果没找到，则递归的从父级context中查找。如果一直到顶层context，都没找到`name` key。那么就不会渲染。
 
-默认所有的variable都会进行HTML escape。如果你想返回unescaped html，使用{{{name}}}
+默认所有的variable都会进行HTML转义。如果你想返回未转义的HTML，使用{{{name}}}
 
-你还可以使用`&`来unescaped 一个variable：{{& name}}。这在改变定界符时很有用。
+你还可以使用`&`来避免转义一个variable：{{& name}}。这在改变定界符时很有用。
 
 默认情况下，一个variable “miss”会返回一个空字符串。通常这可以在你的Mustache库中进行配置。例如：Ruby版的Mustache支持在这种情况下抛出一个错误。
 

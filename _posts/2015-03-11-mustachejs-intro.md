@@ -27,7 +27,11 @@ var view = {
 var output = Mustache.render("{{title}} spends {{calc}}", view);
 ```
 
-`Mustache.render`函数接受两个参数：1）mustache模板 2）一个`view`对象，它包含需要渲染到模板中的数据和代码
+`Mustache.render`函数接受两个参数：
+
+1）mustache模板 
+
+2）一个`view`对象，它包含需要渲染到模板中的数据和代码
 
 ## 模板
 
@@ -194,7 +198,7 @@ Output:
 * D'Artagnan
 ```
 
-如果一个section variable是一个函数，它会在当前item的context中调用。 
+如果一个section variable是一个函数，它会在当前item的context中调用。(注意和下面的函数块相区别，类似于`each` 和 `with`) 
 
 View:
 
