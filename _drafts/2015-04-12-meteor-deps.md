@@ -458,7 +458,17 @@ var setFavoriteFood = function (newValue) {
 
 Deps.Dependency 是一个方便的辅助对象。它构建于Deps 对象，Deps.Computation 之上。
 
+每次调用Deps.autorun 时都会创建一个Deps.Computation 对象。它代表当前autorun的实例，它含有一个stop()方法，用于终止和清理本autorun。
 
+Computation 还有两个方法：
+- invalidate(): 导致重新运行autorun本身
+- onInvalidate(callback):下次autorun重新运行时或是stop时执行callback
+
+它还包含三个属性，stopped,invalidated 和firstRun
+
+代码通过查询全局变量Deps.currentComputation来看是否运行在autorun内部。如果在autorun外面，Deps.currentComputation 为null，如果在autorun内部，则Deps.currentComputation 就是代表当前autorun的Deps.Computation对象。当在嵌套autorun时，Deps.Computation 代表父autorun，或者说是包裹代码的最小的autorun。
+
+一个Deps.Dependency 是一个容器，保存一系列Deps.Computation对象。
 
 ###创建reactive value the hard way 
 ###Computation 和Dependencies 多对多关系
@@ -468,4 +478,105 @@ Deps.Dependency 是一个方便的辅助对象。它构建于Deps 对象，Deps.
 
 ##8. Flush Cycle
 
+autorun什么时候重新运行？换句话说，改变一个reactive value后何时生效？
+
+```
+var data = new ReactiveDict;
+data.set("favoriteFood", "chicken");
+
+Deps.autorun(function () {
+  console.log(data.get("favoriteFood"));
+});
+
+console.log("start update");
+data.set("favoriteFood", "waffles");
+data.set("favoriteFood", "pie");
+console.log("finish update");
+```
+
+
+"waffles"和"pie"会在"finish"之前还是之后打印出来。
+
+答案是：默认情况下，当所有javascript代码都结束执行，系统处于空闲时，reactive value把所有变化批处理，实施一次(例如：在浏览器里，可能就是在浏览器处理完当前事件之后)。批处理的过程叫做flushing，可以通过调用Deps.flush()手动触发。
+
+所以上面的代码会输出：
+
+```
+chicken
+start update
+finish update
+waffles
+pie
+```
+
+如果用Deps.flush()修改上面的例子：
+
+```
+var data = new ReactiveDict;
+data.set("favoriteFood", "chicken");
+
+Deps.autorun(function () {
+  console.log(data.get("favoriteFood"));
+});
+
+console.log("start update");
+data.set("favoriteFood", "waffles");
+data.set("favoriteFood", "pie");
+Deps.flush(); // ADDED LINE
+console.log("finish update");
+```
+
+结果就是：
+
+```
+chicken
+start update
+waffles
+pie
+finish update
+```
+
+###为什么要有flush
+- 可预测:最重要的原因就是可预测。不Flush保证什么都不会变，Flush保证所有更新都完成。
+- 一致性：Flush使系统从一个一致的状态到另一个一致的状态。
+- 性能
+
+
+
+###hook 进Flush cycle
+使用Deps.afterFlush() 来在下一次Flush cycle完成时运行回调函数（在所有autorun都运行过后）
+
+```
+var data = new ReactiveDict;
+data.set("favoriteFood", "cake");
+
+Deps.autorun(function () {
+  console.log("My favorite food is " + data.get("favoriteFood") + "!");
+});
+
+var setUnpopularFood = function (what) {
+  data.set("favoriteFood", what);
+  Deps.afterFlush(function () {
+    console.log("Sounds gross to you, but from where I'm from it's considered a delicacy!");
+  });
+};
+```
+
+在上面的例子中，
+
+```
+set("favoriteFood", "candy");
+// "My favorite food is candy!"
+setUnpopularFood("lizards");
+// "My favorite food is lizards!"
+// "Sounds gross to you, but from where I'm from it's considered a delicacy!"
+set("favoriteFood", "ice cream");
+// "My favorite food is ice cream!"
+```
+
+Deps.afterFlush 是一次性的，在下次Flush cycle之后运行一次。以后就不再运行。
+###Flush cycle如何工作
+###避免change loop
+- 规则一：除非真发生了变化，否则不要调用Deps.changed()
+- 规则二：不要创建循环引用。
 
