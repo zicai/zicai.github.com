@@ -468,10 +468,66 @@ Computation 还有两个方法：
 
 代码通过查询全局变量Deps.currentComputation来看是否运行在autorun内部。如果在autorun外面，Deps.currentComputation 为null，如果在autorun内部，则Deps.currentComputation 就是代表当前autorun的Deps.Computation对象。当在嵌套autorun时，Deps.Computation 代表父autorun，或者说是包裹代码的最小的autorun。
 
-一个Deps.Dependency 是一个容器，保存一系列Deps.Computation对象。
+一个Deps.Dependency 是一个容器，保存一系列Deps.Computation对象。depend()方法会把Deps.curentComputation添加到列表中，如果存在的话。changed()方法调用列表里每一个computation的invalidate()方法。
+
+Deps.Dependency 还给每一个它跟踪的computation建立起一个onInvalidate 回调函数。当一个computation invalid时候，回调函数会把它重跟踪列表里移除。Computations are invalidated by a call to changed() on a Deps.Dependency, by a call to changed() on some other Deps.Dependency that is used by the same computation, or by a call to stop() on an autorun.
+
+基于Deps.Computation API 你可以实现自己的Deps.Dependency ，例如：
+
+```
+Dependency = function () {
+  this._nextId = 0;
+  this._dependents = {};
+};
+
+Dependency.prototype.depend = function () {
+  var self = this;
+  if (Deps.currentComputation) {
+    var id = self._nextId++;
+    self._dependents[id] = Deps.currentComputation;
+    Deps.currentComputation.onInvalidate(function () {
+      delete self._dependents[id];
+    });
+  }
+};
+
+Dependency.prototype.changed = function () {
+  for (var id in this._dependents) {
+    this._dependents[id].invalidate();
+  }
+};
+```
 
 ###创建reactive value the hard way 
 ###Computation 和Dependencies 多对多关系
+
+要想完全理解Deps,知道下面代码为何错误非常关键：
+
+```
+// WRONG
+Dependency = function () {
+  this._nextId = 0;
+  this._dependents = {};
+};
+
+Dependency.prototype.depend = function () {
+  if (Deps.currentComputation) {
+    var id = self._nextId++;
+    this._dependents[id] = Deps.currentComputation;
+  }
+};
+
+Dependency.prototype.changed = function () {
+  for (var id in this._dependents) {
+    this._dependents[id].invalidate();
+  }
+  this._dependents = {};
+};
+// WRONG
+```
+
+
+
 ###taking  a "wait and see"approach
 
 
@@ -576,6 +632,19 @@ set("favoriteFood", "ice cream");
 
 Deps.afterFlush 是一次性的，在下次Flush cycle之后运行一次。以后就不再运行。
 ###Flush cycle如何工作
+
+每一个autorun都有一个标识，invalidate,表明是否需要重新运行。当一个reactive 值发生变化时，会在所有影响的Computation 上设为true，意味着在下一次Flush的时候他们需要重新运行。当Flush被触发时，可以是通过Deps.flush()也可以是由于系统空闲。所有invalidate的Computation 都会重新运行，它们的invalidate 标识被清除。Flush的最后，所有afterFlush handler执行。
+
+有下面的保证：
+- 当Deps.flush()返回时，所有状态都被更新。变化影响到的每一个autorun都结束了重新运行。autorun的执行顺序不确定。即使在Flush cycle中reactive value发生变化时，这一点也能保证。
+- 当Deps.flush()返回时，所有的afterFLush 处理器都会运行，即使当Flush开始时，afterFlush还没注册。直到没有需要重新运行的autorun时，afterFlush 才会执行。afterFlush按照注册顺序执行。
+
+即使在Flush cycle中reactive value发生变化，或在Flush cycle中新注册了afterFlush处理器，也能保证上面两点。这暗示：
+- 有时候，重新运行一个autorun会改变一个reactive value，当发生这种情况时，依赖于这个reactive value的autorun也会在本次Flush cycle中重新运行。
+- 不能再一个autorun中调用Flush() ，否则你会无限循环。Flush() 只能在所有autorun返回之后才能返回，当时autorun不能返回，直到flush() 返回。
+- 如果一个afterFlush 回调函数改变了一个reactive value，依赖于该reactive value的autorun都会在任何其它afterFlush回调运行前重新运行。
+- 如果一个afterFlush回调函数初测了一个新的afterFlush处理器，它会作为当前Flush cycle的一部分运行。
+
 ###避免change loop
 - 规则一：除非真发生了变化，否则不要调用Deps.changed()
 - 规则二：不要创建循环引用。
