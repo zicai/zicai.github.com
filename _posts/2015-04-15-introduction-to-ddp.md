@@ -69,7 +69,7 @@ DDP消息如下：
 ```
 
 ##理解和分析DDP
-理解和分析DDP非常重要，利于你裂解Meteor的工作原理。要想看到真实的DDP消息，可以安装`ddp-analyzer`
+理解和分析DDP非常重要，利于你理解Meteor的工作原理。要想看到真实的DDP消息，可以安装`ddp-analyzer`
 
 [DDP Analyzer](http://meteorhacks.com/discover-meteor-ddp-in-realtime.html)。
 
