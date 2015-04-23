@@ -5,6 +5,19 @@ title: "karma 入门"
 tagline: "Supporting tagline"
 tags : [karma]
 ---
+##是什么
+karma是一个简单的工具，使用它可以在多个真实的浏览器中运行javascript代码
+> karma的主要用途是使你的TDD开发简单、快速、有乐趣。
+
+##什么时候应该使用karma
+
+- 想在真实的浏览器中测试代码
+- 想在多个浏览器中测试代码(桌面、手机、平板等)
+- 在开发过程中运行测试
+- 在CI服务器上运行测试
+- 每次保存时运行测试
+- 想使用Lstanbul 生成测试报告
+- 想在源文件中使用requireJS
 
 ##安装
 Karma 构建在Node.js 之上，以npm包形式安装
