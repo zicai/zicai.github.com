@@ -30,14 +30,6 @@ Meteor 是一个构建在 Node.js 之上的平台，用javascript开发web 和mo
 
 ##快速开始
 [Tutorial](https://www.meteor.com/install)
-模板
-collection
-部署
-移动版
-session
-账户系统
-method
-发布订阅
 
 ##packages
 Meteor 所有的功能都以包的形式实现。核心包、第三方包。
@@ -353,92 +345,16 @@ Meteor.publish('posts', function(author) {
 Meteor.subscribe('posts', 'bob-smith');
 ```
 
-##路由
-路由就是配置。
+订阅之后，在客户端就可以查询数据了，例如:
 
-###配置写在哪？
-Iron.Router 按下面顺序查询路由配置
+```
+posts=Posts.find();
+```
 
-1. RouteController
+###参考资源
 
-	```
-	myController=RouteController.extend({
-		layoutTemplate:'layout'
-	})
-	```
-2. Route
-	
-	```
-	Router.route('path',路由函数,配置对象)
-	```
-3. Router
-
-	```
-	Router.configure({
-		layoutTemplate:'layout',
-		template:'temp'
-	})
-	```
-
-###有哪些配置项？
-
-- name
-- path
-- controller
-- template
-- layoutTemplate
-- yieldRegions
-
-	```
-	yieldRegions:{
-		'mySide':{to:'aside'},
-		'myFooter':{to:'footer'}
-	}
-	```
-- waitOn
-- data
-- onRun
-- onRerun
-- onBeforeAction
-- onAfterAction
-- onStop
-- action
-- where
-
-###路由执行流程
-
-
-##保持状态---session
-session是存在于客户端的全局对象。可以用它来保存任意的键值对。
-
-##账号系统
-
-
-##它的支撑
-- Blaze
-- Tracker
-- DDP
-- LiveQuery
-- Full Stack Database Driver
-- isobuild
-
-##它的核心
-reactive programing
-###它用来解决什么问题
-一个很常见的需求：监测某一些值，当值发生变化时，执行某些操作。
-
-常见的解决思路：
-- poll and diff
-- events
-- bindings
-
-另外一种就是reactive programing。思考下电子表格。
-
-reactive programing非常适合开发用户界面。
-
-
-[谈谈UI架构设计的演化](http://www.cnblogs.com/winter-cn/p/4285171.html)
-[Web前端开发：为何选择MVVM而非MVC](http://www.cnblogs.com/winter-cn/archive/2012/09/16/2687184.html)
+- [谈谈UI架构设计的演化](http://www.cnblogs.com/winter-cn/p/4285171.html)
+- [Web前端开发：为何选择MVVM而非MVC](http://www.cnblogs.com/winter-cn/archive/2012/09/16/2687184.html)
 
 
 
