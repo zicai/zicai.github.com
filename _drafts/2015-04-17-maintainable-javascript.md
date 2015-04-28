@@ -92,5 +92,12 @@ ECMAScript 5
 Array.isArray()
 ```
 ###检测属性
+使用in运算符
 
+```
+if("count" in object){
+	a=object.count
+}
+```
 
+注意：在coffeescript中用in判断数据在数组中是否出现, 而 of 可以探测 JavaScript 对象的属性是否存在.
