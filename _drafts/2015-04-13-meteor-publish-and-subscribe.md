@@ -31,7 +31,7 @@ Meteor.publish(name, func) 				定义在Server
 
 要发布数据到客户端，在服务端调用`Meteor.publish`，带上两个参数：记录集的名字，和一个 publish function，每次有客户端订阅这个记录集的时候，这个函数就会被调用。
 
-publish函数通常对某些collection执行query，返回调用`collection.find(query)`的结果：
+publish函数可以返回一个Collection.Cursor，Meteor会把游标的documents 发布到每一个订阅的客户端。还可以返回一个Collection.Cursor 的数组。
 
 ```
 // Publish the logged in user's posts
@@ -40,7 +40,7 @@ Meteor.publish("posts", function () {
 });
 ```
 
-可以通过返回一个collection.find数组来发布多个collections到documents：
+返回cursor数组
 
 ```
 // Publish a single post and its comments
@@ -53,6 +53,82 @@ Meteor.publish("postAndComments", function (postId) {
     Comments.find({ postId: roomId })
   ];
 });
+```
+
+注意：如果返回的是游标数组，在当前版本中必须是不同的collection，将来可能取消这一限制。
+
+另一种方式：publish函数可以通过调用added,changed,removed方法直接控制发布的记录集。这些方法由publish函数中的this提供。
+
+如果一个publish函数没有返回游标或者游标数组，则假定你使用了底层的added/changed/removed 接口，同时必须在记录集初始化完成时调用ready方法。
+
+例如：
+
+```
+// server: publish the current size of a collection
+Meteor.publish("counts-by-room", function (roomId) {
+  var self = this;
+  check(roomId, String);
+  var count = 0;
+  var initializing = true;
+
+  // observeChanges only returns after the initial `added` callbacks
+  // have run. Until then, we don't want to send a lot of
+  // `self.changed()` messages - hence tracking the
+  // `initializing` state.
+  var handle = Messages.find({roomId: roomId}).observeChanges({
+    added: function (id) {
+      count++;
+      if (!initializing)
+        self.changed("counts", roomId, {count: count});
+    },
+    removed: function (id) {
+      count--;
+      self.changed("counts", roomId, {count: count});
+    }
+    // don't care about changed
+  });
+
+  // Instead, we'll send one `self.added()` message right after
+  // observeChanges has returned, and mark the subscription as
+  // ready.
+  initializing = false;
+  self.added("counts", roomId, {count: count});
+  self.ready();
+
+  // Stop observing the cursor when client unsubs.
+  // Stopping a subscription automatically takes
+  // care of sending the client any removed messages.
+  self.onStop(function () {
+    handle.stop();
+  });
+});
+
+// client: declare collection to hold count object
+Counts = new Mongo.Collection("counts");
+
+// client: subscribe to the count for the current room
+Tracker.autorun(function () {
+  Meteor.subscribe("counts-by-room", Session.get("roomId"));
+});
+
+// client: use the new collection
+console.log("Current room has " +
+            Counts.findOne(Session.get("roomId")).count +
+            " messages.");
+
+// server: sometimes publish a query, sometimes publish nothing
+Meteor.publish("secretData", function () {
+  if (this.userId === 'superuser') {
+    return SecretData.find();
+  } else {
+    // Declare that no data is being published. If you leave this line
+    // out, Meteor will never consider the subscription ready because
+    // it thinks you're using the added/changed/removed interface where
+    // you have to explicitly call this.ready().
+    return [];
+  }
+});
+
 ```
 
 在publish函数中，`this.userId`代表当前登录用户的_id，可以用来过滤collections,使 特定的documents只对特定的用户可见。如果登录用户切换到另一个账号，publish函数会使用新的 userId自动重运行，所以当前用户获取不到之前登录用户的documents。
