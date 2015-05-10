@@ -73,12 +73,223 @@ Template.myTemplate.onRendered		client
 
 当模板实例渲染为DOM节点，第一次插入到文档中的时候调用回调函数。
 
-在回调函数中，this是一个模板实例对象
+在回调函数中，this是一个模板实例对象 that is unique to this occurrence of the template and persists across re-renderings。使用onCreated 和onDestroyed 回调函数来对该对象进行初始化和清理。
+
+```
+Template.myTemplate.onCreated		client
+注册一个函数，当模板实例创建时调用。
+
+参数
+	callback		Function
+```
+
+在回调中，this是模板对象实例。你给这个对象设置的属性，在onRendered 和onDestroyed 回调中以及事件处理器中均可见。
+
+These callbacks fire once and are the first group of callbacks to fire. 处理created事件非常有用，可以给模板实例增加值，然后在模板helper中使用Template.instance()获取。
+
+```
+Template.myPictures.onCreated(function () {
+  // set up local reactive variables
+  this.highlightedPicture = new ReactiveVar(null);
+
+  // register this template within some central store
+  GalleryTemplates.push(this);
+});
+```
+
+```
+Template.myTemplate.onDestroyed		client
+注册一个函数，当模板实例从DOM中移除并清理时调用
+
+参数
+	callback 	Function
+```
+
+当模板实例由于任何原因从页面中移除且不是由重新渲染替换时，调用回调函数。在回调函数内部，this指向模板实例。
+
+This group of callbacks is most useful for cleaning up or undoing any external effects of created or rendered groups. This group fires once and is the last callback to fire.
+
+```
+Template.myPictures.onDestroyed(function () {
+  // deregister from some central store
+  GalleryTemplates = _.without(GalleryTemplates, this);
+});
+```
+##模板实例
+可以给模板实例增加属性，在模板reactive 更新时，属性不会丢失。
+
+除了下面介绍的属性和方法，你可以随意的给模板实例增加属性。
+
+只能在onRendered 回调中使用findAll,find,firstNode 和lastNode，在onCreated和onDestroyed 回调中不行，因为需要模板实例存在于DOM中。
+
+模板实例对象是 instanceof Blaze.TemplateInstance
+
+```
+template.findAll(selector)		client
+在模板实例中找到所有匹配selector的元素
+```
+
+返回DOM元素的数组
+
+```
+template.$(selector)		client
+在模板实例中找到所有匹配selector的元素，返回jQuery对象
+```
+
+```
+template.find(selector)		client
+在模板实例中找到一个匹配selector的元素。		
+```
+
+如果没有，返回null
+
+```
+template.firstNode		client
+模板实例中第一个顶级DOM元素
+```
+
+```
+template.lastNode		client
+模板实例中最后一个顶级DOM元素
+```
+
+```
+template.data		client
+模板实例最后一次调用时的数据上下文
+```
+
+模板每次重新渲染，都会更新。只读，非reactive。
+
+```
+template.autorun(funFunc)		client
+Tracker.autorun 的另一版本，当模板销毁时停止
+参数
+	runFunc	Function
+	要运行的函数，接受一个参数，一个Tracker.Computation对象
+```
+
+可以在onRendered或onCreated 回调函数中reactive更新DOM或是模板实例。当模板被销毁时，computation自动被停止。
+
+是template.view.autorun 的别名。
+
+```
+template.subscribe(name,[arg1,arg2...],[callbacks])   client
+Meteor.subscribe 另一个版本，当模板销毁时订阅会被停止。
+
+参数
+	name	string
+	订阅的name
+	arg1,arg2...		any
+	可选的参数，传递给服务端发布函数
+	callback		Function or Object
+	可选。可以包含onStop 和 onReady 回调函数。如果是一个函数而不是对象，则解释为onReady回调
+```
+
+可以在onCreated 回调中使用this.subscribe 来声明模板依赖的发布数据。当模板被销毁时，订阅会自动停止。
+
+还有一个配套的函数 Template.instance().subscriptionsReady() ,当this.subscribe订阅的所有数据都准备好时，返回true。
+
+在模板的HTML里，你可以使用内置helper Template.subscriptionsReady ,来做加载状态。
+
+例如：
+
+```
+Template.notifications.onCreated(function () {
+  // Use this.subscribe inside onCreated callback
+  this.subscribe("notifications");
+});
+```
+
+```
+<template name="notifications">
+  {{#if Template.subscriptionsReady}}
+    <!-- This is displayed when all data is ready. -->
+    {{#each notifications}}
+      {{> notification}}
+    {{/each}}
+  {{else}}
+    Loading...
+  {{/if}}
+</template>
+```
+
+一个订阅依赖数据上下文的例子：
+
+```
+Template.comments.onCreated(function () {
+  var self = this;
+
+  // Use self.subscribe with the data context reactively
+  self.autorun(function () {
+    var dataContext = Template.currentData();
+    self.subscribe("comments", dataContext.postId);
+  });
+});
+
+```
+
+```
+{{#with post}}
+  {{> comments postId=_id}}
+{{/with}}
+```
+
+```
+template.view  	client
+本次调用模板产生的View 对象
+```
+
+```
+Template.registerHelper(name,function)	  client
+定义一个可以从所有模板中使用的helper 函数
+```
+
+```
+Template.instance()		client
+对应当前模板helper，事件处理器，回调，或是autorun 的模板实例。如果没有，则为null
+```
+
+```
+Template.currentData() 		client
+
+- 在onCreated,onRendered,onDestroyed回调中，返回模板的数据上下文
+- 在事件处理器中，返回事件处理器定义所在的模板的数据上下文
+- 在helper中，返回helper 所在的DOM节点的数据上下文
+```
+
+```
+Template.parentData([numLevels])		client
+获取当前数据上下文的父级数据上下文
+
+参数
+	numLevels		Integer
+	向上查询的级别，默认是1
+	
+```
+例如：Template.parentData(0) 等于Template.currentData(). Template.parentData(2) 等于模板中的{{../..}}
 
 
+```
+Template.body		client
+代表<body>的模板对象
+```
 
+可以给Template.body 定义helper和事件，就像其他Template.myTemplate对象一样。
 
+给Template.body 定义的helper are only available in the <body> tags of your app。要想注册全局helper，使用Template.registerHelper. 给Template.body 定义的event map 不会应用到：通过Blaze.render,jQuery,或是DOM API 添加到body的元素，或是body元素本身。 用jQuery 或是DOM API处理body ,window,document上的事件。
 
+```
+{{>Template.dynamic template=template [data=data]}}    Templates
+动态的插入模板
+
+参数
+	template	string
+	要引入的模板名
+	data		Object
+	可选的，引入模板的数据上下文
+```
+
+Template.dynamic 允许你动态的引入模板，模板名可以是通过helper计算出来的，reactive 变化。如果没有提供data参数，则使用当前的数据上下文
 
 **Event Map**
 event map 是一个对象，属性指定了要处理的事件，属性值是事件处理器。属性可以是下面几种形式：
