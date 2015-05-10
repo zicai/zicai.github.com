@@ -36,15 +36,19 @@ Spacebars 模板由HTML标签和模板标签组成，模板标签由`{{ }}`表�
 
 
 ## Reactivity Model
+
 Spacebars 模板可以细粒度的更新，反映数据的变化。
 
 每一个模板标签的DOM会自动的更新。
+
 ## 标示符和path
+
 Spacebars标示符可以是javascript标示符，也可以是方括号`[ ]`括起来的字符串。还有特殊的标示符，`this`（等同于`.`） 和 `..`。Brackets are required to use one of the following as the first element of a path: else, this, true, false, and null. Brackets are not required around JavaScript keywords and reserved words like var and for.
 
 Spacebars path由一个或多个标示符组成，由`.`或`/`分隔。
 
 ### name resolution
+
 path 的第一个标示符用下面两种方式解析：
 
 - 当前数据上下文的索引。例如：标示符`foo`指向当前数据上下文的`foo`属性
@@ -53,11 +57,13 @@ path 的第一个标示符用下面两种方式解析：
 模板helper优先于数据上下文的属性。
 
 如果一个path以`..`开头，则会使用外层数据上下文，外层数据上下文可能是外层的`#each,#with`，或是模板包含。
+
 ### Path evaluation
 
 当解析一个path时，第一个标示符之后的标示符会看做当前对象的索引，就像javascript的`.`。但是，如果你试图索引一个非对象，或是一个undefined值，是不会报错的。
 
 另外，Spacebars 会自动为你调用函数，所以`{{foo.bar}}`可能解释为`foo().bar`, `foo.bar()`, 或 `foo().bar()`
+
 ## Helper Arguments
 
 helper 的参数可以使任意的path或是标示符，或是字符串，布尔值，number或是null。
@@ -77,12 +83,14 @@ frob(a, b, c, Spacebars.kw({verily: true}))
 `Spacebars.kw` 构建一个对象，是`Spacebars.kw` 的实例，它的`.hash` 属性等于它的参数。
 
 helper的实现可以通过this获取当前数据上下文。
+
 ##Inclusion and Block Arguments
 
 Inclusion tags (`{{> foo}}`) 和 block tags (`{{#foo}}`) 接受一个数据参数，或是没有参数。其它形式的参数会被解析为object specification 或 nested helper：
 
 - Object specification：如果只有关键字参数，例如`{{#with x=1 y=2}}` 或 `{{> prettyBox color=red}}` ，那么关键字参数会被集成到data对象，属性名就是关键字
-- Nested Helper：如果有位置参数，
+- Nested Helper： If there is a positional argument followed by other (positional or keyword arguments), the first argument is called on the others using the normal helper argument calling convention.
+
 ##Template Tag Placement Limitations
 和基于纯字符串的模板系统不同，Spacebars 是HTML-aware的，可以自动更新DOM。所以，you can't use a template tag to insert strings of HTML that don't stand on their own, 例如一个单独的开始标签或关闭标签，或是不容易修改的，例如：标签名。
 
@@ -326,7 +334,7 @@ Spacebars 在运行时会校验你的HTML，如果你违反了基本的HTML语�
 - `<body>`：会被编译成`Template.body` 组件。如果`<body>`标签出现多次，内容会被串联起来。
 
 
-
+原文地址：[https://github.com/meteor/meteor/tree/devel/packages/spacebars](https://github.com/meteor/meteor/tree/devel/packages/spacebars)
 
 
 
