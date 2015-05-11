@@ -60,7 +60,7 @@ Template.myTemplate.helpers({
 	
 有关helper 参数更多内容参见Spacebars readme
 
-在底层，每一个helper都创建了一个新的Tracker.autorun。当它的reactive依赖变化时，helper会重新运行。helper依赖于它的数据上下文，传入的参数和在执行过程中其它reactive数据源
+在底层，每一个helper都创建了一个新的`Tracker.autorun`。当它的reactive依赖变化时，helper会重新运行。helper依赖于它的数据上下文，传入的参数和在执行过程中其它reactive数据源
 
 ```
 Template.myTemplate.onRendered		client
@@ -73,7 +73,7 @@ Template.myTemplate.onRendered		client
 
 当模板实例渲染为DOM节点，第一次插入到文档中的时候调用回调函数。
 
-在回调函数中，this是一个模板实例对象 that is unique to this occurrence of the template and persists across re-renderings。使用onCreated 和onDestroyed 回调函数来对该对象进行初始化和清理。
+在回调函数中，`this`是一个模板实例对象 that is unique to this occurrence of the template and persists across re-renderings。使用`onCreated` 和`onDestroyed` 回调函数来对该对象进行初始化和清理。
 
 ```
 Template.myTemplate.onCreated		client
@@ -83,7 +83,7 @@ Template.myTemplate.onCreated		client
 	callback		Function
 ```
 
-在回调中，this是模板对象实例。你给这个对象设置的属性，在onRendered 和onDestroyed 回调中以及事件处理器中均可见。
+在回调中，`this`是模板对象实例。你给这个对象设置的属性，在`onRendered` 和`onDestroyed` 回调中以及事件处理器中均可见。
 
 These callbacks fire once and are the first group of callbacks to fire. 处理created事件非常有用，可以给模板实例增加值，然后在模板helper中使用Template.instance()获取。
 
@@ -105,7 +105,7 @@ Template.myTemplate.onDestroyed		client
 	callback 	Function
 ```
 
-当模板实例由于任何原因从页面中移除且不是由重新渲染替换时，调用回调函数。在回调函数内部，this指向模板实例。
+当模板实例由于任何原因从页面中移除且不是由重新渲染替换时，调用回调函数。在回调函数内部，`this`指向模板实例。
 
 This group of callbacks is most useful for cleaning up or undoing any external effects of created or rendered groups. This group fires once and is the last callback to fire.
 
@@ -120,9 +120,9 @@ Template.myPictures.onDestroyed(function () {
 
 除了下面介绍的属性和方法，你可以随意的给模板实例增加属性。
 
-只能在onRendered 回调中使用findAll,find,firstNode 和lastNode，在onCreated和onDestroyed 回调中不行，因为需要模板实例存在于DOM中。
+只能在`onRendered` 回调中使用`findAll`,`find`,`firstNode` 和`lastNode`，在`onCreated`和`onDestroyed` 回调中不行，因为需要模板实例存在于DOM中。
 
-模板实例对象是 instanceof Blaze.TemplateInstance
+模板实例对象是 `instanceof Blaze.TemplateInstance`
 
 ```
 template.findAll(selector)		client
@@ -168,9 +168,9 @@ Tracker.autorun 的另一版本，当模板销毁时停止
 	要运行的函数，接受一个参数，一个Tracker.Computation对象
 ```
 
-可以在onRendered或onCreated 回调函数中reactive更新DOM或是模板实例。当模板被销毁时，computation自动被停止。
+可以在`onRendered`或`onCreated` 回调函数中reactive更新DOM或是模板实例。当模板被销毁时，computation自动被停止。
 
-是template.view.autorun 的别名。
+是`template.view.autorun` 的别名。
 
 ```
 template.subscribe(name,[arg1,arg2...],[callbacks])   client
@@ -185,11 +185,11 @@ Meteor.subscribe 另一个版本，当模板销毁时订阅会被停止。
 	可选。可以包含onStop 和 onReady 回调函数。如果是一个函数而不是对象，则解释为onReady回调
 ```
 
-可以在onCreated 回调中使用this.subscribe 来声明模板依赖的发布数据。当模板被销毁时，订阅会自动停止。
+可以在`onCreated` 回调中使用`this.subscribe` 来声明模板依赖的发布数据。当模板被销毁时，订阅会自动停止。
 
-还有一个配套的函数 Template.instance().subscriptionsReady() ,当this.subscribe订阅的所有数据都准备好时，返回true。
+还有一个配套的函数 `Template.instance().subscriptionsReady()` ,当`this.subscribe`订阅的所有数据都准备好时，返回true。
 
-在模板的HTML里，你可以使用内置helper Template.subscriptionsReady ,来做加载状态。
+在模板的HTML里，你可以使用内置helper `Template.subscriptionsReady` ,来做加载状态。
 
 例如：
 
@@ -266,7 +266,7 @@ Template.parentData([numLevels])		client
 	向上查询的级别，默认是1
 	
 ```
-例如：Template.parentData(0) 等于Template.currentData(). Template.parentData(2) 等于模板中的{{../..}}
+例如：`Template.parentData(0)` 等于`Template.currentData()`. `Template.parentData(2)` 等于模板中的`{{../..}}`
 
 
 ```
@@ -274,9 +274,9 @@ Template.body		client
 代表<body>的模板对象
 ```
 
-可以给Template.body 定义helper和事件，就像其他Template.myTemplate对象一样。
+可以给`Template.body` 定义helper和事件，就像其他Template.myTemplate对象一样。
 
-给Template.body 定义的helper are only available in the <body> tags of your app。要想注册全局helper，使用Template.registerHelper. 给Template.body 定义的event map 不会应用到：通过Blaze.render,jQuery,或是DOM API 添加到body的元素，或是body元素本身。 用jQuery 或是DOM API处理body ,window,document上的事件。
+给Template.body 定义的helper are only available in the <body> tags of your app。要想注册全局helper，使用`Template.registerHelper`. 给Template.body 定义的event map 不会应用到：通过Blaze.render,jQuery,或是DOM API 添加到body的元素，或是body元素本身。 用jQuery 或是DOM API处理body ,window,document上的事件。
 
 ```
 {{>Template.dynamic template=template [data=data]}}    Templates
@@ -289,7 +289,7 @@ Template.body		client
 	可选的，引入模板的数据上下文
 ```
 
-Template.dynamic 允许你动态的引入模板，模板名可以是通过helper计算出来的，reactive 变化。如果没有提供data参数，则使用当前的数据上下文
+`Template.dynamic` 允许你动态的引入模板，模板名可以是通过helper计算出来的，reactive 变化。如果没有提供data参数，则使用当前的数据上下文
 
 **Event Map**
 event map 是一个对象，属性指定了要处理的事件，属性值是事件处理器。属性可以是下面几种形式：
@@ -318,7 +318,7 @@ event map 是一个对象，属性指定了要处理的事件，属性值是事�
 }
 ```
 
-大多数事件从源元素开始沿着文档树冒泡。事件的源元素通过target属性获取，而匹配选择器，正在处理事件的元素通过currentTarget获取。
+大多数事件从源元素开始沿着文档树冒泡。事件的源元素通过`target`属性获取，而匹配选择器，正在处理事件的元素通过`currentTarget`获取。
 
 ```
 {
@@ -375,8 +375,8 @@ div' 或 'click *'。如果没有给定selector，事件处理函数只会在源
 其它的DOM事件也支持，但是对于上面的事件，Meteor确保了浏览器行为的一致性。 
 
 
-
-
+**Spacebras**
+Meteor 的模板语言是Spacebars。受到了Handlebars 的启发。和Handlebar 有相同之处，
 
 
 
