@@ -41,7 +41,7 @@ Jekyll是一个简单的，适合博客的静态站点生成器。它包含一�
 目录结构说明：
 
 	1. `_config.yml` Jekyll的配置文件
-	2. `_includes` include 文件所在的文件夹。例如：liquid标签`{% include file.ext %}` 用来引用文件 ` _includes/file.ext`
+	2. `_includes` include 文件所在的文件夹。例如：liquid标签`{ % include file.ext % }` 用来引用文件 ` _includes/file.ext`。(注：大括号和百分号之间不应该有空格)
 	3. `_layouts` 模版文件夹
 	4. `_posts` 自己要发布的内容，post文件的命名规则必须为`YEAR-MONTH-DATE-title.MARKUP`。文章的永久链接可以自定义，但是日期和格式是由文件名唯一决定。
 	5. `_sites` 预览时产生的文件都放在该文件夹中

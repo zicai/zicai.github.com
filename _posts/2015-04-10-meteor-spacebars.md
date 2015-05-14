@@ -298,9 +298,9 @@ Block tag 可以用在属性值：
 
 注意#unless的参数变成了模板的数据上下文，通过`this`获取。However, it would not work very well if this data context was visible to Template.contentBlock, which is supplied by the user of unless.
 
-所以，当你引入`{{> Template.contentBlock}}`， Spacebars hides the data context of the calling template, and any data contexts established in the template by #each and #with. They are not visible to the content block, even via ... Put another way, it's as if the {{> Template.contentBlock}} inclusion occurred at the location where {{#unless}} was invoked, as far as the data context stack is concerned.
+所以，当你引入`{{> Template.contentBlock}}`， Spacebars hides the data context of the calling template, and any data contexts established in the template by #each and #with. They are not visible to the content block, even via ... Put another way, it's as if the `{{> Template.contentBlock}}` inclusion occurred at the location where `{{#unless}}` was invoked, as far as the data context stack is concerned.
 
-You can pass an argument to {{> Template.contentBlock}} or {{> Template.elseBlock}} to invoke it with a data context of your choice. You can also use {{#if Template.contentBlock}} to see if the current template was invoked as a block helper rather than an inclusion.
+You can pass an argument to `{{> Template.contentBlock}}` or `{{> Template.elseBlock}}` to invoke it with a data context of your choice. You can also use `{{#if Template.contentBlock}}` to see if the current template was invoked as a block helper rather than an inclusion.
 ## Comment Tags
 
 ```
@@ -315,7 +315,7 @@ You can pass an argument to {{> Template.contentBlock}} or {{> Template.elseBloc
 注释块：
 
 ```
-{{!-- This is a block comment.
+{ {!-- This is a block comment.
 We can write {{foo}} and it doesn't matter.
 {{#with x}}This code is commented out.{{/with}}
 --}}
