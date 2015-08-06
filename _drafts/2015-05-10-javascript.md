@@ -288,7 +288,7 @@ var pattern=new RegExp("[bc]at","i")
 
 ## 函数
 
-每个函数都是Function类型的实例，都与其它应用类型一样具有属性和方法。而函数名实际上是一个指向函数对象的指针，不会与某个函数绑定。换句话说，一个函数可以有多个名字。
+每个函数都是`Function`类型的实例，都与其它应用类型一样具有属性和方法。而函数名实际上是一个指向函数对象的指针，不会与某个函数绑定。换句话说，一个函数可以有多个名字。
 
 定义函数有两种语法：
 
@@ -311,30 +311,30 @@ var pattern=new RegExp("[bc]at","i")
 
 ### 函数内部属性
 
-在函数内部，有两个特殊的对象：arguments和this
+在函数内部，有两个特殊的对象：`arguments`和`this`
 
-arguments的主要用途是保存函数参数，它还有一个callee属性，指向拥有这个arguments对象的函数。
+`arguments`的主要用途是保存函数参数，它还有一个`callee`属性，指向拥有这个`arguments`对象的函数。
 
-this引用的是函数据以执行的环境对象。
+`this`引用的是函数据以执行的环境对象。
 
 ### 函数的属性和方法
 
-每个函数包含两个属性：length和prototype。其中length属性表示函数希望接收的命名参数的个数。
+每个函数包含两个属性：`length`和`prototype`。其中`length`属性表示函数希望接收的命名参数的个数。
 
-prototype是保存它们所有实例方法的真正所在。prototype属性是不可枚举的，因此使用for-in 无法发现。
+`prototype`是保存它们所有实例方法的真正所在。`prototype`属性是不可枚举的，因此使用for-in 无法发现。
 
-ECMAScript 5规范了另一个函数对象的属性：caller。这个属性保存着调用当前函数的的函数的引用。
+ECMAScript 5规范了另一个函数对象的属性：`caller`。这个属性保存着调用当前函数的的函数的引用。
 
-每个函数都包含两个非继承而来的方法：apply()和call()。它俩的用途是在特定的作用域中调用函数，实际上等于设置函数体内this对象的值。
+每个函数都包含两个非继承而来的方法：`apply()`和`call()`。它俩的用途是在特定的作用域中调用函数，实际上等于设置函数体内`this`对象的值。
 
 
-apply()方法接收两个参数：一个是在其中运行函数的作用域，另一个是参数数组，可以是Array的实例，也可以是arguments对象。
+`apply()`方法接收两个参数：一个是在其中运行函数的作用域，另一个是参数数组，可以是`Array`的实例，也可以是`arguments`对象。
 
-call()方法与apply()方法区别仅在于接收参数的方式不同。使用call()方法时，传递给函数的参数必须逐个列举出来。
+`call()`方法与`apply()`方法区别仅在于接收参数的方式不同。使用`call()`方法时，传递给函数的参数必须逐个列举出来。
 
-使用call()和apply()来扩充作用域最大的好处是，对象不需要与方法有任何耦合关系。
+使用`call()`和`apply()`来扩充作用域最大的好处是，对象不需要与方法有任何耦合关系。
 
-ECMAScript 5还定义了一个方法bind()。这个方法会创建一个函数的实例，其this的值会被绑定到传给bind()函数的值。例如：
+ECMAScript 5还定义了一个方法`bind()`。这个方法会创建一个函数的实例，其`this`的值会被绑定到传给`bind()`函数的值。例如：
 
 ```
 var o={color:'red'};
@@ -347,6 +347,58 @@ var objectSayColor=sayColor.bind(o);
 
 objectSayColor(); //red
 ```
+
+参考资料：[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+
+## String 类型
+
+
+`String` 类型的实例都有一个`length`属性，表示字符串中包含的字符数量。需要注意的是，即使字符串中包含双字节字符（不是只占一个字节的ASCII字符），每个字符也只算一个字符。
+
+### 字符方法
+
+用于访问字符串中特定字符。`charAt()` 和`charCodeAt() `。这两个方法都接收一个参数，即基于0的字符位置。
+
+### 字符串操作方法
+
+`concat()`，用于将一个或多个字符串拼接起来。返回拼接得到的新字符串。`concat()`方法可以接受任意多个参数。在实践中更多的是使用加号操作符。
+
+
+三个基于子字符串创建新字符串的方法：
+
+- `slice()`:接收一到两个参数。第一个参数指定子字符串的起始位置，第二个参数指定了结束位置。如果省略，默认是字符串末尾。
+- `substr()`:接收一到两个参数。第一个参数指定子字符串的起始位置，第二个参数指定子字符串长度。如果省略，默认是字符串末尾。
+- `substring()`:接收一到两个参数。第一个参数指定子字符串的起始位置，第二个参数指定了结束位置。如果省略，默认是字符串末尾
+
+### 字符串位置方法
+
+`indexOf()` 和 `lastIndexOf()`用于从字符串中查找子字符串。返回子字符串的位置，如果没有找到返回-1。
+
+### 字符串模式匹配
+
+match()
+
+search()
+
+replace()
+
+split()
+
+### fromCharCode()
+
+String构造函数还有一个静态方法：`fromCharCode()`。它接收一个或多个字符编码，然后将它们转换成一个字符串。从本质上看，它与`charCodeAt()`执行的是相反的操作。
+
+
+## 单体内置对象
+
+### Global
+
+
+
+
+
+
+
 
 
 
