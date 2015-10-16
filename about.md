@@ -8,9 +8,17 @@ about: true
 
 男
 
+#### 签名
+
+未读之书，未经之旅
+
+
 #### 技术
 
-HTML CSS Javascript Python
+- HTML 架构师 
+- CSS 段子手
+- Javascript 全栈工程师 
+- Python 正在学
 
 #### 工作
 
