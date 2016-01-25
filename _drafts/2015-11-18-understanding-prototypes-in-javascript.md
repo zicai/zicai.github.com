@@ -187,10 +187,69 @@ jeremy.toString() // "Jeremy Ashkenas"
 
 ## Native Object Orientation
 
-目前看来，原型是可以用来实现继承的。To facilitate using it in this manner, JavaScript provides a new operator.
+到这一步，我们可以很明显的看出，原型是可以用来实现继承的。为了方便以这种方式使用，JavaScript 提供了一个 `new` 操作符。
 
+为了方便面向对象编程，JavaScript 允许你调用一个函数对象，它作为创建新对象的原型和构造函数的结合体。
 
+```
+var Person = function(firstName, lastName) {  
+  this.firstName = firstName;
+  this.lastName = lastName;
+}
 
+Person.prototype = {  
+  toString: function() { return this.firstName + ' ' + this.lastName; }
+}
+```
+
+上面的代码创建了一个函数对象，它既是一个构造函数，也可以作为新对象的原型。接下来实现一个基于 `Person` 对象创建新对象的函数：
+
+```
+function newObject(func) {  
+  // get an Array of all the arguments except the first one
+  var args = Array.prototype.slice.call(arguments, 1);
+
+  // create a new object with its prototype assigned to func.prototype
+  var object = Object.create(func.prototype);
+
+  // invoke the constructor, passing the new object as 'this'
+  // and the rest of the arguments as the arguments
+  func.apply(object, args);
+
+  // return the new object
+  return object;
+}
+
+var brendan = newObject(Person, "Brendan", "Eich");  
+brendan.toString() // "Brendan Eich"  
+```
+
+JavaScript 的 `new` 操作符，本质上做的是同样的工作，提供了一个类似传统面向对象语言的语法。
+
+```
+var mark = new Person("Mark", "Miller");  
+mark.toString() // "Mark Miller"  
+```
+
+从本质上来说，一个 JavaScript ‘类’ 就是一个函数对象，它作为构造函数，同时附加了一个原型对象。然而，早期版本的 JavaScript 并没有 `Object.create` ，但是又很需要这个方法，所以人们经常使用 `new` 操作符来实现类似功能：
+
+```
+var createObject = function (o) {  
+  // we only want the prototype part of the `new`
+  // behavior, so make an empty constructor
+  function F() {}
+
+  // set the function's `prototype` property to the
+  // object that we want the new object's prototype
+  // to be.
+  F.prototype = o;
+
+  // use the `new` operator. We will get a new
+  // object whose prototype is o, and we will
+  // invoke the empty function, which does nothing.
+  return new F();
+};
+```
 
 
 原文地址：[http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/](http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/)
