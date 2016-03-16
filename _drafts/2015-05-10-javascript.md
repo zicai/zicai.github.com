@@ -3,7 +3,7 @@ layout: post
 category : lessons
 title: "javascript 学习"
 tagline: "Supporting tagline"
-tags : [meteor]
+tags : [javascript]
 ---
 
 ## 操作符
