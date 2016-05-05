@@ -17,8 +17,8 @@ about: true
 
 - HTML 架构师 
 - CSS 段子手
-- Javascript 全栈工程师 
-- Python 正在学
+- Javascript 不太会
+- Python 我喜欢
 
 #### 工作
 
