@@ -43,27 +43,75 @@ HTML5 存储技术：
 - [Indexed Database]
 - [Web SQL Database]
 
-其中 [Web SQL Database] 已经被废弃。
+	其中 [Web SQL Database] 已经被废弃。
+
+使用 HTML5 存储技术主要是出于两点考虑：
+
+1. 离线情况下也可以使用
+2. 提升性能
+
+在详细的介绍每种技术之前，先来看几种 HTML5 存储方案的共同点：
+
+## 共同特征
+
+- 保存在客户端设备
+- 受同源策略限制
+- 限额：每一种存储方案在每一个源上可用的空间是有限额的。[	Quota Management API 草案](https://www.w3.org/TR/quota-api/)
+- 事务：两种数据库存储方案支持事务
+- 异步与同步：大多数存储方案都支持同步和异步两种模式。
+
+
+接下来看每种存储技术的细节：
 
 ## Web storage
 
-### 如何使用
+Web Storage API 是浏览器提供的，可以用来保存键值对。
 
-#### 增删改查
+Web Storage 给每个域分配了独立的存储空间，包含两种不同的机制：
+
+- sessionStorage：通过 `window.sessionStorage` 访问。在同一个浏览器窗口中打开的相同站点的任何页面都可以访问（it will be accessible to any page from the same site opened in that window）。
+- localStorage：通过 `window.localStorage` 访问。it is designed for storage that spans multiple windows, and lasts beyond the current session。
+
+访问 `window.sessionStorage` 和 `window.localStorage` 都会返回 `Storage` 对象实例，通过它对数据进行增删改查。需要注意的是，二者返回的是独立的 `Storage` 对象实例。
+
+`Storage` 对象的方法和属性：
+
+```
+Storage.length			// 返回 Storage 对象中保存的键的数量
+Storage.getItem()		// 传入键名，返回键值
+Storage.setItem()		// 传入键名和键值，保存到 storage，如果键名已存在，则更新键值
+Storage.removeItem()	// 传入键名，从 storage 中移除对应的键值对
+Storage.clear()			// 清空 storage
+Storage.key()				// 传入数字 n，返回第 n 个键名
+```
+
+当 storage 中保存的数据发生变化时，就会触发 `StorageEvent`。需要注意的是：This won't work on the same page that is making the changes — it is really a way for other pages on the domain using the storage to sync any changes that are made. Pages on other domains can't access the same storage objects.
+
+todo: 隐私模式下的存储
+
 
 ### 安全性
 
+Web storage 适用于存储少量的数据，当需要存取数据量较大的结构化数据时，使用 IndexedDB 是更好的方案。
 ## IndexedDB
 
+客户端可以使用 IndexedDB 来保存数量较大的结构化数据。它使用索引来提升查询效率。
 
+The previous formats are all suitable for text and structured data, but when it comes to large files and binary content, we need something else.
+## 访问文件
+
+[File API]
 
 参考资料：
 
-
+- [Client-Side Storage](http://www.html5rocks.com/en/tutorials/offline/storage/)
+- [https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+- [https://developer.mozilla.org/zh-CN/docs/Using_files_from_web_applications](https://developer.mozilla.org/zh-CN/docs/Using_files_from_web_applications)
 
 [Web storage]:(https://www.w3.org/TR/webstorage/)
 [Indexed Database]:(https://www.w3.org/TR/IndexedDB/)
 [Web SQL Database]:(https://www.w3.org/TR/webdatabase/)
+[File API]:(https://www.w3.org/TR/FileAPI/)
 
 
 
