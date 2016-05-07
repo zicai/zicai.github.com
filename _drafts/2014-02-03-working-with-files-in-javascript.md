@@ -122,22 +122,42 @@ xhr.send(form);
 以后可能还会出现新的方式。接下来，要讲到的是从文件中读取内容。
 
 
-## 读取文件内容
+## 第二部分：FileReader
 
 ### FileReader 类型
 
-FileReader 类型只有一个任务：从一个文件中读取数据，保存到一个 JavaScript 变量中。API 有意设计成与 XMLHttpRequest 类似，因为他们都是从外部资源（浏览器之外）加载数据。读取过程是异步的，不会阻塞浏览器。
+`FileReader` 类型只有一个任务：从一个文件中读取数据，保存到一个 JavaScript 变量中。API 有意设计成与 `XMLHttpRequest` 类似，因为他们都是从外部资源（浏览器之外）加载数据。读取过程是异步的，不会阻塞浏览器。
 
-FileReader 可以创建多种格式来表示文件数据，and the format must be requested when asking the file to be read.通过调用下面的方法来完成读取：
+`FileReader` 可以创建多种格式来表示文件数据，and the format must be requested when asking the file to be read.通过调用下面的方法来完成读取：
 
-- readAsText()—以文本形式返回文件内容
-- readAsBinaryString()--废弃
-- readAsArrayBuffer()—以 ArrayBuffer 格式返回文件内容（适合二进制数据，例如图片）
-- readAsDataURL()—以 data URL 格式返回文件内容
+- `readAsText()` -- 以文本形式返回文件内容
+- `readAsBinaryString()` -- 废弃，用 `readAsArrayBuffer()` 代替
+- `readAsArrayBuffer()` -- 以 `ArrayBuffer` 格式返回文件内容（适合二进制数据，例如图片）
+- `readAsDataURL()` -- 以 data URL 格式返回文件内容
 
-## Progress event and error
+上面这些方法初始化一个文件读取，类似于 XHR() 对象的 send() 方法初始化 HTTP 请求。同样的，你必须在开始读取之前监听 load 事件。读取的结果总是由 event.target.result 表示。如下：
 
-## Object URL
+```
+var reader = new FileReader();
+reader.onload = function(event) {
+    var contents = event.target.result;
+    console.log("File contents: " + contents);
+};
+
+reader.onerror = function(event) {
+    console.error("File could not be read! Code " + event.target.error.code);
+};
+
+reader.readAsText(file);
+```
+
+当读取成功时调用 onload handler，当读取失败时，调用 onerror handler。在 event handler 中通过 event.target 可以获取 FileReader 实例，建议使用 event.target 而不是直接引用 reader 变量。result 属性在读取成功时包含着文件内容，读取失败时包含着错误信息。
+
+## 第三部分：Progress 事件和错误
+
+## 第四部分：Object URL
+
+## 第五部分：Blobs
 
 原文地址：
 
