@@ -374,6 +374,32 @@ You can use object URLs anywhere the browser would make a GET request, which inc
 
 ## 第五部分：Blobs
 
+实际上， File 对象是 Blob 的特定版本，Blob 表示一段二进制数据。size 和 type 属性存在于 Blob 对象，被 File 继承。
+
+在大多数情况，Blob 和 File 可以用在同样的地方。例如，你可以使用 FileReader 从 Blob 中读取数据，还可以使用 URL.createObjectURL() 从Blob 创建 object URL。
+
+### 切片
+可以用这种方法，将大文件切片上传。
+
+### 创建 Blob 的旧方法
+
+```
+var builder = new BlobBuilder();
+builder.append("Hello world!");
+var blob = builder.getBlob("text/plain");
+```
+
+你可以多次调用 append()，来构建 Blob 内容。
+### 创建 Blob 的新方法
+
+构造函数接受两个参数，第一个是数组，任意数量的 字符串，blobs 或 ArrayBuffer。第二个参数是对象，包含新创建 Blob 的属性，当前可以定义两个属性：type 和 endings
+
+```
+var blob = new Blob(["Hello world!"], { type: "text/plain" });
+```
+
+
+
 原文地址：
 
 - [https://www.nczonline.net/blog/tag/file-api/](https://www.nczonline.net/blog/tag/file-api/)
