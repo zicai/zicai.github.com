@@ -153,7 +153,172 @@ reader.readAsText(file);
 
 当读取成功时调用 onload handler，当读取失败时，调用 onerror handler。在 event handler 中通过 event.target 可以获取 FileReader 实例，建议使用 event.target 而不是直接引用 reader 变量。result 属性在读取成功时包含着文件内容，读取失败时包含着错误信息。
 
+### reading data URIs
+
+Data URIs(有时候叫做 data URLs) 很有用，例如：读取计算机上的图片并显示出来，你可以使用下面的代码：
+
+```
+var reader = new FileReader();
+reader.onload = function(event) {
+    var dataUri = event.target.result,
+        img     = document.createElement("img");
+
+    img.src = dataUri;
+    document.body.appendChild(img);
+};
+
+reader.onerror = function(event) {
+    console.error("File could not be read! Code " + event.target.error.code);
+};
+
+reader.readAsDataURL(file);
+```
+
+由于 data URI 包含着所有的图片数据，可以把它赋值给图片的 src 属性。你还可以通过 `<canvas>` 显示图片：
+
+```
+var reader = new FileReader();
+reader.onload = function(event) {
+    var dataUri = event.target.result,
+        context = document.getElementById("mycanvas").getContext("2d"),
+        img     = new Image();
+
+    // wait until the image has been fully processed
+    img.onload = function() {
+        context.drawImage(img, 100, 100);
+    };
+    img.src = dataUri;
+};
+
+reader.onerror = function(event) {
+    console.error("File could not be read! Code " + event.target.error.code);
+};
+
+reader.readAsDataURL(file);
+```
+
+Data URI 通常都是用来显示图片，但是它也可以用于其它类型的文件。读取文件内容到 data URI 最常见的用法就是直接在网页中显示文件内容。
+
+### reading ArrayBuffer
+
+ArrayBuffer 最开始是作为 WebGL 的一部分被引入的。
+
+处理二进制文件时，为了获得对数据细粒度的控制，优先使用 ArrayBuffer。
+
+可以将 ArrayBuffer 直接传递给 XHR 对象的 send() 方法，来发送 raw data 到服务器（服务器从请求中读取这些数据并重建文件）。
+
+接下来，要讲 FileReader 事件和错误处理。
+
 ## 第三部分：Progress 事件和错误
+
+### Progress 事件
+
+progress 事件越来越常见，所以变成了一个单独的规范。这些事件大体上设计为表示数据转移的进度。例如：从服务端读取数据，从硬盘读取数据，也就是 FileReader 所做的。
+
+有六个 progress 事件：
+
+- loadstart：指示加载数据的流程开始，总是第一个被触发
+- progress：在数据加载过程中多次被触发，可以访问中间数据
+- error：当加载失败时触发
+- abort：通过调用 abort()（XMLHttpRequest 和 FileReader 都支持） 来取消数据加载时触发
+- load：当所有数据都成功读取时触发
+- loadend：当对象结束数据转移时触发。在 error,abort,load 之后都会触发
+
+前面已经提到了 error 和 load 事件，其它的事件用来细粒度的控制数据转移。
+
+#### 跟进 progress
+
+当你想要跟进 file reader 的进度时，使用 progress 事件。该事件对象包含三个属性用于监控数据转移情况：
+
+- lengthComputable：布尔值，指示浏览器是否可以确定数据的完整大小。
+- loaded：已经读取的字节总数
+- total：需要读取的字节总数
+
+可以使用 HTML5 的 <progress> 标签来展示这些数据
+
+```
+var reader = new FileReader(),
+     progressNode = document.getElementById("my-progress");
+
+reader.onprogress = function(event) {
+    if (event.lengthComputable) {
+        progressNode.max = event.total;
+        progressNode.value = event.loaded;
+    }
+};
+
+reader.onloadend = function(event) {
+    var contents = event.target.result,
+        error    = event.target.error;
+
+    if (error != null) {
+        console.error("File could not be read! Code " + error.code);
+    } else {
+        progressNode.max = 1;
+        progressNode.value = 1;
+        console.log("Contents: " + contents);
+    }
+};
+
+reader.readAsText(file);
+```
+
+### 错误处理
+
+即使读取的是本地文件，也是有可能读取失败的。 File API 规范定义了四种错误：
+
+- NotFoundError
+- SecurityError：通常是浏览器加载该文件会有危险或是浏览器当前正在执行多个读取。允许一定误差。
+- NotReadableError：通常是由于权限问题
+- EncodingError：通常是因为以 data URI 形式读取，结果长度超出了浏览器支持的最大长度
+
+当读取文件时出现错误，FileReader 对象的 error 属性会被赋值为上述某个错误类型的实例，至少规范上是这样写的。事实上，浏览器通过一个 FileError 对象来实现，它有个 code 属性来指示发生的错误类型。每一种错误类型有一个数字常量表示：
+
+- FileError.NOT_FOUND_ERR for file not found errors.
+- FileError.SECURITY_ERR for security errors.
+- FileError.NOT_READABLE_ERR for not readable errors.
+- FileError.ENCODING_ERR for encoding errors.
+- FileError.ABORT_ERR when abort() is called while there is no read in progress.
+
+你可以在 error 事件或是 loadend 事件中确定错误类型。
+
+```
+var reader = new FileReader();
+
+reader.onloadend = function(event) {
+    var contents = event.target.result,
+        error    = event.target.error;
+
+    if (error != null) {
+        switch (error.code) {
+            case error.ENCODING_ERR:
+                console.error("Encoding error!");
+                break;
+
+            case error.NOT_FOUND_ERR:
+                console.error("File not found!");
+                break;
+
+            case error.NOT_READABLE_ERR:
+                console.error("File could not be read!");
+                break;
+
+            case error.SECURITY_ERR:
+                console.error("Security issue with file!");
+                break;
+
+            default:
+                console.error("I have no idea what's wrong!");
+        }
+    } else {
+        progressNode.max = 1;
+        progressNode.value = 1;
+        console.log("Contents: " + contents);
+    }
+};
+
+reader.readAsText(file);
+```
 
 ## 第四部分：Object URL
 
