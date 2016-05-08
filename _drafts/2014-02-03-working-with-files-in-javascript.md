@@ -320,7 +320,57 @@ reader.onloadend = function(event) {
 reader.readAsText(file);
 ```
 
+
+FileReader 对象是一个功能完备的对象，和 XMLHttpRequest 有很多相似之处。接下来要提到的是另一个强大的新特性。
 ## 第四部分：Object URL
+
+前面提到的都是传统的处理文件的方式，接下来要讲的是一种全新的方式，可以简化一些常见任务，那就是使用 object URLs。
+
+### Object URL 是什么？
+
+Object URLs 是指向硬盘上文件的URL。假设你想把用户计算机上一张图片显示到网页中，服务器无需知道图片内容，所以没有必要上传。你只是想把图片加载到网页中，你可以用前面提到的方法：用 File 对象获取一个文件引用，读取数据成 data URI，然后将 data URI 赋值给 `<img>` 元素。但是仔细想一想：图片已经存在于硬盘上了，为了使用它为什么要读取成另外一种格式呢？如果你创建一个 object URL，就可以直接将其赋值给 `<img>`，直接访问本地文件。
+
+### Object URL 如何工作？
+
+File API 定义了一个全局变量，称为 URL，它有两个方法。第一个是 createObjectURL()，接受一个 File 对象（文件引用），返回一个 object URL，这会指示浏览器创建和管理对应文件的 URL。第二个方法是 revokeObjectURL() ，指示浏览器销毁传递进来的 URL，有效的释放内存。当然，当页面关闭时，所有 object URL 都会被 revoke，不过还是建议不需要时就释放。
+
+浏览器对 URL 对象的支持，不像对 File API 其它部分那样好。
+
+### 实例
+
+那么如何显示硬盘上的图片到网页中呢？假设你已经获取到了文件引用，保存到变量 file 中。
+
+```
+var URL = window.URL || window.webkitURL,
+    imageUrl,
+    image;
+
+if (URL) {
+    imageUrl = URL.createObjectURL(file);
+    image = document.createElement("img");
+
+    image.onload = function() {
+        URL.revokeObjectURL(imageUrl);
+    };
+
+    image.src = imageUrl;
+    document.body.appendChild(image);
+}
+```
+
+为什么要在图片加载完成后就 revoke object URL 呢？因为图片加载完后，URL 就没用了，除非你还想在其它元素上使用。
+
+### 安全和其它方面的考虑
+
+File API 不允许在不同域上使用 object URL。当 object URL 创建时，就被绑定在 JavaScript 执行的当前域中。
+
+Object URL 只存在于创建它的文档中。当文档被卸载时，所有 object URL 都被 revoke。所以将 object URL 保存到本地存储是没有道理的。
+
+You can use object URLs anywhere the browser would make a GET request, which includes images, scripts, web workers, style sheets, audio, and video. You can never use an object URL when the browser would perform a POST, such as within a <form> whose method is set to “post”.
+
+
+为了在网页中显示，无需再将本地文件读取到 JavaScript，你只需创建一个 URL。这个极大的简化了在网页中使用本地文件的流程。
+
 
 ## 第五部分：Blobs
 
