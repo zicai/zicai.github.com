@@ -79,19 +79,176 @@ app.METHOD(PATH, HANDLER)
 
 其中 `app` 是 express 实例。
 
+express 使用 path-to-regexp https://www.npmjs.com/package/path-to-regexp 匹配路径。
+
+query string 不属于 路由路径
+
+express.Router() 模块化路由
+
 ## 请求
+
+### 文件上传
+从 express 4 开始，默认在 req 对象上是访问不到 req.files 的。要想访问 req.files 对象，需要使用 multipart-handling 中间件，例如：
+
+- [busboy](https://github.com/mscdex/busboy): A streaming parser for HTML form data for node.js
+- [multer](https://github.com/expressjs/multer): Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
+- [formidable](https://github.com/felixge/node-formidable): A node.js module for parsing form data, especially file uploads.
+- [multiparty](https://github.com/andrewrk/node-multiparty): A node.js module for parsing multipart-form data requests which supports streams2
+- [connect-multiparty](https://github.com/andrewrk/connect-multiparty):connect middleware for multiparty 
+
+formidable 和 busboy 的区别？？
 
 ## 响应
 
+### 属性
+
+- res.app
+- res.headerSent
+- res.locals
+
+### 方法
+
+- 响应头
+
+	```
+	res.append('Set-Cookie', 'foo=bar; Path=/; HttpOnly');
+	```
+	注意：在 res.append() 之后调用 res.set()，会重置前面设置的响应头。
+	
+	```
+	res.set(field [, value])
+	// Aliased as res.header(field [, value]).
+	```
+	
+	获取响应头：
+	
+	```
+	res.get(field)
+	```
+	
+	设置 Link 响应头：
+	
+	```
+	res.links(links)
+	```
+	
+	设置 Location 响应头：
+	
+	```
+	res.location(path)
+	```
+	
+	设置 Content-Type 响应头：
+	
+	```
+	res.type(type)
+	```
+	
+	设置 vary 响应头：
+	
+	```
+	res.vary('field')
+	```
+
+- 状态码
+	
+	```
+	res.sendStatus(statusCode)
+	res.status(code)
+	```
+
+- 响应附件
+
+	响应附件，同时设置对应的响应头
+	
+	```
+	res.attachment();
+	// Content-Disposition: attachment
+	
+	res.attachment('path/to/logo.png');
+	// Content-Disposition: attachment; filename="logo.png"
+	// Content-Type: image/png
+	```
+	
+	
+	```
+	res.download(path [, filename] [, fn])
+	```
+	它使用 `res.sendFile()` 来传输文件
+	
+	```
+	res.sendFile(path [, options] [, fn])
+	```
+
+- 设置 cookie
+
+	```
+	res.cookie(name, value [, options])
+	```
+	
+	res.cookie 做的也是设置响应头
+	
+	删除指定 cookie
+	
+	```
+	res.clearCookie(name [, options])
+	```
+
+- 响应内容
+
+	```
+	res.send([body]) // body 可以是 buffer 对象、字符串、对象或是数组
+	res.json([body])
+	res.jsonp([body])
+	
+	res.render(view [, locals] [, callback])
+	```
+
+- 结束响应
+
+	```
+	res.end([data] [, encoding])
+	```
+
+- 跳转
+
+	```
+	res.redirect([status,] path)
+	```
+
+- 根据请求的 Accept 请求头，响应不同内容
+	
+	```
+	res.format()
+	```
+	
 ## 错误处理
 
 ## 中间件
+中间件可以
+
+- 执行任何代码
+- 修改请求和响应
+- 结束请求-响应
+- 调用下一个中间件
+
+中间件分为下面几种：
+
+- application-level 中间件 ：使用 app.use() 和 app.METHOD()
+- Router-level 中间件 ：和上一种一样，只是它绑定到了 express.Router() 实例上
+- 错误处理中间件： 总是有四个参数
+- 内置中间件
+- 第三方中间件
+
+express 4.x 不再依赖 connect https://github.com/senchalabs/connect?_ga=1.90901146.1447663298.1443172894 除了express.static
+
+express 唯一内置的中间件是 express.static。它基于 serve-static
 ### 内置的中间件
 
 - express.static：用于[提供静态文件](http://expressjs.com/en/starter/static-files.html)
 
 ### 第三方中间件
-- body-parser
+- [body-parser](https://github.com/expressjs/body-parser#readme)
 - cookie-parser
 - serve-favicon
 - morgan
