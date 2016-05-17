@@ -129,12 +129,22 @@ Meteor.call(name,[arg1,arg2...],[asyncCallback])    anywhere
 	可选method参数
 	asyncCallback  	Function
 	可选的回调函数，
+```
+
+```
+Meteor.apply(name, args, [options], [asyncCallback])   anywhere
+调用一个method，传递一些参数
+
+参数：
+	name		string
+	arg1,arg2..		EJSON-able 对象
+	method参数
+	asyncCallback  	Function
+	可选的回调函数，
+
+options
+	wait
+	onResultReceived
+```
 
 
-
-
-
-
-
-
-If you include a callback function as the last argument (which can't be an argument to the method, since functions aren't serializable), the method will run asynchronously: it will return nothing in particular and will not throw an exception. When the method is complete (which may or may not happen before Meteor.call returns), the callback will be called with two arguments: error and result. If an error was thrown, then error will be the exception object. Otherwise, error will be undefined and the return value (possibly undefined) will be in result.
