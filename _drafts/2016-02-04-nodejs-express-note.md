@@ -246,11 +246,13 @@ express 唯一内置的中间件是 express.static。它基于 serve-static
 
 - express.static：用于[提供静态文件](http://expressjs.com/en/starter/static-files.html)
 
-### 第三方中间件
+### 其它常用中间件
 - [body-parser](https://github.com/expressjs/body-parser#readme)
-- cookie-parser
-- serve-favicon
-- morgan
+- [cookie-parser](https://github.com/expressjs/cookie-parser)
+- [serve-favicon](https://github.com/expressjs/serve-favicon) favicon serving middleware
+- [morgan](https://github.com/expressjs/morgan) HTTP request logger middleware for node.js
+- [compression](https://github.com/expressjs/compression) Node.js compression middleware
+- [method-override](https://github.com/expressjs/method-override) Override HTTP verbs.
 - [node-sass-middleware](https://github.com/sass/node-sass-middleware)
 
 ### 使用中间件
