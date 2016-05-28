@@ -264,9 +264,28 @@ express 唯一内置的中间件是 express.static。它基于 serve-static
 
 ## 集成
 ### 集成模板引擎
-http://expressjs.com/en/guide/using-template-engines.html
 
-- hbs
+模板引擎使你可以在项目中使用静态模板文件。运行的时候，模板引擎用实际的值替换模板文件中的变量，将模板转换为 HTML 发送到客户端。
+
+常见的模板引擎有：
+
+- [Pug (formerly Jade)](http://jade-lang.com/)
+- [Mustache](https://www.npmjs.com/package/mustache)
+- [EJS](https://www.npmjs.com/package/ejs)
+
+在 Express 中可以使用的[模板引擎列表](https://github.com/expressjs/express/wiki?_ga=1.1511859.323207346.1463184090#template-engines)
+
+模板引擎对比：[](https://strongloop.com/strongblog/compare-javascript-templates-jade-mustache-dust/)
+
+为了渲染模板文件，需要设置下面两个应用属性
+
+- `view` : 模板文件的目录。例如：`app.set('view','./views')`。默认的 `view` 目录是项目根目录。
+- `view engine` : 要使用的模板引擎。例如：`app.set('view engine', 'pug')`。前提是安装了引擎对应的 npm 包。Express 会自动加载对应模块，无需手动引入。
+
+参考链接：
+
+- http://expressjs.com/en/guide/using-template-engines.html
+
 
 ### 集成数据库
 http://expressjs.com/en/guide/database-integration.html
@@ -275,3 +294,7 @@ http://expressjs.com/en/guide/database-integration.html
 ## 最佳实践
 ### 安全
 ### 性能
+
+参考链接：
+
+- [https://github.com/expressjs/express/wiki](https://github.com/expressjs/express/wiki)
