@@ -106,3 +106,22 @@ tags : [grunt]
  
         npm install grunt-contrib-copy --save-dev
         grunt.loadNpmTasks('grunt-contrib-copy');
+        
+
+## 其它常用插件        
+
+- [grunt-spritesmith](https://github.com/Ensighten/grunt-spritesmith)
+
+### 编译 sass 有两个选择：
+
+- [grunt-contrib-sass](https://github.com/gruntjs/grunt-contrib-sass) 更稳定的，支持compass，速度稍慢
+- [grunt-sass](https://github.com/sindresorhus/grunt-sass) 使用 node-sass 编译 sass
+
+> node-sass 是 Node.js bindings to libsass，the C version of the popular stylesheet preprocessor, Sass。
+和原生的Ruby 编译器相比，libsass 更快，但是缺少了一些功能http://sass-compatibility.github.io/。而且也不支持compass
+
+
+
+
+## 调试
+`nonull` 如果被设置为 `true`，未匹配的模式也将执行。结合 Grunt 的 `--verbore` 标志, 这个选项可以帮助用来调试文件路径的问题。
