@@ -112,3 +112,4 @@ RegExp 构造函数为正则表达式提供了运行时编译。如果模式会�
 参考资料：
 
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [regulex](https://github.com/JexCheng/regulex) JavaScript Regular Expression Parser & Visualizer.
