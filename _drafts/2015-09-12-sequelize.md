@@ -6,6 +6,8 @@ tagline: "Supporting tagline"
 tags : [sequelize]
 ---
 
+github : [https://github.com/sequelize/sequelize](https://github.com/sequelize/sequelize)
+
 ## 开始
 
 ### 安装
