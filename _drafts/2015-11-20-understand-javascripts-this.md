@@ -6,6 +6,8 @@ tagline: "Supporting tagline"
 tags : [javascript]
 ---
 
+## 第一部分：函数与 this
+
 在 Java、PHP 这样的语言中，类方法中的 `this` 被看做当前对象的实例。它不能在方法之外使用，简单没有歧义。
 
 在 JavaScript 中，`this` 是一个函数当前的执行上下文。由于 JS 有四种调用函数的方式：
@@ -49,11 +51,71 @@ ECMAScript 5.1 引入了严格模式。
 严格模式不仅会影响当前 scope，同时会影响 inner scope（所有内部声明的函数）。
  
  
-### 误区：内部函数的 this 值
+### 误区：内部函数的 this 值（shadowing this）
  
 一个常见的陷阱是：认为内部函数的 this 值与外部函数一样。实际上，内部函数的上下文只取决于调用方式，而非外部函数的上下文。
 
-为了获得正确的 this 值，通常需要使用 .call() .apply() 或 .bind()
+Therefore, you can’t refer from the former to the method’s this, because it is shadowed. 为了获得正确的 this 值，通常需要使用 .call() .apply() 或 .bind()。例如：
+
+```
+var obj = {
+  name: 'Jane',
+  friends: ['Tarzan', 'Cheeta'],
+  loop: function() {
+    'use strict';
+    this.friends.forEach(
+      function(friend) {
+        console.log(this.name + ' knows ' + friend);
+      }
+    );
+  }
+};
+obj.loop();
+// TypeError: Cannot read property 'name' of undefined
+```
+
+常用的解决方法有三种：
+
+1. `that = this`
+
+```
+loop: function() {
+  'use strict';
+  var that = this;
+  this.friends.forEach(function(friend) {
+    console.log(that.name + ' knows ' + friend);
+  });
+}
+```
+
+2. 使用 `bind()`
+
+```
+loop: function() {
+  'use strict';
+  this.friends.forEach(function(friend) {
+    console.log(this.name + ' knows ' + friend);
+  }.bind(this));
+}
+```
+
+3. 使用 forEach 的第二个参数，它会传递给回调函数作为 this
+
+```
+loop: function() {
+  'use strict';
+  this.friends.forEach(function(friend) {
+    console.log(this.name + ' knows ' + friend);
+  }, this);
+}
+```
+
+除了 forEach 之外，可以改变 this 值得函数还有：
+
+- `Array.prototype.every( callbackfn [ , thisArg ] )`
+- `Array.prototype.some( callbackfn [ , thisArg ] )`
+- `Array.prototype.map( callbackfn [ , thisArg ] )`
+- `Array.prototype.filter( callbackfn [ , thisArg ] )`
 
 ## 方法调用
 
@@ -67,7 +129,16 @@ JavaScript 对象可以从 prototype 中继承方法。当调用这些继承的�
 
 ### 误区：从对象上分离方法
 
-对象的方法可以赋值给一个独立的变量。当通过这个变量调用该方法时，你可能会认为 this 值为定义方法的对象。实际上，如果方法没有通过对象调用，就成了函数调用。那么，this 值就是全局对象 window 或是严格模式下的 undefined。
+对象的方法可以赋值给一个独立的变量。当通过这个变量调用该方法时，你可能会认为 this 值为定义方法的对象。实际上，如果方法没有通过对象调用，就成了函数调用。那么，this 值就是全局对象 window 或是严格模式下的 undefined。Real-world examples include setTimeout() and registering event handlers（详见第三部分）.
+
+```
+/** Similar to setTimeout() and setImmediate() */
+function callIt(func) {
+  func();
+}
+```
+
+一个具体的例子：
 
 ```
 function Animal(type, legs) {  
@@ -87,14 +158,6 @@ setTimeout(myCat.logInfo, 1000);
 在上面的例子中，当方法作为参数传递时，就从对象上剥离了。使用 bind() 可以修正该行为：
 
 ```
-function Animal(type, legs) {  
-  this.type = type;
-  this.legs = legs;  
-  this.logInfo = function() {
-    console.log(this === myCat); // => true
-    console.log('The ' + this.type + ' has ' + this.legs + ' legs');
-  };
-}
 var myCat = new Animal('Cat', 4);  
 // logs "The Cat has 4 legs"
 setTimeout(myCat.logInfo.bind(myCat), 1000);  
@@ -193,45 +256,144 @@ bound function 是指跟一个对象绑定的函数。通常在原始函数上�
 
 > What is this where the arrow function is defined?
 
-PS: 上面的内容来自 [Gentle explanation of 'this' keyword in JavaScript](http://rainsoft.io/gentle-explanation-of-this-in-javascript)。涵盖了大多数情况下 this 的值。有一些没有覆盖的，下面会提到。
+PS: 上面的内容来自 [Gentle explanation of 'this' keyword in JavaScript](http://rainsoft.io/gentle-explanation-of-this-in-javascript)。涵盖了大多数情况下 this 的值（主要是函数里的 this）。需要补充的地方如下：
 
-
+## 第二部分：补充
 
 The ECMAScript Standard defines this as a keyword that "evaluates to the value of the ThisBinding of the current execution context" (§11.1.1). ThisBinding is something that the JavaScript interpreter maintains as it evaluates JavaScript code, like a special CPU register which holds a reference to an object. The interpreter updates the ThisBinding whenever establishing an execution context in one of only three different cases:
 
-大多数情况下，this的值取决于函数的调用方法。在执行过程中不能通过赋值给this，函数每次调用的this值都可能不同。
-ES5 引入了bind 方法，设定函数的this值而不用管它是如何被调用的。
-ES6 引入了箭头函数，。。。。
+- Outside functions (in the top-level scope)
+- In functions
+- In a string passed to eval()
 
 ## global context
 global execution context（outside of any function）,this 引用的是全局对象。无论是否是严格模式。
 
-## function context
-在函数里，this的值取决于函数如何调用
+在 Node.js 中，代码通常都是运行在模块中。所以，top-level scope 是一个特殊的 module scope
 
-### 简单调用
+```
+// `this` doesn’t refer to the global object:
+console.log(this !== global); // true
+// `this` refers to a module’s exports:
+console.log(this === module.exports); // true
+```
+## function context
+在函数里，this的值取决于函数如何调用。如上所述。
 
 ### 箭头函数
+arrow functions – functions without their own this. Inside such functions, you can freely use this, because there is no shadowing
 
 ### 对象的方法
 
-### 构造函数
+`this` binding is only affected by the most immediate member reference. 如下所示：
 
-### call 和 apply
+```
+var o = {prop: 37};
 
-### bind
+function independent() {
+  return this.prop;
+}
+
+o.b = {g: independent, prop: 42};
+console.log(o.b.g()); // logs 42
+```
+
+A function used as getter or setter has its this bound to the object from which the property is being set or gotten.
+
+```
+function sum(){
+  return this.a + this.b + this.c;
+}
+
+var o = {
+  a: 1,
+  b: 2,
+  c: 3,
+  get average(){
+    return (this.a + this.b + this.c) / 3;
+  }
+};
+
+Object.defineProperty(o, 'sum', {
+    get: sum, enumerable:true, configurable:true});
+
+console.log(o.average, o.sum); // logs 2, 6
+```
+
+## eval
+eval() 有两种调用方式：详见[这里](http://speakingjs.com/es5/ch23.html#_indirect_eval_evaluates_in_global_scope)
+
+- 直接调用
+- [间接调用](http://dmitrysoshnikov.com/ecmascript/es5-chapter-2-strict-mode/#indirect-eval-call)
+
+如果间接调用 eval()，this 引用的是全局对象。如下：
+
+```
+> (0,eval)('this === window')
+true
+```
+
+如果是直接调用 eval()，this 值与 eval() 外层 this 值相同。如下：
+
+```
+// Real functions
+function sloppyFunc() {
+  console.log(eval('this') === window); // true
+}
+sloppyFunc();
+
+function strictFunc() {
+  'use strict';
+  console.log(eval('this') === undefined); // true
+}
+strictFunc();
+
+// Constructors
+var savedThis;
+
+function Constr() {
+  savedThis = eval('this');
+}
+var inst = new Constr();
+console.log(savedThis === inst); // true
+
+// Methods
+var obj = {
+  method: function() {
+    console.log(eval('this') === obj); // true
+  }
+}
+obj.method();
+```
+
+思考题：
+
+```
+<script type="text/javascript">
+var obj = {
+    myMethod : function () {
+        // What is the value of this at this line
+    }
+};
+var myFun = obj.myMethod;
+myFun();
+</script>
+```
+
+答案是：window。This one was tricky. When evaluating the eval code, this is obj. However, in the eval code, myFun is not called on an object, so ThisBinding is set to window for the call.
+
+## 第三部分：实战--事件处理中的 this
+参考资料：http://www.quirksmode.org/js/this.html
 
 ### DOM event handler
 
 ### in-line event handler
 
-## eval
-eval() either picks up the current value of this or sets it to the global object, depending on whether it is called directly or indirectly.
+
 
 
 参考资料：
 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
-- DOM 事件绑定中的 this http://www.quirksmode.org/js/this.html
 - http://www.2ality.com/2014/05/this.html
 - http://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work
