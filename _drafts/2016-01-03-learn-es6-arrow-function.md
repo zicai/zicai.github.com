@@ -31,7 +31,7 @@ ES6 引入箭头函数（Fat arrow function 或是 arrow function）出于两个
 
 ## 语法
 
-箭头函数的语法灵活多变。基本结构是：函数参数，跟着一个箭头，跟着函数体。一个简单的例子：
+箭头函数的语法灵活多变。基本结构是：函数参数，跟着一个箭头，跟着函数体。例如：
 
 ```
 var reflect = value => value;
@@ -170,7 +170,7 @@ function log(msg) {
 log('hello'); // hello
 ```
 
-重申一下：箭头函数没有自己的 `this` 和 `arguments`。但是，你还是可以通过 rest parameters(also known as spread operator)来获取传入箭头函数的所有参数。
+重申一下：箭头函数没有自己的 `this` 和 `arguments`。但是，你还是可以通过 rest parameters 来获取传入箭头函数的所有参数。
 
 ```
 function log(msg) {
@@ -201,27 +201,3 @@ log('hello'); // LOG: hello
 - https://strongloop.com/strongblog/an-introduction-to-javascript-es6-arrow-functions/
 - http://tc39wiki.calculist.org/es6/arrow-functions/
 - http://www.2ality.com/2016/02/arrow-functions-vs-bind.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
