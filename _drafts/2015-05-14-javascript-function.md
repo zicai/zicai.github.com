@@ -88,5 +88,53 @@ var objectSayColor=sayColor.bind(o);
 objectSayColor(); //red
 ```
 
-参考资料：[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+## ES6 对函数的扩展
+
+### 函数参数的默认值
+
+在 ES6 之前，不能直接为函数的参数指定默认值。常见的解决方案如下：
+
+```
+function log(x, y) {
+  y = y || 'World';
+  console.log(x, y);
+}
+```
+
+上面的代码的问题在于，如果 y 赋值了，但是对应的布尔值是 false，则赋值无效，还是会使用默认值。例如：
+
+```
+log('Hello', '') // Hello World
+```
+
+为了避免该问题，需要改为：
+
+```
+if (typeof y === 'undefined') {
+  y = 'World';
+}
+```
+
+ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面，如下：
+
+```
+function log(x, y = 'World') {
+  console.log(x, y);
+}
+```
+
+需要注意的是，参数变量是默认声明的，所以不能用 let 或 const 再次声明，否则会报错：
+
+```
+function foo(x = 5) {
+  let x = 1; // error
+  const x = 2; // error
+}
+```
+
+
+参考资料：
+
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+- http://es6.ruanyifeng.com/#docs/function
 
