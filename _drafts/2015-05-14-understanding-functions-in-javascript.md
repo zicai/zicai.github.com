@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "javascript 函数总结"
+title: "理解 javascript 中的函数"
 tagline: "Supporting tagline"
 tags : [javascript]
 ---
