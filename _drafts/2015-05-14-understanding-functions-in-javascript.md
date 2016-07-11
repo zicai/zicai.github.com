@@ -135,6 +135,7 @@ function foo(x = 5) {
 
 参考资料：
 
+- 《the principles of object-oriented javascript》chapter 2: functions
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 - http://es6.ruanyifeng.com/#docs/function
 
