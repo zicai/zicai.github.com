@@ -72,6 +72,7 @@ HTML 4 并没有给文档字符集中的所有字符都定义实体引用。HTML
 参考资料：
 
 - [https://www.w3.org/TR/html4/charset.html](https://www.w3.org/TR/html4/charset.html)
+- https://developers.whatwg.org/named-character-references.html#named-character-references
 
 [ISO10646]:(https://www.w3.org/TR/html4/references.html#ref-ISO10646)
 [UNICODE]:(https://www.w3.org/TR/html4/references.html#ref-UNICODE)
