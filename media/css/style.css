@@ -183,7 +183,7 @@ form, embed {
     overflow: hidden;
     display: block;
     line-height: 52px;
-    font-family: impact, 'Microsoft Yahei';
+    font-family: impact, "Helvetica Neue", Helvetica, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
 }
 
 #header #blog_title h1 b {
@@ -228,7 +228,7 @@ form, embed {
 }
 
 #menu ul li a:hover {
-    color: black;
+    color: #40aa52;
 }
 
 #menu ul .current a:hover {
@@ -265,20 +265,34 @@ form, embed {
     padding: 0 20px 0 20px;
     margin-top: 25px;
 }
-.archive{
+
+.archive {
     padding-top: 20px;
     font-size: 14px;
     line-height: 30px;
 }
-.bundle{
+
+.bundle {
     margin-bottom: 20px;
 }
-.posts-by-year .row:hover{
-   color: #243743;
-}
-.posts-by-year .row:hover a{
+
+.posts-by-year .row:hover {
     color: #243743;
 }
+
+.posts-by-year .row:hover a {
+    color: #243743;
+}
+
+.posts-by-year .title,
+.post-date {
+    transition: color .2s;
+}
+
+.posts-by-year .row:hover .post-date {
+    color: #40AA52;
+}
+
 .sidebar {
     float: right;
     width: 266px;
@@ -785,6 +799,7 @@ ol.page-navigator li a:hover {
 
 .foot {
     border-top: 1px #E3E3E3 solid;
+    padding-top: 10px;
 }
 
 .foot #gotop {
@@ -793,7 +808,6 @@ ol.page-navigator li a:hover {
 
 .foot .copy, .foot #gotop {
     margin-left: 0px;
-    padding-top: 8px;
 }
 
 .foot .copy p {
@@ -1466,4 +1480,67 @@ ol.comment-list li .comment-reply a:hover, .respond .cancel-comment-reply a:hove
     color: #40AA52;
     float: left;
     line-height: 12px;
+}
+
+.post-date {
+    padding-left: 24px;
+}
+
+@media (max-width: 768px) {
+    #wrap {
+        width: 100%;
+        padding-top: 50px;
+    }
+
+    #menu {
+        display: none;
+    }
+
+    #header {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 0px;
+        background-color: #eee;
+        line-height: 1.5;
+        padding-bottom: 0;
+        height: auto;
+        box-shadow: 0px 0px 10px #bbb;
+    }
+
+    #header #blog_title h1 a {
+        font-size: 30px;
+        padding-left: 20px;
+        height: auto;
+        line-height: auto;
+    }
+
+    .posts-by-year .title {
+        width: auto;
+
+        float: none;
+        display: inline;
+    }
+
+    .posts-by-year .title:after {
+        display: none;
+    }
+
+    .bundle {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .post-date {
+        margin-right: 10px;
+        float: left;
+        width: auto;
+        padding-left: 0;
+    }
+
+    .post-date:after {
+        display: none;
+    }
 }

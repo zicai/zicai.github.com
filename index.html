@@ -27,9 +27,9 @@ index: true
 {% endunless %}
 
   <article class="row gutters">
-    <a href="https://github.com/zicai/zicai.github.com/tree/master/{{ post.path }}" title="{{ post.title }}" class="col span_8">{{ post.title }}</a>
+    <a href="https://github.com/zicai/zicai.github.com/tree/master/{{ post.path }}" title="{{ post.title }}" class="col span_8 title">{{ post.title }}</a>
     <div class="post-date col span_4">
-      <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d %B" }}</time>
+      <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%m-%d" }}</time>
     </div>
   </article>
 
