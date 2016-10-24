@@ -1,7 +1,7 @@
 ---
 layout: post
 category : test
-title: "karma 入门"
+title: "Karma 入门"
 tagline: "Supporting tagline"
 tags : [karma]
 ---

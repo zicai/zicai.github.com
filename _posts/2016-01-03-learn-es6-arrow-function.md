@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "学习ES6--箭头函数"
+title: "学习 ES6 -- 箭头函数"
 tagline: "Supporting tagline"
 tags : [javascript]
 ---

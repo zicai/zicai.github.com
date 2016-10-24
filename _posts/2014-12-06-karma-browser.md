@@ -1,7 +1,7 @@
 ---
 layout: post
 category : test
-title: "karma 浏览器设置"
+title: "Karma 浏览器设置"
 tagline: "Supporting tagline"
 tags : [karma]
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 category : 
-title: "【译】CSS实现响应式全屏背景图"
+title: "CSS 实现响应式全屏背景图【译】"
 tagline: "Supporting tagline"
 tags : [responsive]
 ---

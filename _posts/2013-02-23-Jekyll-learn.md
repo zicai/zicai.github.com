@@ -1,7 +1,7 @@
 ---
 layout: post
 category : tutorial
-title: jekyll 学习
+title: Jekyll 学习
 tagline: "Supporting tagline"
 tags : [jekyll, tutorial]
 ---

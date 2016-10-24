@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "launchy 使用手册"
+title: "Launchy 使用手册【译】"
 description: ""
 category: 
 tags: []

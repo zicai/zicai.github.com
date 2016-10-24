@@ -1,7 +1,7 @@
 ---
 layout: post
 category : scrapy
-title: "scrapy Selectors"
+title: "Scrapy Selectors【译】"
 tagline: "Supporting tagline"
 tags : [scrapy]
 ---

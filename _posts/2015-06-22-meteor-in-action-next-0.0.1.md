@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "Meteor项目实战 -- Next 0.0.1"
+title: "Meteor 项目实战 -- Next 0.0.1"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

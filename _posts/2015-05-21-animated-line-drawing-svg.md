@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "SVG动画--线绘"
+title: "SVG 动画 -- 线绘"
 tagline: "Supporting tagline"
 tags : [svg]
 ---

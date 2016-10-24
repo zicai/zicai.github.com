@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "【译】深入理解 meteor deps"
+title: "深入理解 Meteor deps【译】"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

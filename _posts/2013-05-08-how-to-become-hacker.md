@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "如何成为一名黑客"
+title: "如何成为一名黑客【译】"
 description: ""
 category: 
 tags: [hacker,book]

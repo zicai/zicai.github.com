@@ -1,7 +1,7 @@
 ---
 layout: post
 category : 
-title: "tmux使用"
+title: "Tmux 使用"
 tagline: "Supporting tagline"
 tags : [linux]
 ---

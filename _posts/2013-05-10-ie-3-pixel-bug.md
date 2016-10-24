@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "IE 3像素 Bug"
+title: "IE 3 像素 Bug"
 description: ""
 category: 
 tags: []

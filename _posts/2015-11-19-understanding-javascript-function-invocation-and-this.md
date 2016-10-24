@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "【译】理解 JavaScript 的函数调用和 this"
+title: "理解 JavaScript 的函数调用和 this【译】"
 tagline: "Supporting tagline"
 tags : [javascript]
 ---

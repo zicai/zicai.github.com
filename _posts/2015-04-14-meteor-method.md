@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "meteor method"
+title: "Meteor method"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

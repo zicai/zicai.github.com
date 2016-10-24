@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "chrome 远程调试 android 设备网页"
+title: "Chrome 远程调试 Android 设备网页【译】"
 tagline: "Supporting tagline"
 tags : [chrome]
 ---

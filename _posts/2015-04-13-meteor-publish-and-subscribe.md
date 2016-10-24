@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "Meteor发布与订阅"
+title: "Meteor 发布与订阅"
 tagline: "Supporting tagline"
 tags : [Meteor]
 ---

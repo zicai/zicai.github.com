@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "meteor tutorial"
+title: "Meteor 教程"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

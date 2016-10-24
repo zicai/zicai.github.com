@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "DDP简介"
+title: "DDP 简介"
 tagline: "Supporting tagline"
 tags : [meteor,DDP]
 ---

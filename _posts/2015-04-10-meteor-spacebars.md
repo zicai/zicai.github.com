@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "meteor spacebars"
+title: "Meteor Spacebars"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

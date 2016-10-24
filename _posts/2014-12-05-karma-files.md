@@ -1,7 +1,7 @@
 ---
 layout: post
 category : test
-title: "karma Files"
+title: "Karma Files"
 tagline: "Supporting tagline"
 tags : [karma]
 ---

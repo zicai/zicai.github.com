@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "meteor blaze 简介"
+title: "Meteor Blaze 简介"
 tagline: "Supporting tagline"
 tags : [meteor]
 ---

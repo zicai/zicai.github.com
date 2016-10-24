@@ -1,7 +1,7 @@
 ---
 layout: post
 category : scrapy
-title: scrapy 安装
+title: Scrapy 安装【译】
 tagline: "Supporting tagline"
 tags : [scrapy]
 ---

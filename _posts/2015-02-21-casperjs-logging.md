@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "casperjs 日志"
+title: "CasperJS 日志"
 tagline: "Supporting tagline"
 tags : [casperjs]
 ---

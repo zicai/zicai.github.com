@@ -1,7 +1,7 @@
 ---
 layout: post
 category : tutorial
-title: grunt 使用
+title: Grunt 使用
 tags : [grunt]
 ---
 

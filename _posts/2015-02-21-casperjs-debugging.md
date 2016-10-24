@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "casperjs 调试"
+title: "CasperJS 调试"
 tagline: "Supporting tagline"
 tags : [casperjs]
 ---

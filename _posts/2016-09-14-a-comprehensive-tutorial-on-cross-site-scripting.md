@@ -1,7 +1,7 @@
 ---
 layout: post
 category : security
-title: "【译】Excess-XSS 一份关于 XSS 的综合教程"
+title: "Excess-XSS 一份关于 XSS 的综合教程【译】"
 tagline: "Supporting tagline"
 tags : [xss]
 ---

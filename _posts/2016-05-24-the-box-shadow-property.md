@@ -1,7 +1,7 @@
 ---
 layout: post
 category : lessons
-title: "【译】box-shadow 属性"
+title: "box-shadow 属性【译】"
 tagline: "Supporting tagline"
 tags : [css,box-shadow]
 ---

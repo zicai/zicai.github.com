@@ -1,7 +1,7 @@
 ---
 layout: post
 category : test
-title: "phantomjs 基础"
+title: "Phantomjs 基础"
 tagline: "Supporting tagline"
 tags : [phantomjs]
 ---

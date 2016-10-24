@@ -1,7 +1,7 @@
 ---
 layout: post
 category : Mobile
-title : "yeoman generator mobile 简介"
+title : "Yeoman generator mobile 简介"
 tagline: "Supporting tagline"
 tags : []
 ---

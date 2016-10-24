@@ -1,7 +1,7 @@
 ---
 layout: post
 category : scrapy
-title: "scrapy Spiders"
+title: "Scrapy Spiders【译】"
 tagline: "Supporting tagline"
 tags : [scrapy]
 ---

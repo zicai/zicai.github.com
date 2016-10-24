@@ -1,7 +1,7 @@
 ---
 layout: post
 category : tutorial
-title: github 写博客
+title: Github 写博客
 tagline: "Supporting tagline"
 tags : [github, jekyll, tutorial]
 ---

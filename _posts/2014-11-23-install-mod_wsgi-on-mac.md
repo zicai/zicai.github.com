@@ -1,7 +1,7 @@
 ---
 layout: post
 category : 
-title: "mac安装mod_wsgi"
+title: "Mac 安装 mod_wsgi"
 tagline: "Supporting tagline"
 tags : [mac]
 ---

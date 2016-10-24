@@ -1,7 +1,7 @@
 ---
 layout: post
 category : 
-title: "【译】走向Retina Web"
+title: "走向 Retina Web【译】"
 tagline: "Supporting tagline"
 tags : [retina]
 ---

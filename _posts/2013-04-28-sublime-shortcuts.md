@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sublime 安装配置"
+title: "Sublime 安装配置"
 category : tutorial
 tags : [sublime, shortcuts]
 ---
