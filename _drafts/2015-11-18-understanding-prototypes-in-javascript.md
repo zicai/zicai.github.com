@@ -1,13 +1,13 @@
 ---
 layout: post
-category : lessons
-title: "理解 JavaScript 的 prototype"
+category : javascript
+title: "理解 JavaScript 的 prototype【译】"
 tagline: "Supporting tagline"
-tags : [javascript]
+tags : [prototype]
 ---
+PS：只翻译了关键内容。
 
-
-## a whole new object
+## 新建对象
 在 JavaScript 中，对象就是键值对，创建对象可以使用 `Object.create`:
 
 ```
@@ -20,7 +20,11 @@ var person = new Object(null); // 创建了一个空对象
 
 添加属性之前，需要先理解什么是属性，（规范中称为：named data property）。
 
-显然，属性有名字和值。而且，属性可以是 enumerable，configurable，writable。如果某个属性是 enumerable，那么使用 `for(prop in obj)` 迭代对象时会出现该属性。如果是 writable，就可以替换该属性。如果是 configurable ,就可以删除或是改变该属性的 attributes 。
+显然，属性有名字和值。而且，属性可以是 enumerable，configurable，writable。
+
+- 如果某个属性是 enumerable，那么使用 `for(prop in obj)` 迭代对象时会出现该属性。
+- 如果是 writable，就可以替换该属性。
+- 如果是 configurable，就可以删除或是改变该属性的 attributes 。
 
 可以通过 `Object.defineProperty` 给对象添加属性。我们给上面的空对象添加 first name 和 last name :
 
@@ -189,7 +193,7 @@ jeremy.toString() // "Jeremy Ashkenas"
 
 到这一步，我们可以很明显的看出，原型是可以用来实现继承的。为了方便以这种方式使用，JavaScript 提供了一个 `new` 操作符。
 
-为了方便面向对象编程，JavaScript 允许你调用一个函数对象，它作为创建新对象的原型和构造函数的结合体。
+为了方便面向对象编程，JavaScript 允许你将一个函数对象作为创建新对象的原型和构造函数的结合体。
 
 ```
 var Person = function(firstName, lastName) {  
