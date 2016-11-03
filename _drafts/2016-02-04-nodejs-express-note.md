@@ -1,6 +1,6 @@
 ---
 layout: post
-category : lessons
+category : node.js
 title: "node.js express 学习笔记"
 tagline: "Supporting tagline"
 tags : [node.js, express]
@@ -79,16 +79,16 @@ app.METHOD(PATH, HANDLER)
 
 其中 `app` 是 express 实例。
 
-express 使用 path-to-regexp https://www.npmjs.com/package/path-to-regexp 匹配路径。
+express 使用 [path-to-regexp](https://www.npmjs.com/package/path-to-regexp) 匹配路径。
 
-query string 不属于 路由路径
+query string 不属于路由路径
 
-express.Router() 模块化路由
+`express.Router()` 模块化路由
 
 ## 请求
 
 ### 文件上传
-从 express 4 开始，默认在 req 对象上是访问不到 req.files 的。要想访问 req.files 对象，需要使用 multipart-handling 中间件，例如：
+从 express 4 开始，默认在 `req` 对象上是访问不到 `req.files` 的。要想访问 `req.files` 对象，需要使用 multipart-handling 中间件，例如：
 
 - [busboy](https://github.com/mscdex/busboy): A streaming parser for HTML form data for node.js
 - [multer](https://github.com/expressjs/multer): Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
@@ -96,7 +96,7 @@ express.Router() 模块化路由
 - [multiparty](https://github.com/andrewrk/node-multiparty): A node.js module for parsing multipart-form data requests which supports streams2
 - [connect-multiparty](https://github.com/andrewrk/connect-multiparty):connect middleware for multiparty 
 
-formidable 和 busboy 的区别？？
+
 
 ## 响应
 
@@ -113,7 +113,7 @@ formidable 和 busboy 的区别？？
 	```
 	res.append('Set-Cookie', 'foo=bar; Path=/; HttpOnly');
 	```
-	注意：在 res.append() 之后调用 res.set()，会重置前面设置的响应头。
+	注意：在 `res.append()` 之后调用 `res.set()`，会重置前面设置的响应头。
 	
 	```
 	res.set(field [, value])
@@ -186,7 +186,7 @@ formidable 和 busboy 的区别？？
 	res.cookie(name, value [, options])
 	```
 	
-	res.cookie 做的也是设置响应头
+	`res.cookie` 做的也是设置响应头
 	
 	删除指定 cookie
 	
@@ -239,7 +239,7 @@ formidable 和 busboy 的区别？？
 - 内置中间件
 - 第三方中间件
 
-express 4.x 不再依赖 connect https://github.com/senchalabs/connect?_ga=1.90901146.1447663298.1443172894 除了express.static
+express 4.x 不再依赖 [connect](https://github.com/senchalabs/connect) 除了 express.static
 
 express 唯一内置的中间件是 express.static。它基于 serve-static
 ### 内置的中间件
@@ -290,6 +290,7 @@ express 唯一内置的中间件是 express.static。它基于 serve-static
 
 
 ### 集成数据库
+
 http://expressjs.com/en/guide/database-integration.html
 
 
