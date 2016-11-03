@@ -1,6 +1,6 @@
 ---
 title: About
-layout: page
+layout: about
 about: true
 ---
 
