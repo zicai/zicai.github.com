@@ -1,9 +1,9 @@
 ---
 layout: post
-category : lessons
-title: "HTML5 存储"
+category : html
+title: "HTML5 本地存储"
 tagline: "Supporting tagline"
-tags : [html]
+tags : [HTML5,storage]
 ---
 
 ## 历史
@@ -20,8 +20,8 @@ tags : [html]
 	
 对 Web 应用来说，在之前的很长时间内，cookie 是唯一可以用来在本地存放用户数据的方法。使用 cookie 的不足在于：
 
-- 经济性：每个 HTTP 请求都会带上 cookie，无形中增加了流量
-- 安全性：HTTP 请求中，cookie 是明文传输	
+- 每个 HTTP 请求都会带上 cookie，无形中增加了流量
+- HTTP 请求中，cookie 是明文传输	
 - 大小限制：cookie 大小限制在 4KB 左右
 
 而 Web 开发者的需求是：
@@ -30,27 +30,27 @@ tags : [html]
 - 数据保存在客户端，无需在请求间来回传递
 - 数据的生命周期可以跨页面，甚至重新打开浏览器也不丢失
 
-在 HTML5 存储出现之前，出现了一些替代技术：
+在 HTML5 本地存储出现之前，出现了一些替代技术：
 
 - IE 的 [userData](https://msdn.microsoft.com/en-us/library/ms531424(VS.85).aspx)
 - Adobe 在 Flash6 引入的 Flash cookie（Local shared Objects）
 - Dojo Toolkit 框架的 dojox.storage
 - [Google gears](http://gearsblog.blogspot.com/2011/03/stopping-gears.html) 项目 
 
-HTML5 存储技术：
+HTML5 本地存储技术：
 
 - [Web storage]
 - [Indexed Database]
 - [Web SQL Database]
 
-	其中 [Web SQL Database] 已经被废弃。
+其中 [Web SQL Database] 已经被废弃。
 
-使用 HTML5 存储技术主要是出于两点考虑：
+使用 HTML5 本地存储技术主要是出于两点考虑：
 
 1. 离线情况下也可以使用
 2. 提升性能
 
-在详细的介绍每种技术之前，先来看几种 HTML5 存储方案的共同点：
+在详细的介绍每种技术之前，先来看 HTML5 本地存储方案的共同点：
 
 ## 共同特征
 
@@ -69,8 +69,8 @@ Web Storage API 是浏览器提供的，可以用来保存键值对。
 
 Web Storage 给每个域分配了独立的存储空间，包含两种不同的机制：
 
-- sessionStorage：通过 `window.sessionStorage` 访问。在同一个浏览器窗口中打开的相同站点的任何页面都可以访问（it will be accessible to any page from the same site opened in that window）。
-- localStorage：通过 `window.localStorage` 访问。it is designed for storage that spans multiple windows, and lasts beyond the current session。
+- sessionStorage：通过 `window.sessionStorage` 访问。在同一个浏览器窗口中打开的相同站点的任何页面都可以访问。
+- localStorage：通过 `window.localStorage` 访问。数据可以跨窗口共享，即使窗口关闭，数据也不会清空。
 
 访问 `window.sessionStorage` 和 `window.localStorage` 都会返回 `Storage` 对象实例，通过它对数据进行增删改查。需要注意的是，二者返回的是独立的 `Storage` 对象实例。
 
@@ -85,33 +85,24 @@ Storage.clear()			// 清空 storage
 Storage.key()				// 传入数字 n，返回第 n 个键名
 ```
 
-当 storage 中保存的数据发生变化时，就会触发 `StorageEvent`。需要注意的是：This won't work on the same page that is making the changes — it is really a way for other pages on the domain using the storage to sync any changes that are made. Pages on other domains can't access the same storage objects.
+当 storage 中保存的数据发生变化时，就会触发 `StorageEvent`。需要注意的是：导致变化的页面，不会触发该事件。该机制可以用来在相同域下不同窗口之间同步数据变化。
 
-todo: 隐私模式下的存储
-
-
-### 安全性
 
 Web storage 适用于存储少量的数据，当需要存取数据量较大的结构化数据时，使用 IndexedDB 是更好的方案。
 ## IndexedDB
 
 客户端可以使用 IndexedDB 来保存数量较大的结构化数据。它使用索引来提升查询效率。
 
-The previous formats are all suitable for text and structured data, but when it comes to large files and binary content, we need something else.
-## 访问文件
-
-[File API]
 
 参考资料：
 
 - [Client-Side Storage](http://www.html5rocks.com/en/tutorials/offline/storage/)
+- ["Offline": What does it mean and why should I care?](https://www.html5rocks.com/en/tutorials/offline/whats-offline/)
 - [https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
-- [https://developer.mozilla.org/zh-CN/docs/Using_files_from_web_applications](https://developer.mozilla.org/zh-CN/docs/Using_files_from_web_applications)
 
 [Web storage]:(https://www.w3.org/TR/webstorage/)
 [Indexed Database]:(https://www.w3.org/TR/IndexedDB/)
 [Web SQL Database]:(https://www.w3.org/TR/webdatabase/)
-[File API]:(https://www.w3.org/TR/FileAPI/)
 
 
 
