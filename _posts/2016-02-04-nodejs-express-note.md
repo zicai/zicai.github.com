@@ -1,7 +1,7 @@
 ---
 layout: post
 category : node.js
-title: "node.js express 学习笔记"
+title: "Node.js Express 学习笔记"
 tagline: "Supporting tagline"
 tags : [node.js, express]
 ---
