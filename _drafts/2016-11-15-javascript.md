@@ -299,16 +299,6 @@ function unique(arr) {
 
 ### Object 类型
 
- 检测属性
-使用in运算符
-
-```
-if("count" in object){
-	a=object.count
-}
-```
-
-
 ### Function 类型
 
 ### Date 类型
