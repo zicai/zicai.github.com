@@ -466,6 +466,45 @@ var anotherPerson = Object.create(person);
 
 ```
 
+### 寄生组合式继承
+
+再看组合继承，它的不足之处在于：无论什么情况下，都会调用两次超类型构造函数，导致的结果就是原型链上定义了重复的属性。
+
+实际上，为了指定子类型的原型，我们并不需要调用父类的构造函数。我们所需要的无非就是超类型原型的一个副本而已。改进如下：
+
+```
+function SuperType(name) {
+  this.name = name;
+  this.color = ['red', 'yellow']
+}
+
+SuperType.prototype.sayName = function() {
+  alert(this.name)
+}
+
+function SubType(name, age) {
+  SuperType.call(this, name);
+  this.age = age;
+}
+
+// 将 SubType.prototype = new SuperType(); 改为下面三行
+var prototype = Object.create(SuperType.prototype);
+prototype.constructor = subType;
+SubType.prototype = prototype;
+// 可以将上面三行封装为一个函数，例如：inheritPrototype(subType, superType)
+
+SubType.prototype.sayAge = function() {
+  alert(this.age)
+}
+
+var instance1 = new SubType('one', 1);
+instance1.sayAge()
+
+```
+通过上面可以看出来：所谓寄生组合式继承就是通过借用构造函数来继承属性，通过原型链来继承方法。它只调用了一次 SuperType 的构造函数，避免了在 SubType.prototype 上面创建不必要的，多余的属性。同时，原型链保持不连，还能够使用 instanceof 和 inPrototypeOf()。
+
+开发人员普遍认为寄生组合式继承是引用类型最理想的继承方式。
+
 ## 模块
 
 ```
@@ -505,7 +544,7 @@ fun.apply(thisArg, [argsArray])
 fun.call(thisArg[, arg1[, arg2[, ...]]])
 ```
 
-## 轮播图
+## carousel
 
 ```
 var index = 0;
