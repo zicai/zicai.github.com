@@ -65,6 +65,47 @@ Because all of an extension's pages execute in same process on the same thread, 
 
 变量共享？
 函数共享？
+
+#### override page
+https://developer.chrome.com/extensions/override
+
+通过 override page，可以用插件里的 HTML 文件替换某些 chrome 默认提供的页面。包括：
+
+- 书签管理器：chrome://bookmarks
+- 历史：chrome://history
+- 新标签页：chrome://newtab
+
+注意：一个插件只能替换一个页面。
+
+匿名窗口有些特殊，匿名窗口的新标签页不能被替换。
+
+需要在 manifest 文件中注册要替换的页面：
+
+```
+{
+  "name": "My extension",
+  ...
+  "chrome_url_overrides" : {
+    "pageToOverride": "myPage.html"
+  },
+  ...
+}
+```
+
+其中，要将 `pageToOverride` 替换成下面三者之一：
+
+- bookmarks
+- history
+- newtab
+
+**提示：**
+
+- 尽可能让你的页面体积小，且加载迅速
+- 给你的页面指定标题 `<title>New Tab</title>`，否则用户会看到页面的 URL
+- 不要依赖页面会获得输入焦点，因为当用户打开新标签时，地址栏总是先获得焦点
+- 不要试图模仿默认的新标签页
+
+
 ### 内容脚本
 
 https://developer.chrome.com/extensions/content_scripts
