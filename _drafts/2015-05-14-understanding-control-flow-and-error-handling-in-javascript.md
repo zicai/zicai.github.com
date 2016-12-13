@@ -7,7 +7,7 @@ tags : []
 ---
 
 
-## 流程控制
+## 条件判断语句
 ### if 语句
 
 ```
@@ -21,6 +21,30 @@ if (i>25){
 ```
 
 ECMAScript 会自动调用Boolean()转换函数将条件表达式的结果转换为布尔值
+
+### switch 语句
+
+```
+switch（expression）{
+	case value:
+		statement;
+		break;
+	case value:
+		statement;
+		break;
+	default:
+		statement;
+}
+```
+
+每一个 case 的含义是，如果表达式的值等于这个值 value，则执行后面的 statement。break 会跳出 switch 语句。表达式不匹配任何一种情形时会执行 default 语句。
+
+可以在 switch 语句中使用任何数据类型。每个 case 的值不一定是常量，可以是变量，也可以是表达式。
+
+switch 语句在比较时使用的是全等操作符，不会发生类型转换。
+
+## 循环语句
+
 
 ### do-while 语句
 
@@ -66,25 +90,11 @@ ECMAScript 对象的属性是没有顺序的，所以for-in语句循环的属性
 break语句会立即退出循环，强制继续执行循环后面的语句。
 continue语句也是立即退出循环，但是退出之后会从循环的顶部继续执行。
 
-### switch 语句
 
-```
-switch（expression）{
-	case value:
-		statement;
-		break;
-	case value:
-		statement;
-		break;
-	default:
-		statement;
-}
-```
+## 异常处理语句
 
-每一个 case 的含义是，如果表达式的值等于这个值 value，则执行后面的 statement。break 会跳出 switch 语句。表达式不匹配任何一种情形时会执行 default 语句。
+## promise
 
-可以在 switch 语句中使用任何数据类型。每个 case 的值不一定是常量，可以是变量，也可以是表达式。
+参考资料：
 
-switch 语句在比较时使用的是全等操作符，不会发生类型转换。
-
-
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling)
