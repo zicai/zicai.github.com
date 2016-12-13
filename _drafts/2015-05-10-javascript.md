@@ -6,43 +6,6 @@ tagline: "Supporting tagline"
 tags : [javascript]
 ---
 
-## 操作符
-
-### 布尔操作符
-#### 逻辑非
-逻辑非操作符用叹号表示 `！`
-
-可以应用于任何数据类型，逻辑非操作符首先会把操作数转换为布尔值，然后再求反。
-
-如果操作数为空字符串、0、null、NaN、undefined，返回true。
-
-`!!` 构造是一个可以将任意 JavaScript 表达式转化为其等效布尔值得简单方式。
-`!!variable` 的结果与 `Boolean(variable)` 相同。
-
-#### 逻辑与
-
-#### 逻辑或
-
-```
-var myObject = preferredObject || backupObject
-```
-
- 
-### 条件操作符
-
-```
-variable = bool_expression ? true_value : false_value;
-```
-
-基于对 `bool_expression` 求值的结果，决定给变量 `variable` 赋什么值。如果值为 `true`，则赋值为 `true_value`，否则赋值为 `false_value`。
-
-### 逗号操作符
-可以在一条语句中执行多个操作，例如：
-
-```
-var num1=1,num2=2,num3=3;
-```
-
 ## 语句
 ### if 语句
 
