@@ -61,5 +61,53 @@ variable = bool_expression ? true_value : false_value;
 var num1=1, num2=2, num3=3;
 ```
 
-运算符优先级 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+## void 运算符
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void)
+
+void 运算符用来执行给定的表达式，然后返回 undefined。
+
+```
+void expression
+```
+
+常用来获取 undefined 的原始值，也可以直接使用全局变量 undefined（前提是它没有被赋值为非默认值）
+
+```
+void(0)
+// 等同于
+void 0
+```
+
+常见于 javascript 伪协议，浏览器调用 JavaScript 引擎，执行后面代码，并用代码返回结果替换页面内容，除非返回值是 undefined。
+
+```
+<a href="javascript:void(0);">
+  Click here to do nothing
+</a>
+
+<a href="javascript:void(document.body.style.backgroundColor='green');">
+  Click here for green background
+</a>
+```
+
+
+
+## 运算符优先级
+
+运算符的优先级决定了表达式中运算执行的先后顺序。
+
+### 运算符的结合性
+结合性决定了拥有相同优先级的运算符的执行顺序。
+
+例如，赋值运算符结合性为从右到左。且返回结果为运算符右边的那个值。
+
+```
+a = b = 5;
+// 结果 a 和 b 值都会成为 5
+```
+
+参考资料：
+
+- [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators)
+- [运算符优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
 
