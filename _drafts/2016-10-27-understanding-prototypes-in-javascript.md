@@ -107,7 +107,7 @@ var instance = new SubType();
 ### 确定原型和实例之间的关系
 有两种方式：
 
-- `instanceof` 操作符：只要用这个操作符来测试实例与原型链中出现过的构造函数，结果就会返回 true
+- `instanceof` 操作符：`obj instanceof constructor`只要是 constructor.prototype 出现在对象的原型链中，结果就会返回 true
 - `isPrototypeOf()` 方法：只要是原型链中出现过的原型，都可以说是该原型链所派生的实例的原型，结果就会返回 true
 
 ### 判断属性的位置
@@ -121,6 +121,10 @@ var instance = new SubType();
 ```
 Object.getPrototypeOf(person1);
 ```
+
+### 修改对象的原型
+
+Object.setPrototypeOf
 
 参考资料：
 
