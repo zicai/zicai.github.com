@@ -90,7 +90,29 @@ void 0
 </a>
 ```
 
+## instanceof 运算符
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)
 
+instanceof 运算符用来测试 constructor.prototype 是否出现在对象的原型链中。
+
+注意：instanceof 的结果会随着构造函数的 prototype 属性而变化。
+
+### 在多上下文中（例如：frames 或 windows）的 instanceof
+不同的 scope 有不同的执行环境。换句话说，它们有不同的内置对象（不同的全局对象，不同的构造函数等等）
+
+### 对字面量使用 instanceof
+
+```
+var simpleStr = "This is a simple string"; 
+simpleStr instanceof String; // returns false
+
+var newStr    = new String("String created with constructor");
+newStr instanceof String; // returns true
+
+var myObj     = {};
+myObj instanceof Object;  // returns true, despite an undefined prototype
+({})  instanceof Object;    // returns true, same case as above
+```
 
 ## 运算符优先级
 
