@@ -45,6 +45,34 @@ expr1 || expr2
 var myObject = preferredObject || backupObject
 ```
 
+## 相等运算符
+[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comparison_Operators](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comparison_Operators)
+
+### 相等和不相等
+比较之前，会将两个操作数转为相同的类型，再进行全等比较。使用 [Abstract Equality Comparison Algorithm](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
+
+转换顺序：
+
+1. 有布尔值，先转为数值。false 转换为 0，true 转换为 1
+2. 有 number，都转 number
+3. 有 string，都转 string
+4. 如果有一个操作数为对象，而另一个不是，则调用对象的 `valueOf()` 方法（因为，`valueOf()` 方法用来返回对象的字符串、数值或者布尔值表示），用得到的基本类型值按前面的规则进行比较。
+
+注意：null 和 undefined 是不会做任何转换的。
+
+比较规则：
+
+* null == undefined
+* NaN 跟谁都不等，包括自身
+* 如果两个操作数都是对象，只有当二者引用的是同一个对象时才相等。
+
+[JavaScript Equality Table](http://dorey.github.io/JavaScript-Equality-Table/)
+
+### 全等和不全等
+仅当两个操作数类型相同且值相等时，才为 true。仅比较不转换。使用 [The Strict Equality Comparison Algorithm](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6)
+
+## 关系运算符
+大于、大于等于、小于、小于等于
  
 ## 条件(三元)运算符
 
