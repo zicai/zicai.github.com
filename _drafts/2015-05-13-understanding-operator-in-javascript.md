@@ -118,6 +118,61 @@ void 0
 </a>
 ```
 
+## typeof 运算符
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
+
+```
+typeof operand
+```
+The typeof operator returns a string indicating the type of the unevaluated operand.
+
+注意：对于尚未声明过的变量，只能执行一项操作，即使用 typeof 操作符检测其数据类型。
+
+typeof 的返回值汇总如下：
+
+|类型|结果|
+|:--:|:--|
+|Undefined|	"undefined"|
+|Null|	"object" (see below)|
+|Boolean|	"boolean"|
+|Number|	"number"|
+|String|	"string"|
+|Symbol (new in ECMAScript 2015)	|"symbol"|
+|Host object (provided by the JS environment)|	Implementation-dependent|
+|Function object (implements [[Call]] in ECMA-262 terms)|	"function"|
+|Any other object|	"object"|
+
+注意下面这些：
+
+```
+// Numbers
+typeof Math.LN2 === 'number';
+typeof Infinity === 'number';
+typeof NaN === 'number'; // Despite being "Not-A-Number"
+
+// Symbols
+typeof Symbol() === 'symbol'
+typeof Symbol('foo') === 'symbol'
+typeof Symbol.iterator === 'symbol'
+
+// use Array.isArray or Object.prototype.toString.call
+// to differentiate regular objects from arrays
+typeof [1, 2, 4] === 'object';
+
+typeof new Date() === 'object';
+
+// Functions
+typeof function(){} === 'function';
+typeof class C {} === 'function';
+typeof Math.sin === 'function';
+```
+
+```
+// This stands since the beginning of JavaScript
+typeof null === 'object';
+```
+In the first implementation of JavaScript, JavaScript values were represented as a type tag and a value. The type tag for objects was 0. null was represented as the NULL pointer (0x00 in most platforms). Consequently, null had 0 as type tag, hence the bogus typeof return value
+
 ## instanceof 运算符
 [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)
 
