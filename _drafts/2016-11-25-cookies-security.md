@@ -43,9 +43,11 @@ samesite
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
 - https://www.nczonline.net/blog/2009/05/12/cookies-and-security/
 - 《白帽子讲 Web 安全》P111
+- 《Web 应用安全权威指南》P174
 - 走马《cookie 之困》https://github.com/knownsec/KCon/blob/master/2015/Cookie%20%E4%B9%8B%E5%9B%B0.pdf
 - https://www.google.com/intl/zh-CN/policies/technologies/types/
 - https://www.owasp.org/index.php/HTTPOnly#Browsers_Supporting_HTTPOnly
+- https://github.com/blog/1466-yummy-cookies-across-domains
 
 
 
