@@ -107,15 +107,15 @@ net.Socket 也是 EventEmitter 实例，它的自定义事件包括：
 
 - `socket.address()`
 - `socket.connect()`：用给定的 socket 打开一个连接
-- `socket.destroy()`
-- `socket.end()`
+- `socket.destroy([exception])`：出现错误时才有必要调用。
+- `socket.end()`：半关闭连接，即发送一个 FIN 包，服务端仍有可能发送一些数据。
 - `socket.pause()`：暂停读取数据
 - `socket.ref()`
 - `socket.resume()`：暂停之后恢复读取数据
 - `socket.setEncoding()`
 - `socket.setKeepAlive()`
 - `socket.setNoDelay()`
-- `socket.setTimeout()`
+- `socket.setTimeout(timeout[, callback])`：socket 默认是不会超时。该方法用来设置超时时间，当 socket 空闲时间超过设定时间，触发 'timeout' 事件，但是连接并不会被切断。用户必须手动 `end()` 或是 `destroy()` socket
 - `socket.unref()`
 - `socket.write()`
 
