@@ -106,17 +106,17 @@ http.ServerResponse 实现了但并没有继承 writable stream 接口。
 
 ## 构建客户端
 
-首先要通过 `http.request(options[, callback])` 构建一个 http.ClientRequest 类的实例。其中 options 可以是一个 url 字符串（会自动通过 url.parse() 解析），也可以是一个对象（具体内容见下）。可选的 callback 参数会作为 `'response'` 事件的监听函数（一次性的）
-
-还可以使用 Node.js 为 GET 方法提供的快捷方法 `http.get(options[, callback])`。
+首先要通过 `http.request(options[, callback])` 构建一个 http.ClientRequest 类的实例。其中 `options` 可以是一个 url 字符串（会自动通过 `url.parse()` 解析），也可以是一个对象（具体内容见下）。可选的 `callback` 参数会作为 `'response'` 事件的监听函数（一次性的）
 
 http.ClientRequest 实例表示一个进行中的请求。它的头部已经进入队列，不过还是可以通过 `setHeader(name, value)`, `getHeader(name)`, `removeHeader(name)` 来修改请求头。
 
 接着可以通过 `request.write()` 发送消息体。最终调用 `request.end()` 完成请求发送。
 
-为了获取响应，需要监听实例的 `'response'` 事件。监听函数唯一的参数是 http.IncomingMessage 类的实例。当收到响应头时，触发 'response' 事件。
+还可以使用 Node.js 为 GET 方法提供的快捷方法 `http.get(options[, callback])`。和 `http.request()` 的区别在于，它将请求方法设为 GET，同时自动调用 `request.end()` 发送请求。
 
-如果没有监听 `'response'` 事件，那么整个响应就被丢弃。不过，一旦你添加了 `'response'` 监听函数，那么必须要消耗响应对象中的数据，可以是通过 response.read 也可以是添加 `'data'` 处理器，或是调用 resume() 方法。否则就会一直占用内存空间。
+为了获取响应，需要监听实例的 `'response'` 事件。监听函数唯一的参数是 http.IncomingMessage 类的实例。当收到响应头时，触发 `'response'` 事件。
+
+如果没有监听 `'response'` 事件，那么整个响应就被丢弃。不过，一旦你添加了 `'response'` 监听函数，那么必须要消耗响应对象中的数据，可以是通过 `response.read()` 也可以是添加 `'data'` 处理器，或是调用 `resume()` 方法。否则就会一直占用内存空间。
 
 http.ClientRequest 实现了可写流接口，同时也是一个 EventEmitter 实例，定义的事件有：
 
