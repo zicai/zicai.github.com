@@ -283,6 +283,43 @@ chrome.cookies.onChanged.addListener(function(){
 
 ```
 
+### webRequest
+[https://developer.chrome.com/extensions/webRequest](https://developer.chrome.com/extensions/webRequest)
+
+webRequest API 可以用来观察和分析网络流量，还可以拦截和修改进行中的的请求。
+
+需要权限：'webRequest' 和 host 权限。如果想要拦截请求，还需要 'webRequestBlocking' 权限。例如
+
+```
+"permissions": [
+          "webRequest",
+          "*://*.google.com/"
+        ]
+```
+
+请求的生命周期
+
+注册事件监听器
+要想给一个请求注册事件监听器，需要使用普通 addListener() 函数的变种。除了要指定回调函数之外，还必须指定一个过滤参数，和一个可选的额外信息参数。
+
+三个参数的格式如下：
+
+```
+var callback = function(details) {...};
+var filter = {...};
+var opt_extraInfoSpec = [...];
+```
+
+其中 filter 用来从多角度过滤触发事件的请求：
+
+- URLs
+- Types
+- Tab ID
+- Window ID
+
+## 常见需求
+
+### 获取当前 tab id
 
 
 参考资料：
