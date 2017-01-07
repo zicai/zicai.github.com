@@ -20,6 +20,11 @@ extension UI
 - browser action：当扩展和大多数页面有关时
 - page action：和某些页面有关时
 
+
+## 权限声明
+
+host permission 和模式匹配 https://developer.chrome.com/extensions/match_patterns
+
 ## 插件结构
 
 - 背景页（background page）
@@ -129,7 +134,93 @@ run in the context of a web page and not the extension
 - 发起 Ajax 到与扩展相同的站点
 - 通过共享 DOM 与宿主页面通信
 
-## 常用 API
+## API 列表
+
+[https://developer.chrome.com/extensions/api_index](https://developer.chrome.com/extensions/api_index) 展示了完整的 API 列表：
+
+### Stable APIS
+
+- accessibilityFeatures
+- alarms：调度代码周期性的运行
+- bookmarks：管理、操纵书签
+- browserAction：地址栏右侧的 icon，可以包括：tooltip、badge 和 popup
+- browsingData：用来清除用户浏览数据
+- certificateProvider
+- commands：添加键盘快捷键
+- contentSettings：在每个站点自定义 chrome 的行为
+- contextMenus
+- cookies
+- debugger
+- declarativeContent
+- desktopCapture
+- devtools.inspectedWindow：与审查窗口交互
+- devtools.network
+- devtools.panels
+- documentScan
+- downloads
+- enterprise.deviceAttributes
+- enterprise.platformKeys
+- events
+- extension
+- extensionTypes
+- fileBrowserHandler
+- fileSystemProvider
+- fontSettings
+- gcm
+- history
+- i18n
+- identity：用来获取 OAuth2 token
+- idle
+- input.ime
+- instanceID
+- management
+- networking.config
+- notifications
+- omnibox
+- pageAction
+- pageCapture
+- permissions
+- platformKeys
+- power
+- printerProvider
+- privacy	
+- proxy
+- runtime
+- sessions
+- storage
+- system.cpu
+- system.memory
+- system.storage
+- tabCapture
+- tabs：和浏览器的标签系统进行交互。
+- topSites
+- tts
+- ttsEngine
+- types
+- vpnProvider
+- wallpaper
+- webNavigation
+- webRequest：观测和分析网络流量，拦截或修改进行中的请求。
+- webstore
+- windows
+
+### Beta APIS
+
+- declarativeWebRequest	
+
+### Dev APIS
+
+- automation	
+- processes
+- signedInDevices	
+
+### Experimental APIS
+
+### API 约定
+除非文档说明，否则 chrome.* API 都是异步的
+
+## 常用 API 介绍
+
 ### 消息传递
 [https://developer.chrome.com/extensions/messaging](https://developer.chrome.com/extensions/messaging)
 
