@@ -80,8 +80,86 @@ person.propertyIsEnumerable('name')
 ```
 
 ## 属性类型
-属性分为两种：data properties and accessor properties.
-Accessor properties are most useful when you want the assignment of a value to trigger some sort of behavior, or when reading a value requires the calculation of the desired return value.
+属性分为两种：
+
+- 数据属性（data properties）
+- 访问器属性（accessor properties）
+
+当你想要在给属性赋值的同时触发一些行为或是读取的属性值需要通过计算才能得到的时候，访问器属性会很有用。
+
+Getter 提供另一个好处就是延迟计算，只有访问时才进行计算。甚至可以加上缓存机制，做成 [memoized getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#Smart_self-overwriting_lazy_getters)
+
+
+
+### 定义访问器属性
+
+方法一：在对象字面量中定义
+
+```
+var person = {
+    _name: 'TaLuo',
+    get name() {
+        console.log('reading name');
+        return this._name;
+    },
+    set name(value) {
+        console.log('setting name to %s', value);
+        this._name = value;
+    }
+};
+
+console.log(person.name);
+
+person.name = 'Gates';
+console.log(person.name);
+```
+
+方法二：通过 `defineProperty` 方法
+
+```
+var person = {
+    _name: 'TaLuo'
+};
+
+Object.defineProperty(person, 'name', {
+    get: function () {
+        console.log('getting name');
+        return this._name;
+    },
+    set: function (value) {
+        console.log('setting name');
+        this._name = value;
+    }
+});
+```
+
+方法三：通过 `Object.prototype.__defineGetter__` 或 `Object.prototype.__defineSetter__` 方法
+
+```
+var person = {
+    _name: 'TaLuo'
+};
+
+person.__defineGetter__('name', function () {
+    console.log('getting name');
+    return this._name;
+});
+person.__defineSetter__('name', function (value) {
+    console.log('setting name');
+    this._name = value;
+});
+```
+
+方法三已被 deprecated，优先使用前两种方法。
+
+除了可以给用户定义的对象添加访问器属性，还可以给预定义的核心对象添加访问器属性。
+
+删除访问器属性与删除数据属性一样，都是使用 `delete` 操作符。
+
+需要注意的几点：
+
+- 如果你仅定义了 getter，该属性就变成只读，在非严格模式下试图写入将失败，而在严格模式下将抛出错误。如果仅定义 setter，该属性就变成只写，在两种模式下试图读取都将失败。
+- 方法一中 `[gs]et name(){ }` 的 name 是属性名，而非 getter 和 setter 本身的名字。要想明确的给 getter 或 setter 命名，需要使用后两种方法。[参见](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_getters_and_setters)
 
 ## 属性特性
 ECMAScript defines multiple internal properties for objects in JavaScript, and these internal properties are indicated by double-square-bracket notation
