@@ -358,65 +358,6 @@ instance1.sayAge()
 
 开发人员普遍认为寄生组合式继承是引用类型最理想的继承方式。
 
-## Ajax
-
-```
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function(){
-	if(xhr.readyState==4){
-		if(xhr.status>=200 && xhr.status<300 || xhr.status==304){
-			alert(xhr.responseText)
-		}else{
-			alert('fail')
-		}
-	}
-}
-xhr.open('get', 'api.php', 'true'); // open 方法并不会真正发送请求，只是启动一个请求以备发送
-xhr.send(null); // send 方法用来发送请求，参数是作为请求主体发送的数据。如果不需要通过请求主体发送数据，则必须传入 null
-```
-
-XHR 对象的 readyState 属性表示请求/响应过程的当前活动状态，可取值有：
-
-- 0：未初始化。未调用 open 方法
-- 1：启动。已调用 open 方法，未调用 send 方法
-- 2：发送。已调用 send 方法，未接到响应
-- 3：接收。已接到部分响应数据
-- 4：完成。已经接受到全部响应，可以使用
-
-readyState 属性值每一次变化都会触发 readystatechange 事件。通常只需关心值为 4 的阶段。为了保证兼容性，必须在调用 open 方法之前绑定 onreadystatechange 事件处理程序。
-
-收到响应后，响应的数据会自动填充 XHR 对象的属性，包括：
-
-- responseText：作为响应主体返回的文本
-- responseXML：如果相应内容类型是 'text/xml' 或 'application/xml'，这个属性将保存响应数据的 XML DOM 文档。
-- status：响应的 HTTP 状态
-- statusText：HTTP 状态说明
-
-在 open 方法之后，send 方法之前，可以调用 setRequestHeader() 方法设置自定义请求头部信息。
-
-XHR 对象的 getResponseHeader() 和 getAllResponseHeaders() 方法可以获取响应头。
-
-XMLHttpRequest 2 级规范进一步扩展了 XHR。包括：
-
-- FormData
-- 超时设定
-
-经常用到的一项功能就是表单数据的序列化。XMLHttpRequest 2 级规范为此定义了 FormData 类型。
-
-给 FormData 填充数据的两种方式:
-
-```
-var data = new FormData();
-data.append('name','value');
-
-// 或者直接使用表单元素
-var data = new FormData(document.forms[0])
-```
-然后就可以将 FormData 传给 send 方法。
-
-
-
-
 ## 模块
 
 ```
