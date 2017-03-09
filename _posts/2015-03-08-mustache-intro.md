@@ -6,6 +6,16 @@ tagline: "Supporting tagline"
 tags : [Mustache]
 ---
 
+Mustache 是 Logic-less templates。它与语言无关。许多编程语言都有 Mustache 的实现。例如：
+
+- [Ruby](https://github.com/mustache/mustache)
+- [PHP](https://github.com/bobthecow/mustache.php)
+- [Python](https://github.com/defunkt/pystache)
+- [Javascript](https://github.com/janl/mustache.js)
+- [Node.js](https://github.com/raycmorgan/Mu)
+- [Java](https://github.com/spullara/mustache.java)
+- 等等
+
 ## 概要
 一个典型的 Mustache 模板：
 
@@ -41,14 +51,14 @@ Mustache 可以用在 HTML，配置文件，源代码--等任何文件中。它�
 ## Tag 类型
 Tag 用双大括号标明。`{{person}}` 是一个 tag，`{{#person}}` 也是一个 tag。下面的例子中，我们把 `person` 叫做 key 或者 tag key。
 
-tag 类型包括:
+Mustache 定义了 6 种 tag 类型，包括:
 
 - Variables
 - Sections
 - Inverted Section
 - Comments
 - Partials
-- Set Delimiter
+- Set Delimiter：用于变更定界符
 
 ### Variables
 最基本的 tag 就是 variable。模板里的一个 `{{name}}` tag 会尝试在当前 context 中寻找 `name` key。如果没找到，则递归的从父级 context 中查找。如果一直到顶层 context，都没找到 `name` key。那么就不会渲染。
@@ -243,3 +253,7 @@ set delimiter tag 以 `=` 开始，将定界符从 `{{` 和 `}}` 修改为自定
     * {{ default_tags_again }}
 
 自定义的定界符不能包含等号和空格
+
+参考资料：
+
+- [http://mustache.github.io/](http://mustache.github.io/)
