@@ -222,48 +222,7 @@ run in the context of a web page and not the extension
 ## 常用 API 介绍
 
 ### 消息传递
-[https://developer.chrome.com/extensions/messaging](https://developer.chrome.com/extensions/messaging)
-
-由于内容脚本运行在网页的上下文中，而不是扩展本身的上下文。所以它经常需要与扩展的其余部分进行消息的传递。 
-
-消息传递的双方都可以监听对方的消息，然后通过相同信道回复。消息可以包含合法 JSON 对象。
-
-消息传递主要有以下几种形式：
-
-- 简单的一次请求
-- 长连接
-- 跨扩展通信
-- 从网页发消息
-- native 消息
-
-
-
-#### 一次请求
-
-- 从内容脚本发消息到扩展使用 `chrome.runtime.sendMessage`
-- 从扩展发消息到内容脚本使用 `chrome.tabs.sendMessage`，因为需要指定发送到哪个 tab
-
-示例：
-
-```
-// 从内容脚本发消息到扩展
-chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-  console.log(response.farewell);
-});
-
-// 从扩展发消息到内容脚本
-chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-    console.log(response.farewell);
-  });
-});
-```
-
-
-
-接受消息的一方 chrome.runtime.onMessage.addListenner(callback) 。可以同步返回响应也可以异步
-
-#### 长连接
+[draft]()
 
 ### 存储数据
 通常使用以下三种方法来存储数据：
