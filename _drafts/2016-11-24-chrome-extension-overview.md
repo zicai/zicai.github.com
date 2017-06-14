@@ -64,6 +64,8 @@ event page 会在需要时加载。空闲时被卸载。下面是一些会导致
 The HTML pages inside an extension have complete access to each other's DOMs, and they can invoke functions on each other.
 Because all of an extension's pages execute in same process on the same thread, the pages can make direct function calls to each other.
 
+To find pages in the extension, use chrome.extension methods such as getViews() and getBackgroundPage(). Once a page has a reference to other pages within the extension, the first page can invoke functions on the other pages, and it can manipulate their DOMs.
+
 #### pop 页面
 
 生命周期
@@ -118,6 +120,9 @@ https://developer.chrome.com/extensions/content_scripts
 和页面进行交互。可以把它看做网页的一部分
 run in the context of a web page and not the extension
 
+内容脚本的执行环境：
+内容脚本在一个特殊环境中执行，称之为 isolated world。它可以访问被注入页面的 DOM，但是不能访问页面创建的任何 JavaScript 变量和函数。看起来就像页面中没有其他 JS 执行一样。反过来也一样，页面中的 JavaScript 也不能访问内容脚本定义的任何变量和函数。这样就避免了冲突。
+
 它不能：
 
 - 使用 chrome.* API 除了：
@@ -148,7 +153,7 @@ run in the context of a web page and not the extension
 - certificateProvider
 - commands：添加键盘快捷键
 - contentSettings：在每个站点自定义 chrome 的行为
-- contextMenus
+- contextMenus：右键快捷菜单
 - cookies
 - debugger
 - declarativeContent
