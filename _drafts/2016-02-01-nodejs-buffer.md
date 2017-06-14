@@ -245,8 +245,23 @@ readable.setEncoding(encoding)
 
 要想从根本上解决该问题就得正确拼接 Buffer，然后通过 iconv 一类的模块来转码。不能用 += 的方式拼接，需要用到 `Buffer.concat()` 方法。
 
-
-
+假设有 GBK 编码的网页内容
+```javascript
+http.request({
+	hostname:'http://www.google.com'
+},(res) => {
+	let bufArray = [];
+	let bytesLen = 0;
+	res.on('data',(chunk) => {
+		bufArray.push(chunk);
+		bytesLen += chunk.length;
+	});
+	res.on('end',() => {
+		let bufContent = Buffer.concat(bufArray, bytesLen);
+		let strContent = iconv.decode(bufContent,'gbk')
+	})
+})
+```
 
 
 
