@@ -354,12 +354,32 @@ webRequest API 可以用来观察和分析网络流量，还可以拦截和修�
 
 请求的生命周期
 
+- onBeforeRequest
+- onBeforeSendHeaders
+- onSendHeaders
+- onHeadersReceived
+- onAuthRequired
+- onBeforeRedirect
+- onResponseStarted
+- onCompleted
+- onErrorOccurred
+
+web request API 确保对于每个请求最后一个触发的事件不是 onCompleted 就是 onErrorOccurred。只有一个例外，如果某个请求被重定向到 data:// URL，最后一个事件是 onBeforeRedirect。
+
+webRequest API 根据请求的生命周期定义了一系列的事件。开发者通过给这些事件注册监听器来监测和分析流量。
+
 注册事件监听器
-要想给一个请求注册事件监听器，需要使用普通 addListener() 函数的变种。除了要指定回调函数之外，还必须指定一个过滤参数，和一个可选的额外信息参数。
+要想给一个请求注册事件监听器，需要使用普通 `addListener()` 函数的变种。除了要指定回调函数之外，还必须指定一个过滤参数，和一个可选的额外信息参数。
 
-三个参数的格式如下：
+例如：给 onBeforeRequest 事件注册监听函数：
 
+```javascript
+chrome.webRequest.onBeforeRequest.addListener(callback, filter, opt_extraInfoSpec);
 ```
+
+上面三个参数的格式分别如下：
+
+```javascript
 var callback = function(details) {...};
 var filter = {...};
 var opt_extraInfoSpec = [...];
