@@ -22,11 +22,11 @@ tags : [javascript]
 
 当然，在网页中访问用户文件是被严格禁止的，因为这是很明显的安全隐患。你不会希望当你浏览网页时，网页可以扫描你的硬盘，查看里面的内容。为了访问计算机上的文件，需要从用户获得授权。然而，没有必要显示麻烦的授权窗口，因为当用户决定上传内容时，他总是给网页授权。
 
-当你使用`<input type="files">`控件时，你就是在进行授权。
+当你使用 `<input type="files">` 控件时，你就是在进行授权。
 
 HTML5 给所有的 `<input type="file">` 控件定义了 `files` 属性。这个集合是一个 `FileList`，它是一个类数组结构，包含着 `File` 对象。你可以使用类似下面的代码来访问用户选择的文件。
 
-```
+```html
 <input type="file" id="your-files" multiple>
 <script>
 var control = document.getElementById("your-files");
@@ -49,14 +49,14 @@ control.addEventListener("change", function(event) {
 
 ```
 
-监听 file 控件的 change 事件。记住，总是可以通过 JavaScript 访问 files 属性，不一定要等到 change 。
+监听 file 控件的 change 事件。记住，总是可以通过 JavaScript 访问 files 属性，不一定要等到 change。
 ### 拖拽文件
 
 HTML5 Drag and Drop 提供了另外一种授权网站访问文件的方式：从计算机中拖动文件到浏览器中。你要做的就是监听两个事件。
 
 为了获取投放到页面某区域的文件，你必须监听 dargover 和 drop 事件，取消它们的默认行为。告诉浏览器由你来直接处理该动作，例如：打开图片文件。
 
-```
+```html
 <div id="your-files"></div>
 <script>
 var target = document.getElementById("your-files");
@@ -88,16 +88,16 @@ target.addEventListener("drop", function(event) {
 
 ### Ajax 文件上传
 
-一旦你获得了文件引用，就可以利用它来做一些很酷的事儿了：通过 Ajax 上传。FormData 对象让着一切变为可能。FormData 定义在 [XMLHttpRequest Level 2]。它代表一个 HTML 表单，允许你通过 append() 方法添加要提交到服务器的键值对。
+一旦你获得了文件引用，就可以利用它来做一些很酷的事儿了：通过 Ajax 上传。FormData 对象让着一切变为可能。FormData 定义在 [XMLHttpRequest Level 2]。它代表一个 HTML 表单，允许你通过 `append()` 方法添加要提交到服务器的键值对。
 
-```
+```javascript
 var form = new FormData();
 form.append("name","Nicholas");
 ```
 
 FormData 对象厉害之处在于，你可以直接添加一个文件进去，从而模拟文件上传表单。你只需将文件引用和一个名字添加进去，剩下的就交给浏览器。如下：
 
-```
+```javascript
 // create a form with a couple of values
 var form = new FormData();
 form.append("name", "Nicholas");
@@ -112,7 +112,7 @@ xhr.open("post", "/entrypoint", true);
 xhr.send(form);
 ```
 
-只要 FormData 传递到 send()，就会自动设置合适的 HTTP headers，使用文件时，你不用担心设置正确的 form encoding。服务端就像接收到常规表单提交一样处理即可。
+只要 FormData 传递到 `send()`，就会自动设置合适的 HTTP headers，使用文件时，你不用担心设置正确的 form encoding。服务端就像接收到常规表单提交一样处理即可。
 
 上面提到了在浏览器中获取 File metadata 的两种方式：
 
@@ -135,9 +135,9 @@ xhr.send(form);
 - `readAsArrayBuffer()` -- 以 `ArrayBuffer` 格式返回文件内容（适合二进制数据，例如图片）
 - `readAsDataURL()` -- 以 data URL 格式返回文件内容
 
-上面这些方法初始化一个文件读取，类似于 XHR() 对象的 send() 方法初始化 HTTP 请求。同样的，你必须在开始读取之前监听 load 事件。读取的结果总是由 event.target.result 表示。如下：
+上面这些方法初始化一个文件读取，类似于 XHR() 对象的 `send()` 方法初始化 HTTP 请求。同样的，你必须在开始读取之前监听 load 事件。读取的结果总是由 `event.target.result` 表示。如下：
 
-```
+```javascript
 var reader = new FileReader();
 reader.onload = function(event) {
     var contents = event.target.result;
@@ -157,7 +157,7 @@ reader.readAsText(file);
 
 Data URIs(有时候叫做 data URLs) 很有用，例如：读取计算机上的图片并显示出来，你可以使用下面的代码：
 
-```
+```javascript
 var reader = new FileReader();
 reader.onload = function(event) {
     var dataUri = event.target.result,
@@ -176,7 +176,7 @@ reader.readAsDataURL(file);
 
 由于 data URI 包含着所有的图片数据，可以把它赋值给图片的 src 属性。你还可以通过 `<canvas>` 显示图片：
 
-```
+```javascript
 var reader = new FileReader();
 reader.onload = function(event) {
     var dataUri = event.target.result,
@@ -205,7 +205,7 @@ ArrayBuffer 最开始是作为 WebGL 的一部分被引入的。
 
 处理二进制文件时，为了获得对数据细粒度的控制，优先使用 ArrayBuffer。
 
-可以将 ArrayBuffer 直接传递给 XHR 对象的 send() 方法，来发送 raw data 到服务器（服务器从请求中读取这些数据并重建文件）。
+可以将 ArrayBuffer 直接传递给 XHR 对象的 `send()` 方法，来发送 raw data 到服务器（服务器从请求中读取这些数据并重建文件）。
 
 接下来，要讲 FileReader 事件和错误处理。
 
@@ -220,7 +220,7 @@ progress 事件越来越常见，所以变成了一个单独的规范。这些�
 - loadstart：指示加载数据的流程开始，总是第一个被触发
 - progress：在数据加载过程中多次被触发，可以访问中间数据
 - error：当加载失败时触发
-- abort：通过调用 abort()（XMLHttpRequest 和 FileReader 都支持） 来取消数据加载时触发
+- abort：通过调用 `abort()`（XMLHttpRequest 和 FileReader 都支持） 来取消数据加载时触发
 - load：当所有数据都成功读取时触发
 - loadend：当对象结束数据转移时触发。在 error,abort,load 之后都会触发
 
@@ -234,9 +234,9 @@ progress 事件越来越常见，所以变成了一个单独的规范。这些�
 - loaded：已经读取的字节总数
 - total：需要读取的字节总数
 
-可以使用 HTML5 的 <progress> 标签来展示这些数据
+可以使用 HTML5 的 `<progress>` 标签来展示这些数据
 
-```
+```javascript
 var reader = new FileReader(),
      progressNode = document.getElementById("my-progress");
 
@@ -282,7 +282,7 @@ reader.readAsText(file);
 
 你可以在 error 事件或是 loadend 事件中确定错误类型。
 
-```
+```javascript
 var reader = new FileReader();
 
 reader.onloadend = function(event) {
@@ -332,7 +332,7 @@ Object URLs 是指向硬盘上文件的URL。假设你想把用户计算机上�
 
 ### Object URL 如何工作？
 
-File API 定义了一个全局变量，称为 URL，它有两个方法。第一个是 createObjectURL()，接受一个 File 对象（文件引用），返回一个 object URL，这会指示浏览器创建和管理对应文件的 URL。第二个方法是 revokeObjectURL() ，指示浏览器销毁传递进来的 URL，有效的释放内存。当然，当页面关闭时，所有 object URL 都会被 revoke，不过还是建议不需要时就释放。
+File API 定义了一个全局变量，称为 URL，它有两个方法。第一个是 `createObjectURL()`，接受一个 File 对象（文件引用），返回一个 object URL，这会指示浏览器创建和管理对应文件的 URL。第二个方法是 `revokeObjectURL()`，指示浏览器销毁传递进来的 URL，有效的释放内存。当然，当页面关闭时，所有 object URL 都会被 revoke，不过还是建议不需要时就释放。
 
 浏览器对 URL 对象的支持，不像对 File API 其它部分那样好。
 
@@ -340,7 +340,7 @@ File API 定义了一个全局变量，称为 URL，它有两个方法。第一�
 
 那么如何显示硬盘上的图片到网页中呢？假设你已经获取到了文件引用，保存到变量 file 中。
 
-```
+```javascript
 var URL = window.URL || window.webkitURL,
     imageUrl,
     image;
@@ -376,25 +376,25 @@ You can use object URLs anywhere the browser would make a GET request, which inc
 
 实际上， File 对象是 Blob 的特定版本，Blob 表示一段二进制数据。size 和 type 属性存在于 Blob 对象，被 File 继承。
 
-在大多数情况，Blob 和 File 可以用在同样的地方。例如，你可以使用 FileReader 从 Blob 中读取数据，还可以使用 URL.createObjectURL() 从Blob 创建 object URL。
+在大多数情况，Blob 和 File 可以用在同样的地方。例如，你可以使用 FileReader 从 Blob 中读取数据，还可以使用 `URL.createObjectURL()` 从 Blob 创建 object URL。
 
 ### 切片
 可以用这种方法，将大文件切片上传。
 
 ### 创建 Blob 的旧方法
 
-```
+```javascript
 var builder = new BlobBuilder();
 builder.append("Hello world!");
 var blob = builder.getBlob("text/plain");
 ```
 
-你可以多次调用 append()，来构建 Blob 内容。
+你可以多次调用 `append()`，来构建 Blob 内容。
 ### 创建 Blob 的新方法
 
 构造函数接受两个参数，第一个是数组，任意数量的 字符串，blobs 或 ArrayBuffer。第二个参数是对象，包含新创建 Blob 的属性，当前可以定义两个属性：type 和 endings
 
-```
+```javascript
 var blob = new Blob(["Hello world!"], { type: "text/plain" });
 ```
 
@@ -403,6 +403,5 @@ var blob = new Blob(["Hello world!"], { type: "text/plain" });
 原文地址：
 
 - [https://www.nczonline.net/blog/tag/file-api/](https://www.nczonline.net/blog/tag/file-api/)
-
-[File API]:()
-[XMLHttpRequest Level 2]:(http://www.w3.org/TR/XMLHttpRequest/)
+- [File API]()
+- [XMLHttpRequest Level 2](http://www.w3.org/TR/XMLHttpRequest/)
