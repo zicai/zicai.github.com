@@ -26,6 +26,7 @@ extension UI
 host permission 和模式匹配 https://developer.chrome.com/extensions/match_patterns
 
 ## 插件结构
+https://developer.chrome.com/extensions/overview
 
 - 背景页（background page）
 - 用户接口页（UI page），为了方便理解，可以叫做前景页。
@@ -352,15 +353,17 @@ webRequest API 可以用来观察和分析网络流量，还可以拦截和修�
         ]
 ```
 
+可用 scheme：http://, https://, ftp://, file://, ws:// , wss:// ,chrome-extension://
+
 请求的生命周期
 
 - onBeforeRequest
-- onBeforeSendHeaders
-- onSendHeaders
-- onHeadersReceived
+- onBeforeSendHeaders：扩展可以通过该事件添加、修改、删除请求头。
+- onSendHeaders：在请求头最终发送到网络之前触发该事件
+- onHeadersReceived：收到一个响应头时触发。由于跳转和 authentication request，所以一个请求可能多次触发该事件。扩展可以通过该事件添加、修改和删除响应头。
 - onAuthRequired
 - onBeforeRedirect
-- onResponseStarted
+- onResponseStarted：接收到响应体的第一个字节时触发
 - onCompleted
 - onErrorOccurred
 
@@ -384,6 +387,15 @@ var callback = function(details) {...};
 var filter = {...};
 var opt_extraInfoSpec = [...];
 ```
+callback 接收一个对象作为参数。对象包含当前请求的信息，信息与当前事件类型和 opt_extraInfoSpec 有关。
+
+如果 opt_extraInfoSpec 数组包含字符串 'blocking'(只有特定事件允许)，callback 以同步方式进行处理。也就是说，请求会被阻塞直到 callback 返回。在这种情况下，回调可以返回一个  webRequest.BlockingResponse 来决定请求后面的生命周期。
+
+根据不同的事件类型，你可以在 opt_extraInfoSpec 数组中提供不同的字符串，来获取有关请求更多的信息。例如：要在 onSendHeaders 事件中获取请求头：
+
+```javascript
+chrome.webRequest.onSendHeaders.addListener(callback, {urls: ['<all_urls>']}, ['requestHeaders']);
+```
 
 其中 filter 用来从多角度过滤触发事件的请求：
 
@@ -391,6 +403,9 @@ var opt_extraInfoSpec = [...];
 - Types
 - Tab ID
 - Window ID
+
+注意：该 API 目前没办法获取响应 body
+https://bugs.chromium.org/p/chromium/issues/detail?id=487422
 
 ## 常见需求
 
