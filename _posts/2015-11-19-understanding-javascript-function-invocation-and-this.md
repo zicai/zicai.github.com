@@ -26,7 +26,7 @@ fun.call(thisValue[, arg1[, arg2[, ...]]])
 
 例如：
 
-```
+```javascript
 function hello(thing) {  
   console.log(this + " says hello " + thing);
 }
@@ -42,7 +42,7 @@ hello.call("Yehuda", "world") //=> Yehuda says hello world
 
 很明显，每次都要用 `call` 来调用函数是很烦人的。所以 JavaScript 允许我们用括号语法来直接调用函数 `hellow("world")`。这种调用方式可以脱糖为：
 
-```
+```javascript
 function hello(thing) {  
   console.log("Hello " + thing);
 }
@@ -56,7 +56,7 @@ hello.call(window, "world");
 
 在 ECMAScript 5，严格模式下[2]，上面的行为发生了变化：
 
-```
+```javascript
 // this:
 hello("world")
 
@@ -74,7 +74,7 @@ hello.call(undefined, "world");
 
 另一种常见的调用方式是作为对象的成员函数调用。在这种情况下，脱糖为：
 
-```
+```javascript
 var person = {  
   name: "Brendan Eich",
   hello: function(thing) {
@@ -91,7 +91,7 @@ person.hello.call(person, "world");
 
 需要注意的是，不论 `hello` 方法是如何附加到对象上的都不会影响上面的行为。上面的例子是在初始化对象时定义方法。下面来看，动态的将方法附加到对象上：
 
-```
+```javascript
 function hello(thing) {  
   console.log(this + " says hello " + thing);
 }
@@ -104,13 +104,13 @@ person.hello("world") // still desugars to person.hello.call(person, "world")
 hello("world") // "[object DOMWindow]world"  
 ```
 
-请注意，函数没有持久性的 `this` 值。`this` 的值是在运行时，基于调用方式进行设定的。
+**请注意，函数没有持久性的 `this` 值。`this` 的值是在运行时，基于调用方式进行设定的。**
 
 ## 使用 Function.prototype.bind
 
 有时候，如果函数拥有一个持久性的 `this` 值，会很方便。过去，人们经常利用闭包来将一个函数转化为一个 `this` 值不变的函数：
 
-```
+```javascript
 var person = {  
   name: "Brendan Eich",
   hello: function(thing) {
@@ -127,7 +127,7 @@ boundHello("world");
 
 为了更加通用，稍作修改：
 
-```
+```javascript
 var bind = function(func, thisValue) {  
   return function() {
     return func.apply(thisValue, arguments);
@@ -144,14 +144,14 @@ boundHello("world") // "Brendan Eich says hello world"
 
 由于这是很常见的用法，所以ES5 在所有 `Function` 对象上引入了 `bind` 方法，实现了这一行为：
 
-```
+```javascript
 var boundHello = person.hello.bind(person);  
 boundHello("world") // "Brendan Eich says hello world"  
 ```
 
 当你需要把一个函数做为回调传递时，`bind` 很有用:
 
-```
+```javascript
 var person = {  
   name: "Alex Russell",
   hello: function() { console.log(this.name + " says hello world"); }

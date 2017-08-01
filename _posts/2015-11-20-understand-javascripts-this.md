@@ -55,7 +55,7 @@ ECMAScript 5.1 引入了严格模式。
 
 在内部函数中，你是不能用 `this` 引用到外部函数的 `this` 值的，因为外部函数 `this` 值被 shadowed. 为了获得外部函数的 `this` 值，通常需要使用 `.call()`，`.apply()` 或 `.bind()`。例如：
 
-```
+```javascript
 var obj = {
   name: 'Jane',
   friends: ['Tarzan', 'Cheeta'],
@@ -131,7 +131,7 @@ JavaScript 对象可以从 prototype 中继承方法。当调用这些继承的�
 
 常见的例子包括 `setTimeout()` 和注册事件处理器（详见第三部分）。
 
-```
+```javascript
 /** Similar to setTimeout() and setImmediate() */
 function callIt(func) {
   func();
@@ -140,7 +140,7 @@ function callIt(func) {
 
 一个具体的例子：
 
-```
+```javascript
 function Animal(type, legs) {  
   this.type = type;
   this.legs = legs;  
@@ -157,7 +157,7 @@ setTimeout(myCat.logInfo, 1000);
 
 在上面的例子中，当方法作为参数传递时，就从对象上剥离了。使用 `bind()` 可以修正该行为：
 
-```
+```javascript
 var myCat = new Animal('Cat', 4);  
 // logs "The Cat has 4 legs"
 setTimeout(myCat.logInfo.bind(myCat), 1000);  
@@ -180,7 +180,7 @@ setTimeout(myCat.logInfo.bind(myCat), 1000);
 
 为了避免忘记使用 `new` ，可以使用下面代码
 
-```
+```javascript
 function Vehicle(type, wheelsCount) {  
   if (!(this instanceof Vehicle)) {
     throw Error('Error: Incorrect invocation');
@@ -206,7 +206,7 @@ var brokenCat = Vehicle('Broken Car', 3);
 
 还有一种常见用法是：在 ES5 中，在子类中调用父类的构造函数。
 
-```
+```javascript
 function Runner(name) {  
   console.log(this instanceof Rabbit); // => true
   this.name = name;  
@@ -249,7 +249,7 @@ bound function 是指跟一个对象绑定的函数。通常在原始函数上�
 
 ### 误区：用箭头函数定义方法
 
-```
+```javascript
 function Period (hours, minutes) {  
   this.hours = hours;
   this.minutes = minutes;
@@ -292,7 +292,7 @@ global execution context（outside of any function）,`this` 引用的是全局�
 
 在 Node.js 中，代码通常都是运行在模块中。所以，top-level scope 是一个特殊的 module scope
 
-```
+```javascript
 // `this` doesn’t refer to the global object:
 console.log(this !== global); // true
 // `this` refers to a module’s exports:
@@ -307,7 +307,7 @@ console.log(this === module.exports); // true
 
 `this` binding is only affected by the most immediate member reference. 如下所示：
 
-```
+```javascript
 var o = {prop: 37};
 
 function independent() {
@@ -320,7 +320,7 @@ console.log(o.b.g()); // logs 42
 
 A function used as getter or setter has its this bound to the object from which the property is being set or gotten.
 
-```
+```javascript
 function sum(){
   return this.a + this.b + this.c;
 }
@@ -348,14 +348,14 @@ console.log(o.average, o.sum); // logs 2, 6
 
 如果间接调用 `eval()`，`this` 引用的是全局对象。如下：
 
-```
+```javascript
 > (0,eval)('this === window')
 true
 ```
 
 如果是直接调用 `eval()`，`this` 值与 `eval()` 外层 `this` 值相同。如下：
 
-```
+```javascript
 // Real functions
 function sloppyFunc() {
   console.log(eval('this') === window); // true
@@ -388,7 +388,7 @@ obj.method();
 
 思考题：
 
-```
+```html
 <script type="text/javascript">
 var obj = {
     myMethod : function () {
@@ -408,7 +408,7 @@ This one was tricky. When evaluating the eval code, this is obj. However, in the
 
 先定义一个函数：
 
-```
+```javascript
 function doSomething() {
    this.style.color = '#cc0000';
 }
@@ -416,13 +416,13 @@ function doSomething() {
 
 ### DOM event handler
 
-```
+```javascript
 element.onclick = doSomething;
 ```
 
 `doSomething` 函数会完整的拷贝到 `onclick` 属性上，成为一个方法。
 
-```
+```javascript
 alert(element.onclick)
 // 会得到
 function doSomething()
@@ -435,12 +435,12 @@ function doSomething()
 
 ### in-line event handler
 
-```
+```html
 <element onclick="doSomething()">
 ```
 在这种情况下，不会拷贝函数，只是调用它。
 
-```
+```javascript
 alert(element.onclick)
 // 会得到
 function onclick()
@@ -450,7 +450,7 @@ function onclick()
 ```
 所以 `this` 值为全局对象。可以改写为：
 
-```
+```javascript
 <element onclick="doSomething(this)">
 
 function doSomething(obj) {
