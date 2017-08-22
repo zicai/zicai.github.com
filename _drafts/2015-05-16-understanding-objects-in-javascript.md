@@ -153,10 +153,10 @@ delete person.name
 - for-in 循环
 
     ```javascript
-for (property in object){
-	console.log(property) // 属性名
-	console.log(object[property]) // 属性值
-}
+    for (property in object){
+	    console.log(property) // 属性名
+	    console.log(object[property]) // 属性值
+    }
     ```
 - `Object.keys(obj)` 可以用来获取可枚举属性的名字的数组。
 

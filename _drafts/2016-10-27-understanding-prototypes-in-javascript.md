@@ -33,7 +33,7 @@ ECMAScript 支持面向对象编程，但是和传统面向对象语言（例如
 
 通过代码来理解上面三句话：
 
-```
+```javascript
 function Person(){
 
 }
@@ -57,7 +57,7 @@ var person1 = new Person()
 上面的代码中，`Person` 函数对应的是默认的原型对象，
 想一想，如果我们重写函数的默认原型对象，让原型对象等于另一个类型的实例，会怎样呢？
 
-```
+```javascript
 function SuperType() {
 
 }
