@@ -148,7 +148,7 @@ delete person.name
 
 ## 枚举属性
 
-有两种方法：
+有三种种方法：
 
 - for-in 循环
 
@@ -158,13 +158,21 @@ delete person.name
 	    console.log(object[property]) // 属性值
     }
     ```
-- `Object.keys(obj)` 可以用来获取可枚举属性的名字的数组。
+- `Object.keys(obj)` 获取自身可枚举属性。
+- `Object.getOwnPropertyNames(obj)` 获取自身所有属性（包括不可枚举属性）
 
-二者的区别在于 for-in 循环也会遍历原型属性（只包括可枚举属性），而 Object.keys() 只返回自有属性。
+三者对比如下：
 
-可枚举属性的 [[Enumerable]] 都被设置为 true。你添加的属性默认都是可枚举的。而对象的大部分原生方法（Object.prototype）都是不可枚举的。
+|方法|是否包含原型属性|是否包含不可枚举属性|
+|:---|:---:|:---:|
+|for...in|是|否|
+|Object.keys|否|否|
+|Object.getOwnPropertyNames|否|是|
 
-每个对象都有一个 propertyIsEnumerable() 方法，用来判断一个属性是否可枚举。
+
+可枚举属性的 Enumerable 特性都被设置为 true。你添加的属性默认都是可枚举的。而对象的大部分原生方法（Object.prototype）都是不可枚举的。
+
+每个对象都有一个 `propertyIsEnumerable()` 方法，用来判断一个属性是否可枚举。
 
 ```javascript
 person.propertyIsEnumerable('name')
