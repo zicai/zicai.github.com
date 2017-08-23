@@ -172,18 +172,41 @@ person.propertyIsEnumerable('name')
 
 
 
-## 属性特性
-ECMAScript defines multiple internal properties for objects in JavaScript, and these internal properties are indicated by double-square-bracket notation
+## 属性特性（Property attributes）
 
-- [[Enumerable]]
-- [[Configurable]]
-- [[Value]]
-- [[Writable]]
-- [[Get]] and [[Set]]
+- 数据属性和访问器属性通用的属性特性
+    - Enumerable
+    - Configurable
+- 数据属性的属性特性
+    - Value
+    - Writable
+- 访问器属性的属性特性：访问器属性不需要保存值，所以不需要 Value 和 Writable。
+    - Get：保存着 getter 函数
+    - Set：保存着 setter 函数
 
-Object.defineProperty() 修改属性特性
-Object.defineProperties()
-Object.getOwnPropertyDescriptor()
+
+相关方法：
+
+- `Object.defineProperty(obj,propertyName,descriptorObj)` 定义或者修改属性特性
+- `Object.defineProperties(obj,{propery1:descriptorObj,propery2:descriptorObj})` 同时定义多个属性及其特性
+- `Object.getOwnPropertyDescriptor()` 获取属性特性
+
+使用示例：
+
+```javascript
+let person  = {}
+Object.defineProperty(person, "name", {
+    value: "Taluo",
+    enumerable: true,
+    configurable: true,
+    writable: true
+})
+```
+
+注意：在使用 `Object.defineProperty` 定义新属性时，enumerable、configurable、writable 默认值均为 false。
+
+
+
 
 ## 防止对象被修改
 三种方式：
