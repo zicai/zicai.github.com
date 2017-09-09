@@ -1,14 +1,14 @@
 ---
 layout: post
 category : lessons
-title: "javascript 数组循环"
+title: "javascript 循环与遍历"
 tagline: "Supporting tagline"
 tags : [javascript]
 ---
 
-原文地址：[http://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript](http://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript)
+## 循环
 
-##数组
+## 数组遍历
 
 1. 使用forEach(ES5+)
 2. 使用for
@@ -143,10 +143,11 @@ var divs = Array.prototype.slice.call(document.querySelectorAll("div"), 0);
 ##Caveat for host-provided objects
 
 
+## 对象遍历
 
 
-
-
+参考链接
+- ：[http://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript](http://stackoverflow.com/questions/9329446/for-each-over-an-array-in-javascript)
 
 
 
