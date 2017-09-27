@@ -21,7 +21,7 @@ npm init
 
 新建一个 index.js，内容如下：
 
-```
+```javascript
 #!/usr/bin/env node
 console.log('Hello, hacker!');
 ```
@@ -80,7 +80,7 @@ $ readlink /usr/local/bin/hacker
 ## 错误处理
 根据 Unix 传统，程序执行成功返回 0，否则返回 1 。
 
-```
+```javascript
 if (err) {
   process.exit(1);
 } else {
@@ -113,7 +113,7 @@ $ ps aux | grep 'node'
 ```
 脚本可以通过监听标准输入的 `data` 事件，获取重定向的数据。
 
-```
+```javascript
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', function(data) {
@@ -129,7 +129,7 @@ hello foo
 ### 系统信号
 操作系统可以向执行中的进程发送信号，`process` 对象能够监听信号事件。
 
-```
+```javascript
 process.on('SIGINT', function () {
   console.log('Got a SIGINT');
   process.exit(0);

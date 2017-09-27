@@ -33,7 +33,7 @@ ES6 引入箭头函数（Fat arrow function 或是 arrow function）出于两个
 
 箭头函数的语法灵活多变。基本结构是：函数参数，跟着一个箭头，跟着函数体。例如：
 
-```
+```javascript
 var reflect = value => value;
 
 // 等同于:
@@ -45,7 +45,7 @@ var reflect = function(value) {
 
 如果不止一个参数，则需要用括号括起来，如下：
 
-```
+```javascript
 var sum = (num1, num2) => num1 + num2;
 
 // 等同于:
@@ -57,7 +57,7 @@ var sum = function(num1, num2) {
 
 如果不需要参数，也得用括号括起来，如下：
 
-```
+```javascript
 var sum = () => 1 + 2;
 
 // 等同于:
@@ -69,7 +69,7 @@ var sum = function() {
 
 因为花括号用来表示函数体，箭头函数如果要返回一个 literal object，必须用括号括起来。如下：
 
-```
+```javascript
 var getTempItem = id => ({ id: id, name: "Temp" });
 
 // 等同于:
@@ -94,7 +94,7 @@ var getTempItem = function(id) {
 
 综上所述：
 
-```
+```javascript
 function () { return 1; }
 () => { return 1; }
 () => 1
@@ -119,7 +119,7 @@ function () { return arguments[0]; }
 
 JavaScript 中的 `this` 饱受诟病。以 jQuery 为例，下面的代码用于更新时间：
 
-```
+```javascript
 $('.current-time').each(function () {
   setInterval(function () {
     $(this).text(Date.now());
@@ -129,7 +129,7 @@ $('.current-time').each(function () {
 
 当在 `setInterval` 中尝试通过 `each` 设定的 `this` 引用 DOM 元素时，我们实际上得到的是属于回调函数本身的一个 `this`。常见的解决办法是：
 
-```
+```javascript
 $('.current-time').each(function () {
   var self = this;
  
@@ -141,7 +141,7 @@ $('.current-time').each(function () {
 
 或者使用 `.bind()`
 
-```
+```javascript
 $('.current-time').each(function () {
   setInterval((function () {
     $(this).text(Date.now());
@@ -152,7 +152,7 @@ $('.current-time').each(function () {
 
 使用箭头函数就不存在这个问题，因为它们并不引入自己的 `this`:
 
-```
+```javascript
 $('.current-time').each(function () {
   setInterval(() => $(this).text(Date.now()), 1000);
 });
@@ -161,7 +161,7 @@ $('.current-time').each(function () {
 ## 关于参数
 警告：箭头函数没有 `arguments` 变量
 
-```
+```javascript
 function log(msg) {
   const print = () => console.log(arguments[0]);
   print(`LOG: ${msg}`);
@@ -172,7 +172,7 @@ log('hello'); // hello
 
 重申一下：箭头函数没有自己的 `this` 和 `arguments`。但是，你还是可以通过 rest parameters 来获取传入箭头函数的所有参数。
 
-```
+```javascript
 function log(msg) {
   const print = (...args) => console.log(args[0]);
   print(`LOG: ${msg}`);
