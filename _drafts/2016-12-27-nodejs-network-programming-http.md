@@ -8,7 +8,7 @@ tags : []
 
 引入 http 模块
 
-```
+```javascript
 const http = require('http');
 ```
 
@@ -28,7 +28,9 @@ http 模块公开的属性有：
 
 首先调用 `http.createServer([requestListener])` 创建一个 http.Server 的实例，requestListener 函数自动绑定到 `'request'` 事件。
 
-调用 listen 方法，绑定监听端口。
+调用 `server.listen([port][, hostname][, backlog][, callback])` 方法，绑定监听端口和 hostname。
+
+需要注意的是：当提供了 hostname 参数时，需要同时给出 backlog 参数（默认是 511），否则报错。而且在本地做测试时，需要先把对应的 hostname 添加到 hosts 文件中，否则也会报错（`Error: getaddrinfo ENOTFOUND`）
 
 ### http.Server 类
 
