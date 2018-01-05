@@ -29,7 +29,7 @@ XHR 有两种用法：
 
 一个简单的例子：
 
-```
+```javascript
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function(){
     if(xhr.readyState==4){
@@ -59,18 +59,22 @@ XHR 对象的 `readyState` 属性可取值及其对应状态：
 - `status`：响应的 HTTP 状态
 - `statusText`：HTTP 状态说明
 
+### send 方法
+内部操作：
+https://xhr.spec.whatwg.org/#the-send()-method
+
 ## HTTP 头部信息
 
 ### 请求头
 在 `open()` 方法之后，`send()` 方法之前，可以调用 `setRequestHeader()` 方法设置自定义请求头部信息。例如：
 
-```
+```javascript
 xhr.setRequestHeader("myheader","value");
 ```
 
 除了可以设置自定义请求头，还可以重写某些标准请求头，例如：'Content-Type'，出于安全考虑，浏览器会禁止重写某些请求头，例如：'Host'、'cookie' 等，[参见这里](https://xhr.spec.whatwg.org/#dom-xmlhttprequest-setrequestheader)。试图重写这些请求头，会触发异常：
 
-```
+```javascript
 Refused to set unsafe header "Host"
 ```
 
@@ -90,7 +94,7 @@ XMLHttpRequest 2 级规范进一步扩展了 XHR。包括：
 
 给 FormData 填充数据的两种方式:
 
-```
+```javascript
 var data = new FormData();
 data.append('name','value');
 
@@ -101,7 +105,18 @@ var data = new FormData(document.forms[0])
 
 ### timeout 属性
 
-### overrideMimeType
+### 发送和接收二进制数据
+
+- 发送
+
+XMLHttpRequest 对象的 send 方法，可以接受 ArrayBuffer, Blob, File 对象。
+
+- 接收
+
+XMLHttpRequest 对象的 responseType 属性可以用来改变期望服务端返回的响应类型。可选值：空字符串（默认值）、
+"arraybuffer", "blob", "document", "json", 和 "text"。response 属性包含 entity body according to responseType, as an ArrayBuffer, Blob, Document, JSON, or string. 
+
+[https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data)
 
 ## Progress Events
 
@@ -121,7 +136,7 @@ XHR 提供了以下几个进度事件
 ### load 事件
 有了 load 事件，就无需再通过监听 `readystatechange` 事件来获取响应了。上面的例子可以优化为：
 
-```
+```javascript
 var xhr = new XMLHttpRequest();
 xhr.onload = function(){
     var status = xhr.status;
@@ -146,13 +161,27 @@ progress 事件会在浏览器接收数据期间周期性的触发。onprogress 
 
 由于同源策略的限制，XHR 对象只能访问与包含它的页面位于同一个域中的资源。但是，实现合理的跨域请求对开发浏览器应用程序也是至关重要的。于是 W3C 提出了 CORS（cross-origin resource sharing）。CORS 的基本思路是：使用自定义的 HTTP 头让浏览器与服务器进行沟通，从而决定请求或响应是否应该成功。
 
-ajax 会自动带上 cookie ，对于跨站请求，浏览器是不会发送凭证信息的。但如果将XMLHttpRequest的一个特殊标志位设置为true，浏览器就将允许该请求的发送。
+ajax 会自动带上 cookie ，对于跨站请求，浏览器是不会发送凭证信息的。但如果将 XMLHttpRequest 的一个特殊标志位设置为 true，浏览器就将允许该请求的发送。
 
-```
+```javascript
 xhr.withCredentials = true;
 ```
 但是，如果服务器端的响应中，如果没有返回 `Access-Control-Allow-Credentials: true`的响应头，那么浏览器将不会把响应结果传递给发出请求的脚本程序，以保证信息的安全。
 
-注意：跨域并非浏览器限制了发起跨站请求，而是跨站请求可以正常发起，但是返回结果被浏览器拦截了。最好的例子是 CSRF 跨站攻击原理，请求是发送到了后端服务器无论是否跨域！注意：有些浏览器不允许从HTTPS的域跨域访问HTTP，比如Chrome和Firefox，这些浏览器在请求还未发出的时候就会拦截请求，这是一个特例
+https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
+
+withCredentials 还用来指示是否忽略响应中的 Cookie。
+
+注意：跨域并非浏览器限制了发起跨站请求，而是跨站请求可以正常发起，但是返回结果被浏览器拦截了。最好的例子是 CSRF 跨站攻击原理，请求是发送到了后端服务。
+
+还要注意的是：有些浏览器不允许从 HTTPS 的域跨域访问 HTTP，比如 Chrome 和 Firefox，这些浏览器在请求还未发出的时候就会拦截请求。
+
+在 Chrome 中， https://a.com ajax 请求 http://a.com，会在控制台输出
+
+> Mixed Content: The page at 'https://a.com' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint 'http://a.com'. This request has been blocked; the content must be served over HTTPS.
+
+同时，在 Network 面板，对应请求 status 标记为：(blocked:mixed-content)	
+
+https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
 
 http://javascript.ruanyifeng.com/bom/ajax.html#toc11
