@@ -25,10 +25,50 @@ tags : [object]
 - 对象复制
 
 ### 对象定义
-两种方式：
+几种方式：
 
-- 对象字面量
-- 构造函数
+- `new Object()`
+- `Object.create()`
+- [对象字面量（literal notation、initializer notation）](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+
+ES6 进一步简化了对象字面量的写法，允许直接写入变量和函数作为对象的属性和方法。例如：
+
+```javascript
+var foo = 'bar'
+var obj = {
+    // Shorthand property names
+    foo,
+    // Shorthand method names
+    method(){ 
+        return 1;
+    }
+}
+// 等同于
+var obj = {
+    foo: foo,
+    method: function(){
+        return 1
+    }
+}
+```
+
+同时，ES6 还引入了 Computed property names，允许使用表达式作为对象的属性名（表达式要放在方括号中）：
+
+```javascript
+var prop = 'foo';
+var o = {
+    [prop]: 'hey',
+    ['b' + 'ar']: 'there'
+}
+
+// 经常结合 Symbol 使用
+var sym = Symbol();
+var a = {
+    [sym]: 'taluoo'
+}
+```
+
+
 
 ### 对象类型
 
@@ -55,12 +95,19 @@ String、Number 只有以构造函数形式创建出来的才是对象，否则�
 
 null 和 undefined 只有字面量，没有对应的构造函数
 
+JSON
+
+检测对象类型
 
 ### 对象复制
 
 * 浅复制：ES6 引入的 `Object.assign()`
 * 深复制：要考虑循环引用的问题
     * 对于JSON安全的对象，可以使用 `var newObj = JSON.parse( JSON.stringfy( somObj ) )`
+
+ES6 spread properties
+
+Note that Object.assign() triggers setters whereas the spread operator doesn't.
 
 ## 第二部分：属性
 
@@ -168,9 +215,30 @@ person.__defineSetter__('name', function (value) {
 
 ### 访问属性
 
-* . 操作符要求属性名满足标识符的命名规范
-* [‘'] 则可以接受任意的 UTF8 字符串作为属性名，也可以是变量
-ES6 增加了可计算属性名，最常用场景可能是 ES6 的 Symbol。
+两种方式：
+
+- dot notation
+- bracket notation
+
+```javascript
+object.property_name
+object['property_name']
+```
+
+使用 dot notation 时，property_name 必须是合法的标示符（identifier）(alphanumerical 字符序列，还包括下划线和 $ 符号，不能以数字开头)
+
+使用 bracket notation 时，property_name 是字符串即可，也可以是变量。
+
+Symbol 值作为属性名时，只能通过 bracket notation 访问。
+
+bracket notation 之间可以有任意 space(空格、Tab、换行)
+
+```javascript
+document 	['getElementById']('main-header')
+```
+
+
+[Property accessors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_Accessors)
 
 ### 检测属性
 
@@ -237,6 +305,12 @@ person.propertyIsEnumerable('name')
 ```
 
 注意：在数组上应用 for...in 有时会产生出人意料的结果，因为这种枚举不仅会包含所有数值索引，还会包含所有可枚举属性。最好只在对象上应用 for..in 循环，如果要遍历数组就使用传统的 for 循环
+
+但是，如果属性名是一个 Symbol 值，该属性并不会出现在上面三种方法的结果当中。虽然，通过 `Object.getOwnPropertyDescriptor` 读取该属性的描述符 enumerable 值为 true
+
+`Object.getOwnPropertySymbols(obj)` 方法返回一个数组，成员是当前对象的所有用作属性名的 Symbol 值。
+
+ES6 新引入的 API，Reflect.ownKeys 方法可以返回所有类型的键名，包括常规键名和 Symbol 键名。
 
 ### 属性特性（Property attributes）
 
