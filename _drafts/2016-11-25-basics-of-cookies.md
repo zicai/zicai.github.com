@@ -195,9 +195,11 @@ name=a=b&c=d&e=f&g=h
 
 - `document.cookie` 用来创建、操作、删除 cookie
 - 设置 cookie 时，格式与 Set-Cookie 一致
-	```
+
+```javascript
 document.cookie="name=Nicholas; domain=nczonline.net; path=/";
 ```
+
 - 设置 `document.cookie` 的值并不会删除页面上所有 cookie，而是新建或者修改对应 cookie
 - 通过 JS 设置的 cookie 与通过 Set-Cookie 设置的 cookie 没有区别
 - 通过 `document.cookie` 读取 cookie 时，格式与 Cookie 头部一致，多个 cookie 之间用分号和空格分隔

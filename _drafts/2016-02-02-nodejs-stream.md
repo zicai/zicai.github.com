@@ -14,7 +14,7 @@ stream 可以是可读、可写或是都可以。所有流都是 EventEmitter �
 
 使用 stream 模块：
 
-```
+```js
 const stream = require('stream');
 ```
 
@@ -53,7 +53,7 @@ stream API 一个主要目的就是 `stream.pipe()` 方法，把缓冲的数据�
 ### 可写流
 可写流是对数据流向的目的地的抽象。所有可写流都实现了 stream.Writable 类定义的接口。虽然特定的可写流的实例可能略有不同，但基本使用模式是一致的：
 
-```
+```js
 const myStream = getWritableStreamSomehow();
 myStream.write('some data');
 myStream.write('some more data');
@@ -131,7 +131,7 @@ Stream 以 paused mode 开始，然后可以用下面的方式在两种模式间
 
 - `readable.isPaused()`：判断可读流的运行状态。主要是给 readable.pipe() 方法的底层机制使用，通常不会直接用到
 - `readable.pause()`
-- `readable.pipe(destination[, options])`：返回目标流的引用，这样就可以串联多个 pipe() 方法。
+- `readable.pipe(destination[, options])`：返回目标流的引用，这样就可以串联多个 `pipe()` 方法。
 - `readable.read([size])`：默认，读出来的数据时 Buffer 对象，除非用 readable.setEncoding() 指定了编码或者流运行在 object mode。如果没有指定 size，那么就返回内部 buffer 包含的所有数据。只应该在可读流处在暂停模式时才使用 readable.read() 方法。在 flowing 模式，readable.read() 会自动被调用直到内部 buffer 为空。
 - `readable.resume()`
 - `readable.setEncoding(encoding)`

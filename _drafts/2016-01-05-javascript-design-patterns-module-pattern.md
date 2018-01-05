@@ -20,7 +20,7 @@ Module pattern 部分是基于 object literal，所以，我们先来看object l
 
 ## Object literal
 
-```
+```javascript
 var myObjectLiteral = {
  
     variableKey: variableValue,
@@ -33,7 +33,7 @@ var myObjectLiteral = {
 
 一个更完整的例子：
 
-```
+```javascript
 var myModule = {
  
   myProperty: "someValue",
@@ -89,7 +89,7 @@ module pattern 仍然是使用 object literal，只不过是将其作为一个 s
 
 例子：
 
-```
+```javascript
 var testModule = (function () {
  
   var counter = 0;
@@ -120,7 +120,7 @@ testModule.resetCounter();
 
 模板
 
-```
+```javascript
 var myNamespace = (function () {
  
   var myPrivateVar, myPrivateMethod;
@@ -160,7 +160,7 @@ var myNamespace = (function () {
 #### Import mixin
 将全局变量作为参数传入
 
-```
+```javascript
 // Global module
 var myModule = (function ( jQ, _ ) {
  
@@ -186,7 +186,7 @@ myModule.publicMethod();
 
 #### Exports
 
-```
+```javascript
 // Global module
 var myModule = (function () {
  

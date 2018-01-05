@@ -16,7 +16,7 @@ DOM3 event 规范中定义了 Mutation events。它给网页提供了一种在 D
 
 一个简单的示例：
 
-```
+```javascript
 document.addEventListener('DOMNodeInserted', function(e){
 	// handle changes one-by-one. No idea how many more are coming
 })
@@ -41,7 +41,7 @@ document.addEventListener('DOMNodeInserted', function(e){
 
 先来看一个简单的示例：
 
-```
+```javascript
 // select the target node
 var target = document.querySelector('#some-id');
  
@@ -66,7 +66,7 @@ observer.disconnect();
 
 `MutationObserver()` 构造函数用来创建一个新的 DOM mutation observer。
 
-```
+```javascript
 var observer = new MutationObserver(function callback)
 ```
 

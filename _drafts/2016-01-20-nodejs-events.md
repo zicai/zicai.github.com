@@ -22,7 +22,7 @@ tags : [event]
 
 简单的例子：
 
-```
+```javascript
 const EventEmitter = require('events');
 
 class MyEmitter extends EventEmitter {}
@@ -43,7 +43,7 @@ myEmitter.emit('event');
 
 - 用普通函数时，this 指向的是监听器所附加的 EventEmitter
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 myEmitter.on('event', function(a, b) {
   console.log(a, b, this);
@@ -59,7 +59,7 @@ myEmitter.emit('event', 'a', 'b');
 
 - 用箭头函数时，this 就不再指向 EventEmitter 实例。
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 myEmitter.on('event', (a, b) => {
   console.log(a, b, this);
@@ -73,7 +73,7 @@ myEmitter.emit('event', 'a', 'b');
 EventListener 按照监听函数的注册顺序，同步调用每个监听函数。这是为了保证合适的事件序列以及避免竞态和逻辑错误。适当的时候，可以通过 `setImmediate()` 或 `process.nextTick()` 将监听函数切换到异步模式。
 
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 myEmitter.on('event', (a, b) => {
   setImmediate(() => {
@@ -87,7 +87,7 @@ myEmitter.emit('event', 'a', 'b');
 
 用 `eventEmitter.on()` 注册的监听函数，事件每次触发时都会执行一遍。而使用 `eventEmitter.once()` 方法可以注册最多只执行一次的监听函数，事件第一次触发时，监听函数被 unregistered 并调用。
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 var m = 0;
 myEmitter.once('event', () => {
@@ -104,7 +104,7 @@ myEmitter.emit('event');
 当 EventEmitter 实例内部出现错误时，通常是发射一个 error 事件，在 Node.js 中，这会作为特殊情况进行处理。
 如果 EventEmitter 实例没有注册任何监听函数到 error 事件，当有 error 事件发射时，错误被抛出，打印跟踪栈，Node.js 进程退出。
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 myEmitter.emit('error', new Error('whoops!'));
 // Throws and crashes Node.js
@@ -112,7 +112,7 @@ myEmitter.emit('error', new Error('whoops!'));
 
 为了防止 Node.js 进程崩溃，应该在 process 对象的 uncaughtException 事件上注册监听函数。
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 
 process.on('uncaughtException', (err) => {
@@ -125,7 +125,7 @@ myEmitter.emit('error', new Error('whoops!'));
 
 最佳实践：总是注册 error 事件的监听函数
 
-```
+```javascript
 const myEmitter = new MyEmitter();
 myEmitter.on('error', (err) => {
   console.log('whoops! there was an error');

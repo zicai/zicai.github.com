@@ -21,7 +21,7 @@ Buffer 实例常用来表示字符被编码后的字节序列。使用明确的�
 
 例如：
 
-```
+```javascript
 const buf = Buffer.from('hello world', 'ascii');
 
 // Prints: 68656c6c6f20776f726c64

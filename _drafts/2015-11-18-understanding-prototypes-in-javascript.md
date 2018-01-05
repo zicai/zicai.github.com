@@ -10,7 +10,7 @@ PS：只翻译了关键内容。
 ## 新建对象
 在 JavaScript 中，对象就是键值对，创建对象可以使用 `Object.create`:
 
-```
+```javascript
 var person = new Object(null); // 创建了一个空对象
 ```
 
@@ -28,7 +28,7 @@ var person = new Object(null); // 创建了一个空对象
 
 可以通过 `Object.defineProperty` 给对象添加属性。我们给上面的空对象添加 first name 和 last name :
 
-```
+```javascript
 var person = Object.create(null);
 Object.defineProperty(person, 'firstName', {
 	value : "yehuda",
@@ -47,7 +47,7 @@ Object.defineProperty(person, 'lastName', {
 
 很明显，这太啰嗦了。可以稍微简化下：
 
-```
+```javascript
 var config = {  
   writable: true,
   enumerable: true,
@@ -72,7 +72,7 @@ defineProperty(person, 'lastName',   "Katz");
 
 实际上，`Object.create(null)`，参数就是用来告诉 JavaScript 把谁设为对象的原型。可以用 `Object.getPrototypeOf` 来查看对象的原型。
 
-```
+```javascript
 var man = Object.create(null);  
 defineProperty(man, 'sex', "male");
 
@@ -89,7 +89,7 @@ Object.getPrototypeOf(yehuda) // returns the man object
 
 也可以添加函数，在多个对象间共享：
 
-```
+```javascript
 var person = Object.create(null);  
 defineProperty(person, 'fullName', function() {  
   return this.firstName + ' ' + this.lastName;
@@ -112,7 +112,7 @@ yehuda.fullName() // "Yehuda Katz"
 
 由于创建一个 writable, configurable, enumerable 的新属性是很常见的需求，JavaScript提供了赋值语法来简化这一过程。我们用赋值语法替换上面的 `defineProperty`
 
-```
+```javascript
 var person = Object.create(null);
 
 // instead of using defineProperty and specifying writable,
@@ -139,13 +139,13 @@ yehuda.fullName() // "Yehuda Katz"
 
 每次都用上面的方式设置属性依然很繁琐。JavaScript提供了 literal syntax 用来创建新对象同时设置属性。
 
-```
+```javascript
 var person = { firstName: "Paul", lastName: "Irish" }  
 ```
 
 literal syntax 实际上是下面方式的语法糖：
 
-```
+```javascript
 var person = Object.create(Object.prototype);  
 person.firstName = "Paul";  
 person.lastName  = "Irish";  
@@ -155,7 +155,7 @@ person.lastName  = "Irish";
 
 可是，literal syntax 只适合我们想把新对象的原型设置为 `Object.prototype` 时。但有时候，我们会想基于特定的原型创建对象：
 
-```
+```javascript
 var fromPrototype = function(prototype, object) {  
   var newObject = Object.create(prototype);
 
@@ -195,7 +195,7 @@ jeremy.toString() // "Jeremy Ashkenas"
 
 为了方便面向对象编程，JavaScript 允许你将一个函数对象作为创建新对象的原型和构造函数的结合体。
 
-```
+```javascript
 var Person = function(firstName, lastName) {  
   this.firstName = firstName;
   this.lastName = lastName;
@@ -208,7 +208,7 @@ Person.prototype = {
 
 上面的代码创建了一个函数对象，它既是一个构造函数，也可以作为新对象的原型。接下来实现一个基于 `Person` 对象创建新对象的函数：
 
-```
+```javascript
 function newObject(func) {  
   // get an Array of all the arguments except the first one
   var args = Array.prototype.slice.call(arguments, 1);
@@ -230,14 +230,14 @@ brendan.toString() // "Brendan Eich"
 
 JavaScript 的 `new` 操作符，本质上做的是同样的工作，提供了一个类似传统面向对象语言的语法。
 
-```
+```javascript
 var mark = new Person("Mark", "Miller");  
 mark.toString() // "Mark Miller"  
 ```
 
 从本质上来说，一个 JavaScript ‘类’ 就是一个函数对象，它作为构造函数，同时附加了一个原型对象。然而，早期版本的 JavaScript 并没有 `Object.create` ，但是又很需要这个方法，所以人们经常使用 `new` 操作符来实现类似功能：
 
-```
+```javascript
 var createObject = function (o) {  
   // we only want the prototype part of the `new`
   // behavior, so make an empty constructor
