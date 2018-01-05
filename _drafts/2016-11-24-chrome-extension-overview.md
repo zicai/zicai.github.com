@@ -74,6 +74,26 @@ To find pages in the extension, use chrome.extension methods such as getViews() 
 变量共享？
 函数共享？
 
+#### option 页面
+https://developer.chrome.com/extensions/optionsV2
+
+让用户可以自定义插件的一些行为。权限声明如下：
+
+```json
+{
+  "name": "My extension",
+  ...
+  "options_ui": {
+    // Required.
+    "page": "options.html",
+    // Recommended.
+    "chrome_style": true
+  },
+  ...
+}
+```
+
+
 #### override page
 https://developer.chrome.com/extensions/override
 
@@ -139,6 +159,8 @@ run in the context of a web page and not the extension
 - 和extension 通信
 - 发起 Ajax 到与扩展相同的站点
 - 通过共享 DOM 与宿主页面通信
+
+如果想在内容脚本中使用扩展包内部的资源，需要设置 [web_accessible_resources](https://developer.chrome.com/extensions/manifest/web_accessible_resources) 
 
 ## API 列表
 
@@ -268,7 +290,7 @@ StorageArea 包含以下方法：
 - remove
 - clear
 
-```
+```javascript
 // 保存数据
 chrome.storage.sync.set({'value': theValue}, function() {
 	// Notify that we saved.
@@ -389,7 +411,16 @@ var opt_extraInfoSpec = [...];
 ```
 callback 接收一个对象作为参数。对象包含当前请求的信息，信息与当前事件类型和 opt_extraInfoSpec 有关。
 
-如果 opt_extraInfoSpec 数组包含字符串 'blocking'(只有特定事件允许)，callback 以同步方式进行处理。也就是说，请求会被阻塞直到 callback 返回。在这种情况下，回调可以返回一个  webRequest.BlockingResponse 来决定请求后面的生命周期。
+如果 opt_extraInfoSpec 数组包含字符串 'blocking'(只有特定事件允许)，callback 以同步方式进行处理（前提是有 webRequestBlocking 权限）。也就是说，请求会被阻塞直到 callback 返回。在这种情况下，回调可以返回一个 `webRequest.BlockingResponse` 来决定请求后面的生命周期。
+
+例如：返回 `{cancel:true}` 可以取消请求，返回 `{redirectUrl:'someurl'}` 可以重定向请求。
+
+```javascript
+chrome.webRequest.onBeforeRequest.addListener(
+        function(details) { return {cancel: true}; },
+        {urls: ["*://www.evil.com/*"]},
+        ["blocking"]);
+```
 
 根据不同的事件类型，你可以在 opt_extraInfoSpec 数组中提供不同的字符串，来获取有关请求更多的信息。例如：要在 onSendHeaders 事件中获取请求头：
 
@@ -404,8 +435,12 @@ chrome.webRequest.onSendHeaders.addListener(callback, {urls: ['<all_urls>']}, ['
 - Tab ID
 - Window ID
 
-注意：该 API 目前没办法获取响应 body
+注意：
+
+- 该 API 目前没办法获取响应 body
 https://bugs.chromium.org/p/chromium/issues/detail?id=487422
+- 通过 onBeforeSendHeaders 修改请求头时，有一些请求头不允许修改。
+- 通过 onHeadersReceived 修改响应头后，在 DevTools 中是看不到的。[https://medium.com/@requestly_ext/list-of-headers-not-allowed-to-be-modified-by-chrome-extensions-c850b5c02fff](https://medium.com/@requestly_ext/list-of-headers-not-allowed-to-be-modified-by-chrome-extensions-c850b5c02fff)
 
 ## 常见需求
 
